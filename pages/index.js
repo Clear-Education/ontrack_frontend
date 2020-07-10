@@ -17,7 +17,6 @@ export default function Home() {
 
 const [state, setState] = useState(INITIAL_STATE);
 
-
 const handleChangeInput = (prop) => (event) => {
   setState({ ...state, [prop]: event.target.value });
   console.log(state)
