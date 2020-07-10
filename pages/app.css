@@ -1,0 +1,17 @@
+:root {
+    --main-color-dark: #0099CB;
+    --main-color-ligth: #10BDDC;
+    --black: #303030;
+    --white: #f7f7f7;
+    --gray: #868686;
+  }
+
+  .center {
+    text-align: center;
+  }
+  .left {
+    text-align: left;
+  }
+  .right {
+    text-align: right;
+  }
