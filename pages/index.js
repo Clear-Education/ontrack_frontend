@@ -15,21 +15,21 @@ const INITIAL_STATE = {
 
 export default function Home() {
 
-const [state, setState] = useState(INITIAL_STATE);
+  const [state, setState] = useState(INITIAL_STATE);
 
 
-const handleChangeInput = (prop) => (event) => {
-  setState({ ...state, [prop]: event.target.value });
-  console.log(state)
-};
+  const handleChangeInput = (prop) => (event) => {
+    setState({ ...state, [prop]: event.target.value });
+    console.log(state)
+  };
 
-const handleSubmit = () =>{
-  Auth.login(state).then((result)=>{
-    if(result.success){
-      Router.push('/dashboard')
-    }
-  });
-}
+  const handleSubmit = () => {
+    Auth.login(state).then((result) => {
+      if (result.success) {
+        Router.push('/dashboard')
+      }
+    });
+  }
 
   return (
     <div className="container">
@@ -50,19 +50,19 @@ const handleSubmit = () =>{
           </Col>
 
           <Col md={6} sm={6} xs={6} className={`${styles.login_rigth_container}`}>
-          <div className={styles.login_container}>
-              <h2 id={styles.login_title}>Iniciar Sesión</h2>      
-          </div>
-          
-          <form  noValidate autoComplete="off">
-              <TextField id="user_input" variant="outlined"  label="Usuario" className={styles.form_input} 
+            <div className={styles.login_container}>
+              <h2 id={styles.login_title}>Iniciar Sesión</h2>
+            </div>
+
+            <form noValidate autoComplete="off">
+              <TextField id="user_input" variant="outlined" label="Usuario" className={styles.form_input}
                 onChange={handleChangeInput("email")}
               />
-              <TextField id="password_input" variant="outlined"  label="Contraseña"  className={styles.form_input} 
-              onChange={handleChangeInput("password")}
+              <TextField id="password_input" variant="outlined" label="Contraseña" className={styles.form_input}
+                onChange={handleChangeInput("password")}
               />
               <Button id={styles.login_button} onClick={handleSubmit}>Ingresar</Button>
-          </form>
+            </form>
           </Col>
 
         </Row>
