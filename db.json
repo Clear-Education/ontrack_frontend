@@ -1,0 +1,102 @@
+{ "users": [
+  {
+    "id": 1,
+    "email": "user@email.com",
+    "nombre": "Juan",
+    "apellido": "Perez",
+    "telefono": 542614123123,
+    "legajo": "A123A",
+    "foto_perfil": "url",
+    "cargo": "Profesor",
+    "is_active": true,
+    "group": {
+      "name": "Pedagogia",
+      "id": 1,
+      "permissions": [
+        {
+          "name": "Can view user",
+          "codename": "view_user",
+          "id": 1
+        }
+      ]
+    },
+    "institucion": {
+      "id": 1,
+      "nombre": "Escuela",
+      "direccion": "Lomas 444, Mendoza",
+      "pais": "Argentina",
+      "identificador": "ESCUELALOMAS",
+      "descripcion": "Gran escuela, es de Lomas",
+      "logo": "url_imagen",
+      "fecha_creacion": {},
+      "activa": true
+    }
+  },
+  {
+    "id": 1,
+    "email": "user@email.com",
+    "nombre": "Mariano",
+    "apellido": "Perez",
+    "telefono": 542614123123,
+    "legajo": "A123A",
+    "foto_perfil": "url",
+    "cargo": "Profesor",
+    "is_active": true,
+    "group": {
+      "name": "Pedagogia",
+      "id": 1,
+      "permissions": [
+        {
+          "name": "Can view user",
+          "codename": "view_user",
+          "id": 1
+        }
+      ]
+    },
+    "institucion": {
+      "id": 1,
+      "nombre": "Escuela",
+      "direccion": "Lomas 444, Mendoza",
+      "pais": "Argentina",
+      "identificador": "ESCUELALOMAS",
+      "descripcion": "Gran escuela, es de Lomas",
+      "logo": "url_imagen",
+      "fecha_creacion": {},
+      "activa": true
+    }
+  },
+  {
+    "id": 1,
+    "email": "user@email.com",
+    "nombre": "Rodrigo",
+    "apellido": "Perez",
+    "telefono": 542614123123,
+    "legajo": "A123A",
+    "foto_perfil": "url",
+    "cargo": "Profesor",
+    "is_active": true,
+    "group": {
+      "name": "Pedagogia",
+      "id": 1,
+      "permissions": [
+        {
+          "name": "Can view user",
+          "codename": "view_user",
+          "id": 1
+        }
+      ]
+    },
+    "institucion": {
+      "id": 1,
+      "nombre": "Escuela",
+      "direccion": "Lomas 444, Mendoza",
+      "pais": "Argentina",
+      "identificador": "ESCUELALOMAS",
+      "descripcion": "Gran escuela, es de Lomas",
+      "logo": "url_imagen",
+      "fecha_creacion": {},
+      "activa": true
+    }
+  }
+  ]
+}

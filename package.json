@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "mock-server": "json-server --watch ./db.json -p 4001 -d 3000"
   },
   "dependencies": {
     "@material-ui/core": "^4.11.0",
@@ -16,5 +17,8 @@
     "react": "16.13.1",
     "react-bootstrap": "^1.2.0",
     "react-dom": "16.13.1"
+  },
+  "devDependencies": {
+    "json-server": "0.16.1"
   }
 }

@@ -6,7 +6,9 @@ export default function SideBar() {
     return (
         <div className={styles.side_bar}>
             <div className={styles.img_container}>
-                <img src="./OnTrack.svg" className={styles.img_header}></img>
+                <Link href="/home">
+                    <a><img src="./OnTrack.svg" className={styles.img_header}></img></a>
+                </Link>
             </div>
             <NavItem></NavItem>
         </div>
