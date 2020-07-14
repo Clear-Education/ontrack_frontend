@@ -3,6 +3,9 @@ import MUIDataTable from "mui-datatables";
 import { useState } from 'react';
 import axios from 'axios';
 import { Modal, Button } from 'react-bootstrap';
+import ModalUser from '../../src/components/Users/ModalUser';
+import CrudUser from '../../src/utils/CrudUser';
+
 
 
 
@@ -10,15 +13,26 @@ const Users = ({ listUsers }) => {
 
     const [lista, setLista] = useState(listUsers);
     const [selectedUser, setSelectedUser] = useState({});
+    const [type, setType] = useState(null);
     const [show, setShow] = useState(false);
 
     const handleClose = () => {
         setShow(false);
         setSelectedUser({});
     };
+    
+
+    const handleSubmit = (user) =>{
+        CrudUser.editUser(user)
+    }
+
+    const handleDelete = (data) =>{
+        confirm("Seguro que desea eliminar a : "+data)
+    }
 
     function handleShowModal(user, type) {
         setSelectedUser(user);
+        setType(type)
         setShow(true);
     }
 
@@ -30,7 +44,7 @@ const Users = ({ listUsers }) => {
             empty: true,
             customBodyRenderLite: (dataIndex) => {
                 return (
-                    <button onClick={() => handleShowModal(lista[dataIndex])}>
+                    <button onClick={() => handleShowModal(lista[dataIndex],"Editar")}>
                         Editar
                     </button>
                 );
@@ -46,7 +60,7 @@ const Users = ({ listUsers }) => {
                 customBodyRenderLite: (dataIndex) => {
                     return (
                         <button onClick={() => {
-                            setLista(lista.filter(item => item != lista[dataIndex]));
+                            handleDelete(lista[dataIndex])
                         }}>
                             Eliminar
                         </button>
@@ -76,7 +90,14 @@ const Users = ({ listUsers }) => {
                 options={options}
             />
 
-
+{show ?
+        <ModalUser 
+        handleClose = {handleClose}
+        user = {selectedUser}
+        type = {type}
+        />
+: null
+}
 
         </Layout>
     )

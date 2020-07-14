@@ -1,22 +1,14 @@
 import { Form, Row, Col, Container } from 'react-bootstrap';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-const INITIAL_STATE_USER = {
-    nombre: '',
-    apellido: '',
-    email: ''
-}
 
-const FormUser = (user) => {
+const FormUser = (props) => {
 
-    const [user, setUser] = useState(INITIAL_STATE_USER);
+    const handleChange = (input)=>(event) =>{
+        props.handleChange(input, event.target.value);
+    }
 
-    useEffect(() => {
-        if (user) {
-            setUser(user)
-        }
-    }, [user]);
-
+    return(
     <Container className="mt-5">
         <Form>
             <Form.Group as={Row} controlId="formPlaintextPassword1">
@@ -24,7 +16,7 @@ const FormUser = (user) => {
                     Nombre
                 </Form.Label>
                 <Col sm="10">
-                    <Form.Control type="text" defaultValue={user.nombre} />
+                    <Form.Control type="text" defaultValue={props.user.nombre} onChange={handleChange("nombre")}/>
                 </Col>
             </Form.Group>
             <Form.Group as={Row} controlId="formPlaintextPassword2">
@@ -32,7 +24,7 @@ const FormUser = (user) => {
                     Apellido
                 </Form.Label>
                 <Col sm="10">
-                    <Form.Control type="text" defaultValue={user.apellido} />
+                    <Form.Control type="text" defaultValue={props.user.apellido} onChange={handleChange("apellido")}/>
                 </Col>
             </Form.Group>
             <Form.Group as={Row} controlId="formPlaintextEmail">
@@ -40,11 +32,12 @@ const FormUser = (user) => {
                     Email
                 </Form.Label>
                 <Col sm="10">
-                    <Form.Control defaultValue={user.email} onChange={(e) => e.target.value} />
+                    <Form.Control defaultValue={props.user.email} />
                 </Col>
             </Form.Group>
         </Form>
     </Container>
+    )
 }
 
 export default FormUser;
