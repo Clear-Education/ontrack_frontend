@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Header from './Header';
 import SideBar from './SideBar';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Container } from 'react-bootstrap';
 
 
 function Layout({ children, title }) {
@@ -16,12 +16,14 @@ function Layout({ children, title }) {
             </Head>
             <Header />
             <div>
-                <Row>
+                <Row className="mr-0">
                     <Col xs={2} md={2}>
                         <SideBar />
                     </Col>
                     <Col xs={10} md={10}>
-                        {children}
+                        <Container className="mt-5">
+                            {children}
+                        </Container>
                     </Col>
                 </Row>
             </div>
