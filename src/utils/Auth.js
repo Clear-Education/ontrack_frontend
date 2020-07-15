@@ -1,6 +1,7 @@
 
 import axios from 'axios'
 import Config from './Config'
+import { loadState } from '../../redux/immutableState'
 
 
 const Auth = {
@@ -22,6 +23,16 @@ async login({email,password}){
 
 
 },
+
+
+
+
+checkAuth() {
+    const state = loadState();
+    return state;
+  },
+
+  
 }
 
 export default Auth;
