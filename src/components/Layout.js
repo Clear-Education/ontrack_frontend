@@ -14,7 +14,7 @@ function Layout({ children, title }) {
                     rel="stylesheet"
                 />
             </Head>
-            <Header />
+
             <div>
                 <Row className="mr-0">
                     <Col xs={2} md={2}>

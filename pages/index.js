@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Head from 'next/head';
 import { Row, Col, Container } from "react-bootstrap";
 import { FormControl, InputLabel, FormHelperText, Input, TextField, Button } from '@material-ui/core';
 import Auth from '../src/utils/Auth'
 import Router from "next/router";
-
+import Alert from "react-s-alert";
 import styles from './index.module.css'
 
 const INITIAL_STATE = {
@@ -17,6 +17,15 @@ export default function Home() {
 
   const [state, setState] = useState(INITIAL_STATE);
 
+  
+  useEffect(()=>{
+
+      Alert.info("Probando alerts", {
+        position: "bottom",
+        effect: "stackslide",
+      });
+
+  },[])
 
   const handleChangeInput = (prop) => (event) => {
     setState({ ...state, [prop]: event.target.value });
