@@ -1,6 +1,6 @@
 import Head from 'next/head'
-import Header from './Header';
-import SideBar from './SideBar';
+import Header from './commons/header/Header';
+import SideBar from './commons/sidebar/SideBar';
 import { Row, Col, Container } from 'react-bootstrap';
 
 

@@ -76,6 +76,16 @@ const handleCrudErrors = (error) => {
           ],
         };
       }
+    }else{
+      response = {
+          success: false,
+          unauthorized: false,
+          result: [
+            {
+              message: "Error interno del servidor",
+            },
+          ],
+      }
     }
   
     return response;

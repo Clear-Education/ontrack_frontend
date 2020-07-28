@@ -110,11 +110,7 @@ const Login = () => {
         effect: "stackslide",
       });
     } else {
-      Alert.error("Función en proceso", {
-        position: "bottom",
-        effect: "stackslide",
-      });
-      /* dispatch(loginAction(loginState.email, loginState.password)).then(
+      dispatch(loginAction(loginState.email, loginState.password)).then(
         (status) => {
           if (status) {
             if (status.payload.role === "user") {
@@ -124,7 +120,7 @@ const Login = () => {
             }
           }
         }
-      ); */
+      );
     }
   };
 

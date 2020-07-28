@@ -13,9 +13,8 @@ export async function login(user, password) {
   var formData = new FormData();
   formData.append("email", user);
   formData.append("password", password);
-
   return axios
-    .post(`${Config.api_url}/user/login/`, formData)
+    .post(`${Config.api_url}/users/login/`, formData)
     .then((json) => {
       if (json.data.success) {
         const {

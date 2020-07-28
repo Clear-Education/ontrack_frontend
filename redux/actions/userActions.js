@@ -34,10 +34,7 @@ export const loginAction = (username, password) => {
       } else {
         dispatch({ type: types.NO_LOADING_USER });
         result.result.forEach((element) => {
-          Alert.error(
-            result.error === 409
-              ? `${element.message} <a href="?resend=true&email=${username}">¿No recibiste un email?<a/>`
-              : element.message,
+          Alert.error(element.message,
             {
               position: "bottom",
               effect: "stackslide",

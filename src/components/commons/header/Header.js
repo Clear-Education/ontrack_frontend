@@ -8,9 +8,6 @@ export default function Header() {
     return (
         <AppBar position="static">
             <Toolbar className={styles.header}>
-                {/* <div className={styles.img_header}>
-                    <img src="./OnTrack.svg"></img>
-                </div> */}
                 <div className={styles.container_icons_header}>
                     <IconButton aria-label="show 17 new notifications">
                         <Badge badgeContent={17} color="secondary">

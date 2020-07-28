@@ -5,8 +5,11 @@
     width: 15%;     /* Set the width of the sidebar */
     z-index: 1;      /* Stay on top of everything */
     top: 0;
-    background-color: var(--main-color-ligth); /* Black */
-    overflow-x: hidden;     /* Disable horizontal scroll */
+    background-color: var(--main-color-light);
+    overflow-x: hidden;  
+    display: flex;
+    flex-direction: column;
+    left: 0;
 }
 
 .img_container {
@@ -37,6 +40,8 @@
     display: block;
     text-align: center;
     margin-left: 5px;
+    font-weight: 700;
+    font-size: 17px;
 }
 
 .nav_link:hover {
