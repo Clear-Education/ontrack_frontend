@@ -112,12 +112,8 @@ const Login = () => {
     } else {
       dispatch(loginAction(loginState.email, loginState.password)).then(
         (status) => {
-          if (status) {
-            if (status.payload.role === "user") {
-              router.push("/");
-            } else {
+          if (status) { 
               router.push("/dashboard");
-            }
           }
         }
       );

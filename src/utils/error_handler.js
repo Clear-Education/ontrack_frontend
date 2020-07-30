@@ -5,7 +5,11 @@ const handleCrudErrors = (error) => {
         response = {
           success: false,
           unauthorized: false,
-          result: error.response.data.data,
+          result: [
+            {
+              message: error.response.data.non_field_errors,
+            },
+          ],
         };
       } else if (error.response.status === 401) {
         response = {

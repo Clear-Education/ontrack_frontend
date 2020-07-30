@@ -2,7 +2,7 @@ import { AppBar, Toolbar, IconButton, MenuIcon, Typography, Button, Badge } from
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 
-import styles from './Header.module.css';
+import styles from './header.module.css';
 
 export default function Header() {
     return (

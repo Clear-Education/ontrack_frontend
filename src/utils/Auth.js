@@ -2,7 +2,7 @@
 import axios from "axios";
 import Config from "./config";
 import { loadState } from "../../redux/immutableState";
-import errorHandler from "./Errorhandler";
+import errorHandler from "./error_handler";
 
 export function checkAuth() {
   const state = loadState();
@@ -11,13 +11,13 @@ export function checkAuth() {
 
 export async function login(user, password) {
   var formData = new FormData();
-  formData.append("email", user);
+  formData.append("username", user);
   formData.append("password", password);
   return axios
     .post(`${Config.api_url}/users/login/`, formData)
     .then((json) => {
-      if (json.data.success) {
-        const {
+      if (json.status === 200) {
+/*         const {
           name,
           surname,
           id,
@@ -34,10 +34,10 @@ export async function login(user, password) {
           role,
           cellphone,
           email,
-        };
+        }; */
         let appState = {
           isLoggedIn: true,
-          user: userData,
+          //user: userData,
         };
         return appState;
       } else {

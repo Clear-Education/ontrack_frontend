@@ -16,7 +16,6 @@ const ModalUser = (props) => {
 
     const handleChange = (input, value) =>{
         setUser({...user,[input]: value})
-        console.log(user)
     }
     
     const handleClose = () =>{

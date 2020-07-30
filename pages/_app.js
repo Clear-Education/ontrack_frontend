@@ -3,8 +3,7 @@
 
 import './app.css'
 import './alerts.css'
-import Auth from '../src/utils/Auth';
-import Header from '../src/components/commons/Header/Header';
+import Header from '../src/components/commons/header/header';
 
 //DEPENDENCIAS
 
@@ -13,8 +12,9 @@ import Head from "next/head";
 import Alert from "react-s-alert";
 import { useEffect } from 'react';
 import "react-s-alert/dist/s-alert-css-effects/stackslide.css";
-import SideBar from '../src/components/commons/sidebar/SideBar';
+import SideBar from '../src/components/commons/sidebar';
 import { Row, Col } from 'react-bootstrap';
+import { checkAuth } from '../src/utils/Auth';
 
 
 //APLICACIÓN
@@ -23,22 +23,24 @@ const App = ({ Component, pageProps, router }) => {
 
   //COMENTAR ESTE CÓDIGO HASTA TENER EL LOGIN LISTO
 
-  /* useEffect(() => {
+  useEffect(() => {
 
-    let authUser = Auth.checkAuth();
-    
+    let authUser = checkAuth();
 
-    if (authUser.user.isLoggedIn && router.route.match("/")) {
-      router.push("/dashboard");
+    if (authUser) {
+      if (authUser.user.isLoggedIn && router.route.match("/")) {
+        router.push("/dashboard");
+      }
+      if (authUser.user.isLoggedIn && router.route.match(/(register)/)) {
+        router.push("/dashboard");
+      }
+      if (router.route.match(/(dashboard)/) && !authUser.user.isLoggedIn) {
+        router.push("/");
+      }
     }
-    if (authUser.user.isLoggedIn && router.route.match(/(register)/)) {
-      router.push("/dashboard");
-    }
-    if (router.route.match(/(dashboard)/) && !authUser.user.isLoggedIn) {
-      router.push("/");
-    }
+
   }, []);
- */
+
 
   return (
     <div>
@@ -58,25 +60,35 @@ const App = ({ Component, pageProps, router }) => {
       </Head>
       <Alert timeout={3000} stack={true} />
       {router.route.match(/(dashboard)/i) ? (
-        <>
-          <Row lg={12} md={12} sm={12} xs={12} style={{ margin: 0 }}>
-            <Col lg={12} md={12} sm={12} xs={12} style={{ padding: 0 }}>
-              <Header />
-            </Col>
+        <Row lg={12} md={12} sm={12} xs={12}>
+          <div>
+            <SideBar />
+          </div>
+          <Col
+            id="dashboard_container"
+            className="center"
+            lg={11}
+            md={10}
+            sm={12}
+            xs={12}
+          >
             <div>
-              <SideBar />
+              <Header />
+              <Row lg={12} md={12} sm={12} xs={12}>
+                <Col
+                  id="component_container"
+                  className="center"
+                  lg={12}
+                  md={12}
+                  sm={12}
+                  xs={12}
+                >
+                  <Component {...pageProps} key={router.route} />
+                </Col>
+              </Row>
             </div>
-            <Col
-              id="component_container"
-              lg={12}
-              md={12}
-              sm={12}
-              xs={12}
-            >
-              <Component {...pageProps} />
-            </Col>
-          </Row>
-        </>
+          </Col>
+        </Row>
       ) :
         <Component {...pageProps} />
       }
