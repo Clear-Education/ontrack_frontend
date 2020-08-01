@@ -1,51 +1,67 @@
-/*COMPONENTE SIDEBAR*/
-.side_bar {
-    position: fixed;     /* Fixed Sidebar (stay in place on scroll and position relative to viewport) */
-    height: 100%;
-    width: 15%;     /* Set the width of the sidebar */
-    z-index: 1;      /* Stay on top of everything */
+#sidebar_container {
+    position: fixed;
     top: 0;
-    background-color: var(--main-color-light);
-    overflow-x: hidden;  
-    display: flex;
-    flex-direction: column;
     left: 0;
-}
-
-.img_container {
     background-color: var(--main-color-dark);
-    height: 64px;
-}
-
-.img_header {
-    box-sizing: border-box;
-    width: 100%;
-    max-width: 100%;
-    height: 100%;
-    padding: 5%;
-}
-
-/*COMPONENTE NAVITEM*/
-
-.container_icon_link {
-    display: flex;
-    justify-content: center;
-    color: var(--white);
-    margin-top: 50px;
-}
-
-.nav_link {
-    color: var(--white);
-    text-decoration: none;
-    display: block;
+    width: 170px;
+    height: 100vh;
+    color: #8f8f8f;
+    z-index: 100;
+  } 
+  .navigations_container {
+    height: 95px;
+    margin-left: auto; 
+    margin-right: auto;
+    background-color: var(--main-color-light);
+    border-radius: 20px;
+    padding: 10px;
+    cursor: pointer;
     text-align: center;
-    margin-left: 5px;
-    font-weight: 700;
-    font-size: 17px;
-}
-
-.nav_link:hover {
-    text-decoration: underline;
-    color: var(--white);
-}
-
+  }
+  .responsive_col {
+    margin-top: 20px;
+  }
+  .nav_text {
+    font-size: 14px;
+    line-height: 15px;
+  }
+  #logo {
+    width: 35px;
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translate(-50%, 0);
+  }
+  @media (max-width: 767px) {
+    #sidebar_container {
+      position: fixed;
+      top: unset;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 60px;
+    }
+    #logo {
+      display: none;
+    }
+    .responsive_col {
+      width: 20% !important;
+      flex: unset !important;
+      margin-top: 0px;
+    }
+    .navigations_container {
+      width: 100%;
+      height: 80px;
+      margin-left: auto;
+      margin-right: auto;
+      background-color: transparent;
+      margin-top: 0px;
+      padding: 10px;
+      cursor: pointer;
+      text-align: center;
+    }
+    .nav_text {
+      display: none;
+    }
+  }
+  

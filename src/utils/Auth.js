@@ -16,28 +16,33 @@ export async function login(user, password) {
   return axios
     .post(`${Config.api_url}/users/login/`, formData)
     .then((json) => {
-      if (json.status === 200) {
-/*         const {
+      console.log(json)
+      if (json.status == 200) {
+     const {
           name,
-          surname,
-          id,
-          role,
-          auth_token,
-          cellphone,
+          last_name,
+          cargo,
+          token,
+          phone,
           email,
-        } = json.data.data;
+          legajo,
+          institucion,
+          groups
+        } = json.data;
         let userData = {
           name,
-          surname,
-          id,
-          auth_token,
-          role,
-          cellphone,
+          last_name,
+          cargo,
+          token,
+          phone,
           email,
-        }; */
+          legajo,
+          institucion,
+          groups
+        };
         let appState = {
           isLoggedIn: true,
-          //user: userData,
+          user: userData,
         };
         return appState;
       } else {

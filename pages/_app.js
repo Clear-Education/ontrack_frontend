@@ -61,34 +61,34 @@ const App = ({ Component, pageProps, router }) => {
       <Alert timeout={3000} stack={true} />
       {router.route.match(/(dashboard)/i) ? (
         <Row lg={12} md={12} sm={12} xs={12}>
+        <div>
+           <SideBar />
+        </div>
+        <Col 
+          id="dashboard_container"
+          className="center"
+          lg={11}
+          md={10}
+          sm={12}
+          xs={12}
+        >
           <div>
-            <SideBar />
+            <Header />
+            <Row lg={12} md={12} sm={12} xs={12}>
+              <Col
+                id="component_container"
+                className="center"
+                lg={12}
+                md={12}
+                sm={12}
+                xs={12}
+              >
+                <Component {...pageProps} key={router.route} />
+              </Col>
+            </Row>
           </div>
-          <Col
-            id="dashboard_container"
-            className="center"
-            lg={11}
-            md={10}
-            sm={12}
-            xs={12}
-          >
-            <div>
-              <Header />
-              <Row lg={12} md={12} sm={12} xs={12}>
-                <Col
-                  id="component_container"
-                  className="center"
-                  lg={12}
-                  md={12}
-                  sm={12}
-                  xs={12}
-                >
-                  <Component {...pageProps} key={router.route} />
-                </Col>
-              </Row>
-            </div>
-          </Col>
-        </Row>
+        </Col>
+      </Row>
       ) :
         <Component {...pageProps} />
       }

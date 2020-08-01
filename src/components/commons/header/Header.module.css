@@ -1,12 +1,29 @@
-.header {
-    background-color: var(--white);
+#header_container {
+  background-color: var(--white);
+  height: 60px;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  color: #6f6f6f;
+  -webkit-box-shadow: 0px 0px 65px 0px rgba(194, 194, 194, 0.87);
+  -moz-box-shadow: 0px 0px 65px 0px rgba(194, 194, 194, 0.87);
+  box-shadow: 0px 0px 65px 0px rgba(194, 194, 194, 0.87);
 }
-
-
-.container_icons_header {
-    margin-left: auto;
+.icons_container{
+  float: right;
+  margin-right: 20px;
+  margin-top: 10px;
 }
-
-.container_icons_header * {
-    display: inline;
+#logo {
+  width: 150px;
+  position: relative;
+  left: 20px;
+  top: 15px;
+}
+@media (max-width: 767px) {
+  #logo {
+    display: initial;
+  }
 }

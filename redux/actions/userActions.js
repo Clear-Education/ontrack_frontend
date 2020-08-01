@@ -36,10 +36,10 @@ export const loginAction = (username, password) => {
         result.result.forEach((element) => {
           Alert.error(element.message,
             {
-              position: "bottom",
+              position: "bottom", 
               effect: "stackslide",
               html: true,
-            }
+            } 
           );
         });
         return false;

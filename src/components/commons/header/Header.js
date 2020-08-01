@@ -1,24 +1,38 @@
-import { AppBar, Toolbar, IconButton, MenuIcon, Typography, Button, Badge } from '@material-ui/core';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import AccountCircle from '@material-ui/icons/AccountCircle';
+// Import dependencias
+import { Row, Col } from "react-bootstrap";
 
-import styles from './header.module.css';
+// Import componentes
+import styles from "./header.module.css";
+import PersonIcon from '@material-ui/icons/Person';
+import { IconButton } from "@material-ui/core";
 
-export default function Header() {
-    return (
-        <AppBar position="static">
-            <Toolbar className={styles.header}>
-                <div className={styles.container_icons_header}>
-                    <IconButton aria-label="show 17 new notifications">
-                        <Badge badgeContent={17} color="secondary">
-                            <NotificationsIcon />
-                        </Badge>
-                    </IconButton>
-                    <IconButton>
-                        <AccountCircle />
-                    </IconButton>
-                </div>
-            </Toolbar>
-        </AppBar>
-    )
-}
+
+const Header = () => {
+  return (
+    <div id={styles.header_container}>
+      <Row lg={12} md={12} sm={12} xs={12}>
+        <Col className="left" lg={2} md={2} sm={2} xs={2} style={{ backgroundColor: 'var(--main-color-dark)', height: '60px' }}>
+          <img src="./OnTrack.svg" id={styles.logo} />
+        </Col>
+        <Col className="right" lg={10} md={10} sm={10} xs={10}>
+          <div className={styles.icons_container}>
+            <Row>
+              <Col>
+                <IconButton>
+                  <PersonIcon />
+                </IconButton>
+              </Col>
+              <Col>
+                <IconButton>
+                  <PersonIcon />
+                </IconButton>
+              </Col>
+            </Row>
+          </div>
+        </Col>
+      </Row>
+    </div>
+  );
+};
+
+export default Header;
