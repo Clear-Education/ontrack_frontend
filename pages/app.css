@@ -26,9 +26,7 @@
   }
   #component_container {
     color: #6f6f6f;
-    margin-top: 20px;
-    max-width: 1700px;
-    margin-left: 15%;
+    margin-top: 70px;
     margin-right: auto;
   }
   /* Inputs form login y reset pass */

@@ -72,7 +72,6 @@ const App = ({ Component, pageProps, router }) => {
           sm={12}
           xs={12}
         >
-          <div>
             <Header />
             <Row lg={12} md={12} sm={12} xs={12}>
               <Col
@@ -86,7 +85,6 @@ const App = ({ Component, pageProps, router }) => {
                 <Component {...pageProps} key={router.route} />
               </Col>
             </Row>
-          </div>
         </Col>
       </Row>
       ) :

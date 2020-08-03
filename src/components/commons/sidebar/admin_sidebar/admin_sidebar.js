@@ -47,7 +47,7 @@ const AdminSideBar = () => {
   };
 
   return (
-    <div id={styles.sidebar_container}>
+    <div className={styles.sidebar_container}>
       <Row className="center" lg={12} md={12} sm={12} xs={12}>
         <Col
           className={styles.responsive_col}
@@ -64,12 +64,12 @@ const AdminSideBar = () => {
               sm={7} 
               xs={7}
               className={styles.navigations_container}
-              title="Estadísticas"
+              title="Cuentas de usuario"
               style={getSelected("dashboard")}
               onClick={changeSelected.bind(this, "dashboard")}
             >
               <p style={{ marginTop: 10 }} className={styles.nav_text}>
-                Cuentas de usuario
+                Cuentas
               </p>
             </Col>
           </Link>
@@ -78,7 +78,7 @@ const AdminSideBar = () => {
       </Row>
 
     </div>
-  );
+  ); 
 };
 
 export default AdminSideBar;

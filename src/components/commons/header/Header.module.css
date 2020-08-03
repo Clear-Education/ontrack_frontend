@@ -16,14 +16,29 @@
   margin-right: 20px;
   margin-top: 10px;
 }
+.logo_container{
+  background-color: var(--main-color-dark);
+  height: 60px;
+  width: 170px;
+}
 #logo {
-  width: 150px;
+  width: 120px;
   position: relative;
   left: 20px;
   top: 15px;
 }
+#mini_logo {
+  width: 40px;
+  position: absolute;
+  top: 15px;
+  left: 30px;
+}
+
 @media (max-width: 767px) {
   #logo {
     display: initial;
+  }
+  .logo_container{
+    width: 75px;
   }
 }

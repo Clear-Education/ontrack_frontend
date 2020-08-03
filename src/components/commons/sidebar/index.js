@@ -15,7 +15,7 @@ const SideBarContainer = () => {
     <AdminSidebar />
   ) : user.user.cargo === "user" ? (
     <UserSidebar />
-  ) : <div></div>
+  ) : <div className={styles.sidebar_container}></div>
 };
 
 export default SideBarContainer;
