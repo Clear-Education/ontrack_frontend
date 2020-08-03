@@ -23,24 +23,7 @@ const App = ({ Component, pageProps, router }) => {
 
   //COMENTAR ESTE CÓDIGO HASTA TENER EL LOGIN LISTO
 
-  useEffect(() => {
-
-    let authUser = checkAuth();
-
-    if (authUser) {
-      if (authUser.user.isLoggedIn && router.route.match("/")) {
-        router.push("/dashboard");
-      }
-      if (authUser.user.isLoggedIn && router.route.match(/(register)/)) {
-        router.push("/dashboard");
-      }
-      if (router.route.match(/(dashboard)/) && !authUser.user.isLoggedIn) {
-        router.push("/");
-      }
-    }
-
-  }, []);
-
+  
 
   return (
     <div>

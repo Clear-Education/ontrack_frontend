@@ -14,6 +14,10 @@
     padding: 10px;
     cursor: pointer;
     text-align: center;
+    transition: all .2s;
+  }
+  .navigations_container:hover{
+    transform: scale(1.05);
   }
   .responsive_col {
     margin-top: 40px;

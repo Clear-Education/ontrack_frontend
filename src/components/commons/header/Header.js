@@ -19,7 +19,7 @@ const Header = () => {
       <Row lg={12} md={12} sm={12} xs={12}>
         <Col className="left" lg={2} md={2} sm={2} xs={2}>
           <div className={styles.logo_container}>
-            <img src={fullScreen ? `./OnTrack.svg` : `./OnTrack_mini.svg`  } id={fullScreen ? styles.logo : styles.mini_logo}/>
+            <img src={fullScreen ? `/OnTrack.svg` : `./OnTrack_mini.svg`  } id={fullScreen ? styles.logo : styles.mini_logo}/>
           </div>
         </Col>
         <Col className="right" lg={10} md={10} sm={10} xs={10}>

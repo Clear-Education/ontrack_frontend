@@ -22,27 +22,26 @@ const AdminSideBar = () => {
   }, [router.route]);
 
   const getSelected = (element) => {
+    console.log(element)
     if (!fullScreen) {
       if (selected === element) {
         return {
-          border: "2px solid var(--main-color)",
-          color: "var(--main-color)",
+          backgroundColor: 'white',
+          width: '5px',
+          height: '70%',
+          display: 'inline-block',
+          position: 'absolute',
+          left: '-15px',
+          borderRadius: '10px',
         };
       } else {
         return {};
       }
-    } 
-  };
-
-  const getIconColor = (element) => {
-    if (selected === element) {
-      return "var(--main-color)";
-    } else {
-      return "#8f8f8f";
     }
   };
 
   const changeSelected = (element) => {
+    console.log(element);
     setSelected(element);
   };
 
@@ -61,24 +60,134 @@ const AdminSideBar = () => {
             <Col
               lg={7}
               md={7}
-              sm={7} 
+              sm={7}
               xs={7}
               className={styles.navigations_container}
               title="Cuentas de usuario"
-              style={getSelected("dashboard")}
               onClick={changeSelected.bind(this, "dashboard")}
             >
+              <div style={getSelected("dashboard")} />
+              <img src="/icons/curricula.svg" style={{ width: '30%', display: 'inline' }} />
+              <p style={{ marginTop: 10 }} className={styles.nav_text}>
+                Estructura Curricular
+              </p>
+
+            </Col>
+          </Link>
+        </Col>
+
+        <Col
+          className={styles.responsive_col}
+          style={{ padding: 0 }}
+          lg={12}
+          md={12}
+          sm={12}
+          xs={12}
+        >
+          <Link href="/dashboard/students">
+            <Col
+              lg={7}
+              md={7}
+              sm={7}
+              xs={7}
+              className={styles.navigations_container}
+              title="Cuentas de usuario"
+              onClick={changeSelected.bind(this, "students")}
+            >
+              <div style={getSelected("students")} />
+              <img src="/icons/students.svg" style={{ width: '30%', display: 'inline' }} />
+              <p style={{ marginTop: 10 }} className={styles.nav_text}>
+                Alumnos
+              </p>
+            </Col>
+          </Link>
+        </Col>
+
+        <Col
+          className={styles.responsive_col}
+          style={{ padding: 0 }}
+          lg={12}
+          md={12}
+          sm={12}
+          xs={12}
+        >
+          <Link href="/dashboard/calendar">
+            <Col
+              lg={7}
+              md={7}
+              sm={7}
+              xs={7}
+              className={styles.navigations_container}
+              title="Cuentas de usuario"
+              onClick={changeSelected.bind(this, "calendar")}
+            >
+               <div style={getSelected("calendar")} />
+              <img src="/icons/calendar.svg" style={{ width: '30%', display: 'inline' }} />
+              <p style={{ marginTop: 10 }} className={styles.nav_text}>
+                Calendario
+              </p>
+            </Col>
+          </Link>
+        </Col>
+
+        <Col
+          className={styles.responsive_col}
+          style={{ padding: 0 }}
+          lg={12}
+          md={12}
+          sm={12}
+          xs={12}
+        >
+          <Link href="/dashboard/data">
+            <Col
+              lg={7}
+              md={7}
+              sm={7}
+              xs={7}
+              className={styles.navigations_container}
+              title="Cuentas de usuario"
+              onClick={changeSelected.bind(this, "data")}
+            >
+               <div style={getSelected("data")} />
+              <img src="/icons/data_upload.svg" style={{ width: '30%', display: 'inline' }} />
+              <p style={{ marginTop: 10 }} className={styles.nav_text}>
+                Carga de datos
+              </p>
+            </Col>
+          </Link>
+        </Col>
+
+        <Col
+          className={styles.responsive_col}
+          style={{ padding: 0 }}
+          lg={12}
+          md={12}
+          sm={12}
+          xs={12}
+        >
+          <Link href="/dashboard/accounts">
+            <Col
+              lg={7}
+              md={7}
+              sm={7}
+              xs={7}
+              className={styles.navigations_container}
+              title="Cuentas de usuario"
+              onClick={changeSelected.bind(this, "accounts")}
+            >
+               <div style={getSelected("accounts")} />
+              <img src="/icons/accounts.svg" style={{ width: '30%', display: 'inline' }} />
               <p style={{ marginTop: 10 }} className={styles.nav_text}>
                 Cuentas
               </p>
             </Col>
           </Link>
         </Col>
-        
+
       </Row>
 
     </div>
-  ); 
+  );
 };
 
 export default AdminSideBar;
