@@ -2,20 +2,20 @@ import React from "react";
 
 // Import componentes
 import styles from "./index.module.css";
-import AdminDashboard from '../../src/components/Admin/dashboard/admin_dashboard'
-import UserDashboard from '../../src/components/Users/dashboard/user_dashboard'
+import AdminSidebar from './admin_sidebar/admin_sidebar'
+import UserSidebar from './user_sidebar/user_sidebar'
 
 // Import redux tools
 import { useSelector } from "react-redux";
 
-const Dashboard = () => {
+const SideBarContainer = () => {
   const user = useSelector((store) => store.user);
 
   return user.user.cargo === "admin" ? (
-    <AdminDashboard />
+    <AdminSidebar />
   ) : user.user.cargo === "user" ? (
-    <UserDashboard />
-  ) : <div></div>
+    <UserSidebar />
+  ) : <div className={styles.sidebar_container}></div>
 };
 
-export default Dashboard;
+export default SideBarContainer;
