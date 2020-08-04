@@ -1,6 +1,6 @@
 import { Modal, Button } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
-import FormUser from './FormUser';
+import FormUser from './form_user';
 
 
 const INITIAL_STATE_USER = {
@@ -11,19 +11,18 @@ const INITIAL_STATE_USER = {
 
 
 const ModalUser = (props) => {
-
     const [user, setUser] = useState(props.user);
 
-    const handleChange = (input, value) =>{
-        setUser({...user,[input]: value})
+    const handleChange = (input, value) => {
+        setUser({ ...user, [input]: value })
     }
-    
-    const handleClose = () =>{
+
+    const handleClose = () => {
         props.handleClose()
     }
 
-    const handleSubmit = () =>{
-        props.handleSubmit();
+    const handleSubmit = () => {
+        props.handleSubmit(user, props.type);
     }
 
     return (
@@ -33,15 +32,15 @@ const ModalUser = (props) => {
             </Modal.Header>
             <Modal.Body>
                 {
-                    props.type === "Editar" ? 
-                    <FormUser 
-                    user={props.user} 
-                    handleChange = {handleChange}
-                    />
-                    :
-                    <FormUser/>
+                    (props.type === "Editar") || (props.type === "Agregar") ?
+                        <FormUser
+                            user={props.user}
+                            handleChange={handleChange}
+                        />
+                        :
+                        <FormUser />
                 }
-                
+
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>
