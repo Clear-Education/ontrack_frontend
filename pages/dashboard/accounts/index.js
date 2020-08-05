@@ -1,49 +1,67 @@
 import MUIDataTable from "mui-datatables";
 import { useState, useEffect } from 'react';
 import ModalUser from '../../../src/components/Users/modal_user';
-import useSWR from 'swr';
+import useSWR, { trigger, mutate } from 'swr';
 import CrudUser from '../../../src/utils/crud_user';
 import { useDispatch, useSelector } from "react-redux";
 import { IconButton, Button } from '@material-ui/core';
 import Delete from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
+import AlertDialog from '../../../src/components/Users/confirmation_dialog';
+import Config from '../../../src/utils/Config';
 
 const Accounts = () => {
-  const url = "adsad";
-  const [dataUsers, setDataUsers] = useState(null);
+  const url = `${Config.api_url}/users/list`;
+  /* const [dataUsers, setDataUsers] = useState(null); */
   const [selectedUser, setSelectedUser] = useState({});
   const [type, setType] = useState(null);
   const [show, setShow] = useState(false);
+  const [showAlertDialog, setShowAlertDialog] = useState(false);
 
   const user = useSelector((store) => store.user);
-  useSWR(url, () =>
+
+  const { data } = useSWR(url, () =>
     CrudUser.getUsers(user.user.token).then((result) => {
-      setDataUsers(result.data.results);
-      return;
+      /* setDataUsers(result.data.results); */
+      return result.data.results;
     })
   );
+
+  console.log(data);
 
 
   const handleClose = () => {
     setShow(false);
+    setShowAlertDialog(false);
     setSelectedUser({});
   };
 
 
   const handleSubmit = (userData, type) => {
     if (type == "Editar") {
+      mutate(`${Config.api_url}/users/list`, [...data, userData]);
       CrudUser.editUser(userData, user.user.token);
-      console.log("editar");
+
     }
+
     if (type == "Agregar") {
-      CrudUser.addUser(userData, user.user.token)
-      console.log("agregar");
+      CrudUser.addUser(userData, user.user.token);
+
     }
+
+    handleClose();
 
   }
 
   const handleDelete = (data) => {
-    confirm("Seguro que desea eliminar al usuario : " + data.name + ` ${data.last_name}`);
+    setShowAlertDialog(true);
+    setSelectedUser(data);
+  }
+
+  const handleDeleteConfirmation = () => {
+    setShowAlertDialog(false);
+    CrudUser.deleteUser(selectedUser, user.user.token);
+
   }
 
   function handleShowModal(user, type) {
@@ -57,7 +75,8 @@ const Accounts = () => {
       name: "id",
       label: "Id",
       options: {
-        display: false
+        display: false,
+        filter: false
       },
 
     },
@@ -91,10 +110,10 @@ const Accounts = () => {
       options: {
         customBodyRenderLite: (dataIndex) => {
           return (<>
-            <IconButton onClick={() => handleShowModal(dataUsers[dataIndex], "Editar")}>
+            <IconButton onClick={() => handleShowModal(data[dataIndex], "Editar")}>
               <EditIcon />
             </IconButton>
-            <IconButton onClick={() => handleDelete(dataUsers[dataIndex])}>
+            <IconButton onClick={() => handleDelete(data[dataIndex])}>
               <Delete />
             </IconButton>
           </>)
@@ -108,7 +127,7 @@ const Accounts = () => {
     sort: true,
     selectableRowsHeader: false,
     selectableRows: "none",
-    filter: false,
+    filter: true,
     responsive: 'standard',
     textLabels: {
       body: {
@@ -128,13 +147,13 @@ const Accounts = () => {
     },
   };
 
-  if (!dataUsers) return <div>loading...</div>
+  if (!data) return <div>loading...</div>
 
   return (
     <div className="container pl-5">
       <MUIDataTable
         title={"Lista de Usuarios"}
-        data={dataUsers.map(user => {
+        data={data?.map(user => {
           return [
             user.id,
             user.name,
@@ -152,7 +171,7 @@ const Accounts = () => {
       <Button
         variant="outlined"
         color="primary"
-        className="d-block mt-5 ml-auto"
+        className="d-block mt-3 mb-3 ml-auto"
         onClick={() => handleShowModal(selectedUser, "Agregar")}>Crear Cuenta</Button>
 
       {show ?
@@ -161,6 +180,16 @@ const Accounts = () => {
           handleSubmit={handleSubmit}
           user={selectedUser}
           type={type}
+        />
+        : null
+      }
+
+      {showAlertDialog ?
+        <AlertDialog
+          open={showAlertDialog}
+          handleClose={handleClose}
+          user={selectedUser}
+          handleDeleteConfirmation={handleDeleteConfirmation}
         />
         : null
       }

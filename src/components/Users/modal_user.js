@@ -14,7 +14,8 @@ const ModalUser = (props) => {
     const [user, setUser] = useState(props.user);
 
     const handleChange = (input, value) => {
-        setUser({ ...user, [input]: value })
+        setUser({ ...user, [input]: value });
+        console.log(user);
     }
 
     const handleClose = () => {
@@ -36,20 +37,22 @@ const ModalUser = (props) => {
                         <FormUser
                             user={props.user}
                             handleChange={handleChange}
+                            handleClose={handleClose}
+                            handleSubmit={handleSubmit}
                         />
                         :
                         <FormUser />
                 }
 
             </Modal.Body>
-            <Modal.Footer>
+            {/*             <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>
                     Close
                     </Button>
                 <Button variant="primary" onClick={handleSubmit}>
                     Save Changes
                     </Button>
-            </Modal.Footer>
+            </Modal.Footer> */}
         </Modal>
     )
 }
