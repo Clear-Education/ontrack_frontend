@@ -9,6 +9,7 @@ import Delete from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import AlertDialog from '../../../src/components/Users/confirmation_dialog';
 import Config from '../../../src/utils/Config';
+import { Row, Col } from 'react-bootstrap';
 
 const Accounts = () => {
   const url = `${Config.api_url}/users/list`;
@@ -45,8 +46,8 @@ const Accounts = () => {
     }
 
     if (type == "Agregar") {
+      console.log(userData);
       CrudUser.addUser(userData, user.user.token);
-
     }
 
     handleClose();
@@ -150,50 +151,64 @@ const Accounts = () => {
   if (!data) return <div>loading...</div>
 
   return (
-    <div className="container pl-5">
-      <MUIDataTable
-        title={"Lista de Usuarios"}
-        data={data?.map(user => {
-          return [
-            user.id,
-            user.name,
-            user.last_name,
-            user.dni,
-            user.legajo,
-            user.cargo,
-            user.email
-          ]
-        })}
-        columns={columns}
-        options={options}
-      />
+    <>
+      <Row lg={12} md={12} sm={12} xs={12} style={{ margin: 0 }}>
+        <Col lg={12} md={12} sm={12} xs={12} style={{ padding: 0 }}>
+          <h2>Cuentas de Usuario</h2>
+        </Col>
+      </Row>
+      <Row lg={12} md={12} sm={12} xs={12} style={{ margin: '5%' }}>
+        <Col
+          md={12}
+          sm={12}
+          xs={12}
+        >
+          <MUIDataTable
+            title={"Lista de Usuarios"}
+            data={data?.map(user => {
+              return [
+                user.id,
+                user.name,
+                user.last_name,
+                user.dni,
+                user.legajo,
+                user.cargo,
+                user.email
+              ]
+            })}
+            columns={columns}
+            options={options}
+          />
+        </Col>
+        <Col>
+          <button
+            className="d-block mt-3 mb-3 ml-auto ontrack_btn_add"
+            onClick={() => handleShowModal(selectedUser, "Agregar")}>Crear Cuenta</button>
+        </Col>
+      </Row>
 
-      <Button
-        variant="outlined"
-        color="primary"
-        className="d-block mt-3 mb-3 ml-auto"
-        onClick={() => handleShowModal(selectedUser, "Agregar")}>Crear Cuenta</Button>
-
-      {show ?
-        <ModalUser
-          handleClose={handleClose}
-          handleSubmit={handleSubmit}
-          user={selectedUser}
-          type={type}
-        />
-        : null
+      {
+        show ?
+          <ModalUser
+            handleClose={handleClose}
+            handleSubmit={handleSubmit}
+            user={selectedUser}
+            type={type}
+          />
+          : null
       }
 
-      {showAlertDialog ?
-        <AlertDialog
-          open={showAlertDialog}
-          handleClose={handleClose}
-          user={selectedUser}
-          handleDeleteConfirmation={handleDeleteConfirmation}
-        />
-        : null
+      {
+        showAlertDialog ?
+          <AlertDialog
+            open={showAlertDialog}
+            handleClose={handleClose}
+            user={selectedUser}
+            handleDeleteConfirmation={handleDeleteConfirmation}
+          />
+          : null
       }
-    </div>
+    </>
   )
 
 }

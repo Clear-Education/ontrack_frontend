@@ -1,6 +1,16 @@
-import { Modal, Button } from 'react-bootstrap';
+/* import { Modal, Button } from 'react-bootstrap'; */
 import { useState, useEffect } from 'react';
 import FormUser from './form_user';
+
+// DIALOG COMPONENT
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Slide from '@material-ui/core/Slide';
 
 
 const INITIAL_STATE_USER = {
@@ -9,17 +19,20 @@ const INITIAL_STATE_USER = {
     email: ''
 }
 
+const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" {...props} />;
+});
+
 
 const ModalUser = (props) => {
     const [user, setUser] = useState(props.user);
 
     const handleChange = (input, value) => {
         setUser({ ...user, [input]: value });
-        console.log(user);
     }
 
     const handleClose = () => {
-        props.handleClose()
+        props.handleClose();
     }
 
     const handleSubmit = () => {
@@ -27,34 +40,185 @@ const ModalUser = (props) => {
     }
 
     return (
-        <Modal show={true} onHide={handleClose}>
-            <Modal.Header closeButton>
-                <Modal.Title>{props.type} Usuario</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                {
-                    (props.type === "Editar") || (props.type === "Agregar") ?
-                        <FormUser
-                            user={props.user}
-                            handleChange={handleChange}
-                            handleClose={handleClose}
-                            handleSubmit={handleSubmit}
-                        />
-                        :
-                        <FormUser />
-                }
+        <Dialog
+            open={true}
+            onClose={handleClose}
+            aria-labelledby="form-dialog-title"
+            TransitionComponent={Transition}
+        >
+            <DialogTitle id="form-dialog-title">{props.type} Usuario</DialogTitle>
+            <DialogContent>
+                <DialogContentText>
+                    {`Ingrese la información solicitada para ${props.type} Usuarios de tu Institución`}
+                </DialogContentText>
+                <TextField
+                    autoFocus
+                    margin="dense"
+                    id="name"
+                    label="Nombre"
+                    type="text"
+                    defaultValue={user.name}
+                    onChange={(event) => handleChange("name", event.target.value)}
+                    fullWidth
+                />
+                <TextField
+                    margin="dense"
+                    id="apellido"
+                    label="Apellido"
+                    type="text"
+                    defaultValue={user.last_name}
+                    onChange={(event) => handleChange("last_name", event.target.value)}
+                    fullWidth
+                />
+                <TextField
+                    margin="dense"
+                    id="email"
+                    label="Correo Electrónico"
+                    type="email"
+                    defaultValue={user.email}
+                    onChange={(event) => handleChange("email", event.target.value)}
+                    fullWidth
+                />
+                <TextField
+                    margin="dense"
+                    id="dni"
+                    label="DNI"
+                    type="number"
+                    defaultValue={user.dni}
+                    onChange={(event) => handleChange("dni", event.target.value)}
+                    fullWidth
+                />
+                <TextField
+                    margin="dense"
+                    id="legajo"
+                    label="Legajo"
+                    type="number"
+                    defaultValue={user.legajo}
+                    onChange={(event) => handleChange("legajo", event.target.value)}
+                    fullWidth
+                />
+                <TextField
+                    margin="dense"
+                    id="cargo"
+                    label="Cargo"
+                    type="text"
+                    defaultValue={user.cargo}
+                    onChange={(event) => handleChange("cargo", event.target.value)}
+                    fullWidth
+                />
+                <TextField
+                    margin="dense"
+                    id="password1"
+                    label="Contraseña"
+                    type="password"
+                    defaultValue={user.password}
+                    onChange={(event) => handleChange("password", event.target.value)}
+                    fullWidth
+                />
+                <TextField
+                    margin="dense"
+                    id="password2"
+                    label="Repetir Contraseña"
+                    type="password"
+                    defaultValue={user.password2}
+                    onChange={(event) => handleChange("password2", event.target.value)}
+                    fullWidth
+                />
+                <TextField
+                    margin="dense"
+                    id="tipo_cuenta"
+                    label="Tipo de Cuenta"
+                    type="number"
+                    defaultValue={user.groups?.id}
+                    onChange={(event) => handleChange("groups", event.target.value)}
+                    fullWidth
+                />
+                <TextField
+                    margin="dense"
+                    id="telefono"
+                    label="Teléfono"
+                    type="number"
+                    defaultValue={user.phone}
+                    onChange={(event) => handleChange("phone", event.target.value)}
+                    fullWidth
+                />
+                <TextField
+                    margin="dense"
+                    id="fecha_nacimiento"
+                    label="Fecha de Nacimiento"
+                    type="date"
+                    defaultValue={user.date_of_birth}
+                    onChange={(event) => handleChange("date_of_birth", event.target.value)}
+                    fullWidth
+                />
+                <TextField
+                    margin="dense"
+                    id="direccion"
+                    label="Dirección"
+                    type="text"
+                    defaultValue={user.direccion}
+                    onChange={(event) => handleChange("direccion", event.target.value)}
+                    fullWidth
+                />
+                <TextField
+                    margin="dense"
+                    id="localidad"
+                    label="Localidad"
+                    type="text"
+                    defaultValue={user.localidad}
+                    onChange={(event) => handleChange("localidad", event.target.value)}
+                    fullWidth
+                />
+                <TextField
+                    margin="dense"
+                    id="provincia"
+                    label="Provincia"
+                    type="text"
+                    defaultValue={user.provincia}
+                    onChange={(event) => handleChange("provincia", event.target.value)}
+                    fullWidth
+                />
 
-            </Modal.Body>
-            {/*             <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
-                    Close
-                    </Button>
-                <Button variant="primary" onClick={handleSubmit}>
-                    Save Changes
-                    </Button>
-            </Modal.Footer> */}
-        </Modal>
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={handleClose} color="primary">
+                    Cancelar
+          </Button>
+                <Button onClick={handleSubmit} color="primary">
+                    Guardar
+          </Button>
+            </DialogActions>
+        </Dialog>
+
     )
 }
 
 export default ModalUser;
+
+{/* <Modal show={true} onHide={handleClose}>
+    <Modal.Header closeButton>
+        <Modal.Title>{props.type} Usuario</Modal.Title>
+    </Modal.Header>
+    <Modal.Body>
+        {
+            (props.type === "Editar") || (props.type === "Agregar") ?
+                <FormUser
+                    user={props.user}
+                    handleChange={handleChange}
+                    handleClose={handleClose}
+                    handleSubmit={handleSubmit}
+                />
+                :
+                <FormUser />
+        }
+
+    </Modal.Body>
+    <Modal.Footer>
+        <Button variant="secondary" onClick={handleClose}>
+            Close
+                    </Button>
+        <Button variant="primary" onClick={handleSubmit}>
+            Save Changes
+                    </Button>
+    </Modal.Footer>
+</Modal> */}
