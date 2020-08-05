@@ -23,7 +23,7 @@ const App = ({ Component, pageProps, router }) => {
 
   //COMENTAR ESTE CÓDIGO HASTA TENER EL LOGIN LISTO
 
-  
+
 
   return (
     <div>
@@ -44,17 +44,17 @@ const App = ({ Component, pageProps, router }) => {
       <Alert timeout={3000} stack={true} />
       {router.route.match(/(dashboard)/i) ? (
         <Row lg={12} md={12} sm={12} xs={12}>
-        <div>
-           <SideBar />
-        </div>
-        <Col 
-          id="dashboard_container"
-          className="center"
-          lg={11}
-          md={10}
-          sm={12}
-          xs={12}
-        >
+          <div>
+            <SideBar />
+          </div>
+          <Col
+            id="dashboard_container"
+            className="center"
+            lg={11}
+            md={10}
+            sm={12}
+            xs={12}
+          >
             <Header />
             <Row lg={12} md={12} sm={12} xs={12}>
               <Col
@@ -68,8 +68,8 @@ const App = ({ Component, pageProps, router }) => {
                 <Component {...pageProps} key={router.route} />
               </Col>
             </Row>
-        </Col>
-      </Row>
+          </Col>
+        </Row>
       ) :
         <Component {...pageProps} />
       }

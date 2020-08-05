@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import FormUser from './form_user';
 
 // DIALOG COMPONENT
-import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -11,6 +10,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
+
+
 
 
 const INITIAL_STATE_USER = {
@@ -46,10 +47,10 @@ const ModalUser = (props) => {
             aria-labelledby="form-dialog-title"
             TransitionComponent={Transition}
         >
-            <DialogTitle id="form-dialog-title">{props.type} Usuario</DialogTitle>
+            <DialogTitle className="center" id="form-dialog-title">{props.type} Usuario</DialogTitle>
             <DialogContent>
                 <DialogContentText>
-                    {`Ingrese la información solicitada para ${props.type} Usuarios de tu Institución`}
+                    {`Ingrese la información solicitada para ${props.type} Usuarios de su Institución`}
                 </DialogContentText>
                 <TextField
                     autoFocus
@@ -180,13 +181,13 @@ const ModalUser = (props) => {
                 />
 
             </DialogContent>
-            <DialogActions>
-                <Button onClick={handleClose} color="primary">
+            <DialogActions className="d-flex justify-content-end">
+                <button className=" ontrack_btn_cancel" onClick={handleClose} >
                     Cancelar
-          </Button>
-                <Button onClick={handleSubmit} color="primary">
+                </button>
+                <button className=" ontrack_btn_add" onClick={handleSubmit} >
                     Guardar
-          </Button>
+                </button>
             </DialogActions>
         </Dialog>
 

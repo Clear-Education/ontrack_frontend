@@ -1,19 +1,32 @@
+/* MATERIAL UI */
 import MUIDataTable from "mui-datatables";
-import { useState, useEffect } from 'react';
-import ModalUser from '../../../src/components/Users/modal_user';
-import useSWR, { trigger, mutate } from 'swr';
-import CrudUser from '../../../src/utils/crud_user';
-import { useDispatch, useSelector } from "react-redux";
-import { IconButton, Button } from '@material-ui/core';
+import { IconButton } from '@material-ui/core';
 import Delete from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
+
+/* HOOKS */
+import { useState, useEffect } from 'react';
+import { useSelector } from "react-redux";
+
+/* COMPONENTS */
+import ModalUser from '../../../src/components/Users/modal_user';
 import AlertDialog from '../../../src/components/Users/confirmation_dialog';
+import BackgroundLoader from '../../../src/components/commons/background_loader/background_loader';
+import TitlePage from '../../../src/components/commons/title_page/title_page';
+
 import Config from '../../../src/utils/Config';
+import CrudUser from '../../../src/utils/crud_user';
+
+import useSWR, { trigger, mutate } from 'swr';
 import { Row, Col } from 'react-bootstrap';
+import { motion } from "framer-motion";
+
 
 const Accounts = () => {
   const url = `${Config.api_url}/users/list`;
+
   /* const [dataUsers, setDataUsers] = useState(null); */
+  const [isLoading, setIsLoading] = useState(false)
   const [selectedUser, setSelectedUser] = useState({});
   const [type, setType] = useState(null);
   const [show, setShow] = useState(false);
@@ -21,11 +34,17 @@ const Accounts = () => {
 
   const user = useSelector((store) => store.user);
 
-  const { data } = useSWR(url, () =>
-    CrudUser.getUsers(user.user.token).then((result) => {
+  const { data } = useSWR(url, () => {
+    setIsLoading(true);
+    return CrudUser.getUsers(user.user.token).then((result) => {
       /* setDataUsers(result.data.results); */
-      return result.data.results;
+      if (result.status == 200) {
+        setIsLoading(false);
+        return result.data.results;
+      }
+
     })
+  }
   );
 
   console.log(data);
@@ -148,66 +167,73 @@ const Accounts = () => {
     },
   };
 
-  if (!data) return <div>loading...</div>
+  /*  if (!data) return <div>loading...</div> */
 
   return (
     <>
-      <Row lg={12} md={12} sm={12} xs={12} style={{ margin: 0 }}>
-        <Col lg={12} md={12} sm={12} xs={12} style={{ padding: 0 }}>
-          <h2>Cuentas de Usuario</h2>
-        </Col>
-      </Row>
-      <Row lg={12} md={12} sm={12} xs={12} style={{ margin: '5%' }}>
-        <Col
-          md={12}
-          sm={12}
-          xs={12}
-        >
-          <MUIDataTable
-            title={"Lista de Usuarios"}
-            data={data?.map(user => {
-              return [
-                user.id,
-                user.name,
-                user.last_name,
-                user.dni,
-                user.legajo,
-                user.cargo,
-                user.email
-              ]
-            })}
-            columns={columns}
-            options={options}
-          />
-        </Col>
-        <Col>
-          <button
-            className="d-block mt-3 mb-3 ml-auto ontrack_btn_add"
-            onClick={() => handleShowModal(selectedUser, "Agregar")}>Crear Cuenta</button>
-        </Col>
-      </Row>
+      {isLoading && <BackgroundLoader show={isLoading} />}
+      <motion.div
+        initial={{ scale: 0.95, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ duration: 0.3 }}
+      >
+        <Row lg={12} md={12} sm={12} xs={12} style={{ margin: 0 }}>
+          <Col lg={12} md={12} sm={12} xs={12} style={{ padding: 0 }}>
+            <TitlePage title="Cuentas de Usuario"></TitlePage>
+          </Col>
+        </Row>
+        <Row lg={12} md={12} sm={12} xs={12} style={{ margin: '5%' }}>
+          <Col
+            md={12}
+            sm={12}
+            xs={12}
+          >
+            <MUIDataTable
+              title={"Lista de Usuarios"}
+              data={data?.map(user => {
+                return [
+                  user.id,
+                  user.name,
+                  user.last_name,
+                  user.dni,
+                  user.legajo,
+                  user.cargo,
+                  user.email
+                ]
+              })}
+              columns={columns}
+              options={options}
+            />
+          </Col>
+          <Col>
+            <button
+              className="d-block mt-3 mb-3 ml-auto ontrack_btn_add"
+              onClick={() => handleShowModal(selectedUser, "Agregar")}>Crear Cuenta</button>
+          </Col>
+        </Row>
 
-      {
-        show ?
-          <ModalUser
-            handleClose={handleClose}
-            handleSubmit={handleSubmit}
-            user={selectedUser}
-            type={type}
-          />
-          : null
-      }
+        {
+          show ?
+            <ModalUser
+              handleClose={handleClose}
+              handleSubmit={handleSubmit}
+              user={selectedUser}
+              type={type}
+            />
+            : null
+        }
 
-      {
-        showAlertDialog ?
-          <AlertDialog
-            open={showAlertDialog}
-            handleClose={handleClose}
-            user={selectedUser}
-            handleDeleteConfirmation={handleDeleteConfirmation}
-          />
-          : null
-      }
+        {
+          showAlertDialog ?
+            <AlertDialog
+              open={showAlertDialog}
+              handleClose={handleClose}
+              user={selectedUser}
+              handleDeleteConfirmation={handleDeleteConfirmation}
+            />
+            : null
+        }
+      </motion.div>
     </>
   )
 

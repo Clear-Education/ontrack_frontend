@@ -114,7 +114,15 @@
     transition: all .2s;
     border: none;
   }
-  .ontrack_btn_add:active{
+  .ontrack_btn_cancel{
+    padding: 20px;
+    background-color: var(--gray);
+    border-radius: 10px;
+    color: white;
+    transition: all .2s;
+    border: none;
+  }
+  .ontrack_btn_add:active, .ontrack_btn_cancel:active{
     transform: scale(0.97);
   }
   @media (max-width: 959px) {
@@ -156,4 +164,21 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
-  
+
+
+.MuiDialogTitle-root {
+  background-color: var(--main-color-dark);
+  color: var(--white);
+}
+
+.MuiInput-underline:after {
+  border-bottom: 2px solid var(--main-color-light) !important;
+}
+
+.MuiFormLabel-root.Mui-focused {
+  color: var(--black) !important;
+}
+
+.MUIDataTableToolbar-left-15 {
+  text-align: left;
+}
