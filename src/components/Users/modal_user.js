@@ -10,6 +10,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
+import { Select, MenuItem, InputLabel } from '@material-ui/core';
 
 
 
@@ -125,15 +126,22 @@ const ModalUser = (props) => {
                     onChange={(event) => handleChange("password2", event.target.value)}
                     fullWidth
                 />
-                <TextField
+                <InputLabel className="mt-3" id="demo-simple-select-label">Cuenta</InputLabel>
+                <Select
                     margin="dense"
                     id="tipo_cuenta"
                     label="Tipo de Cuenta"
-                    type="number"
-                    defaultValue={user.groups?.id}
+                    defaultValue={props.groups.name || ''}
                     onChange={(event) => handleChange("groups", event.target.value)}
                     fullWidth
-                />
+                >
+                    {props.groups &&
+                        props.groups?.map((group) => {
+                            return (
+                                <MenuItem value={group.id} key={group.id}>{group.name}</MenuItem>
+                            );
+                        })}
+                </Select>
                 <TextField
                     margin="dense"
                     id="telefono"

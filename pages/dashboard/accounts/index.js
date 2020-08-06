@@ -31,6 +31,7 @@ const Accounts = () => {
   const [type, setType] = useState(null);
   const [show, setShow] = useState(false);
   const [showAlertDialog, setShowAlertDialog] = useState(false);
+  const [groups, setGroups] = useState({});
 
   const user = useSelector((store) => store.user);
 
@@ -47,7 +48,11 @@ const Accounts = () => {
   }
   );
 
-  console.log(data);
+  useSWR(`${Config.api_url}/users/groups/list`, () => {
+    CrudUser.getGroups(user.user.token).then((result) => {
+      setGroups(result.data);
+    });
+  })
 
 
   const handleClose = () => {
@@ -59,19 +64,24 @@ const Accounts = () => {
 
   const handleSubmit = (userData, type) => {
     if (type == "Editar") {
-      mutate(`${Config.api_url}/users/list`, [...data, userData]);
-      CrudUser.editUser(userData, user.user.token);
+
+      CrudUser.editUser(userData, user.user.token).then((result) => {
+        mutate(`${Config.api_url}/users/list`);
+      });
 
     }
 
     if (type == "Agregar") {
       console.log(userData);
-      CrudUser.addUser(userData, user.user.token);
+      CrudUser.addUser(userData, user.user.token).then(() => {
+        mutate(`${Config.api_url}/users/list`);
+      });
     }
 
     handleClose();
 
   }
+
 
   const handleDelete = (data) => {
     setShowAlertDialog(true);
@@ -80,7 +90,9 @@ const Accounts = () => {
 
   const handleDeleteConfirmation = () => {
     setShowAlertDialog(false);
-    CrudUser.deleteUser(selectedUser, user.user.token);
+    CrudUser.deleteUser(selectedUser, user.user.token).then(() => {
+      mutate(`${Config.api_url}/users/list`);
+    });
 
   }
 
@@ -219,6 +231,7 @@ const Accounts = () => {
               handleSubmit={handleSubmit}
               user={selectedUser}
               type={type}
+              groups={groups}
             />
             : null
         }

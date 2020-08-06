@@ -76,6 +76,19 @@ const CrudUser = {
                 console.log(result);
                 return result;
             })
+    },
+
+    async getGroups(auth_token) {
+        return axios
+            .get(`${Config.api_url}/users/groups/list/`, {
+                headers: {
+                    Authorization: `Token ${auth_token}`,
+                },
+            })
+            .then(result => {
+                return result;
+            })
+            .catch(error => error);
     }
 }
 

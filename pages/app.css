@@ -165,7 +165,7 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
-
+/*MODALS*/
 .MuiDialogTitle-root {
   background-color: var(--main-color-dark);
   color: var(--white);
