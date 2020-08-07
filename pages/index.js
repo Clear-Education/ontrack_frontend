@@ -296,7 +296,7 @@ const Login = () => {
       </div>
     </Row>
   ) : (
-      <div></div>
+      <></>
     );
 };
 

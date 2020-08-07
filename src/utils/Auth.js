@@ -4,7 +4,7 @@ import Config from "./config";
 import { loadState } from "../../redux/immutableState";
 import errorHandler from "./error_handler";
 
-export function checkAuth() {
+export function validateLoggedInUser() {
   const state = loadState();
   return state;
 }
