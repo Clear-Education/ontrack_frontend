@@ -3,9 +3,9 @@ import axios from 'axios';
 import errorHandler from "./error_handler";
 
 
-export async function getStudents(token){
+export async function getInstitutions(token){
     return await axios
-    .get(`${config.api_url}/alumnos/list`,{
+    .get(`${config.api_url}/institucion/list/`,{
         headers:{
             Authorization: `Token ${token}`
         }
@@ -21,6 +21,3 @@ export async function getStudents(token){
       return errorHandler(error);
     });
 }
-
-
- 

@@ -14,12 +14,10 @@ import { useEffect } from 'react';
 import "react-s-alert/dist/s-alert-css-effects/stackslide.css";
 import SideBar from '../src/components/commons/sidebar';
 import { Row, Col } from 'react-bootstrap';
-import { validateLoggedInUser } from '../src/utils/Auth';
-import NProgress from "nprogress";
-import { Router } from 'next/router';
-import "./progress_bar.css";
-
-
+import { checkAuth } from '../src/utils/Auth';
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
+import DateFnsUtils from '@date-io/date-fns';
+import esLocale from "date-fns/locale/es";
 //APLICACIÓN
 
 // Animacion de cambio de pagina
@@ -70,38 +68,44 @@ const App = ({ Component, pageProps, router }) => {
         />
       </Head>
       <Alert timeout={3000} stack={true} />
-      {router.route.match(/(dashboard)/i) ? (
-        <Row lg={12} md={12} sm={12} xs={12}>
-          <div>
-            <SideBar />
-          </div>
-          <Col
-            id="dashboard_container"
-            className="center"
-            lg={11}
-            md={10}
-            sm={12}
-            xs={12}
-          >
-            <Header />
-            <Row lg={12} md={12} sm={12} xs={12}>
-              <Col
-                id="component_container"
-                className="center"
-                lg={12}
-                md={12}
-                sm={12}
-                xs={12}
-              >
-                <Component {...pageProps} key={router.route} />
-              </Col>
-            </Row>
-          </Col>
-        </Row>
-      ) :
-        <Component {...pageProps} />
-      }
+      <MuiPickersUtilsProvider utils={DateFnsUtils} locale={esLocale}>
+        {router.route.match(/(dashboard)/i) ? (
 
+          <Row lg={12} md={12} sm={12} xs={12}>
+            <div>
+              <SideBar />
+            </div>
+            <Col
+              id="dashboard_container"
+              className="center"
+              lg={11}
+              md={10}
+              sm={12}
+              xs={12}
+            >
+              <Header />
+              <Row lg={12} md={12} sm={12} xs={12}>
+                <Col
+                  id="component_container"
+                  className="center"
+                  lg={12}
+                  md={12}
+                  sm={12}
+                  xs={12}
+                >
+
+                  <Component {...pageProps} key={router.route} />
+
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+        ) :
+
+          <Component {...pageProps} />
+
+        }
+      </MuiPickersUtilsProvider>
     </>
 
   )
