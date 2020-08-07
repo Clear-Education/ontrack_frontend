@@ -15,6 +15,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const ModalAdd = (props) => {
 
     const [show, setShow] = useState(true)
+    
     const handleClose = () => {
         setShow(false);
         props.handleClose(false)

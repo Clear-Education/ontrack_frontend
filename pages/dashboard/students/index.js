@@ -45,6 +45,11 @@ const Students = (props) => {
     setAddStudentModal(value)
   }
 
+  const handleSubmitNewStudent = (e,data) =>{
+    e.preventDefault();
+    console.log('enviando')
+  }
+
   return (
     <>
       {isLoading && <BackgroundLoader show={isLoading} />}
@@ -78,10 +83,13 @@ const Students = (props) => {
           </Col>
         </Row>
         {addStudentModal && 
-        <ModalAdd 
+        <ModalAdd  
         title="Agregar Alumnos" 
         handleClose = {handleAddStudentModal}
-        formComponent={<AddStudentForm />} 
+        formComponent={
+          <AddStudentForm 
+            handleSubmitNewStudent={handleSubmitNewStudent}/>
+          } 
         />
         }
       </motion.div>
