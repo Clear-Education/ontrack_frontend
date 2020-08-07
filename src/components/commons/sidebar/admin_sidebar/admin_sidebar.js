@@ -22,7 +22,6 @@ const AdminSideBar = () => {
   }, [router.route]);
 
   const getSelected = (element) => {
-    console.log(element)
     if (!fullScreen) {
       if (selected === element) {
         return {
@@ -50,7 +49,7 @@ const AdminSideBar = () => {
       <Row className="center" lg={12} md={12} sm={12} xs={12}>
         <Col
           className={styles.responsive_col}
-          style={{ padding: 0 }}
+          style={{ padding: '0px' }}
           lg={12}
           md={12}
           sm={12}
@@ -68,7 +67,7 @@ const AdminSideBar = () => {
             >
               <div style={getSelected("dashboard")} />
               <img src="/icons/curricula.svg" style={{ width: '30%', display: 'inline' }} />
-              <p style={{ marginTop: 10 }} className={styles.nav_text}>
+              <p style={{ marginTop: '10px' }} className={styles.nav_text}>
                 Estructura Curricular
               </p>
 
@@ -78,7 +77,7 @@ const AdminSideBar = () => {
 
         <Col
           className={styles.responsive_col}
-          style={{ padding: 0 }}
+          style={{ padding: '0px' }}
           lg={12}
           md={12}
           sm={12}
@@ -96,7 +95,7 @@ const AdminSideBar = () => {
             >
               <div style={getSelected("students")} />
               <img src="/icons/students.svg" style={{ width: '30%', display: 'inline' }} />
-              <p style={{ marginTop: 10 }} className={styles.nav_text}>
+              <p style={{ marginTop: '10px' }} className={styles.nav_text}>
                 Alumnos
               </p>
             </Col>
@@ -105,7 +104,7 @@ const AdminSideBar = () => {
 
         <Col
           className={styles.responsive_col}
-          style={{ padding: 0 }}
+          style={{ padding: '0px' }}
           lg={12}
           md={12}
           sm={12}
@@ -150,7 +149,7 @@ const AdminSideBar = () => {
             >
                <div style={getSelected("data")} />
               <img src="/icons/data_upload.svg" style={{ width: '30%', display: 'inline' }} />
-              <p style={{ marginTop: 10 }} className={styles.nav_text}>
+              <p style={{ marginTop: '10px' }} className={styles.nav_text}>
                 Carga de datos
               </p>
             </Col>
@@ -159,7 +158,7 @@ const AdminSideBar = () => {
 
         <Col
           className={styles.responsive_col}
-          style={{ padding: 0 }}
+          style={{ padding: '0px' }}
           lg={12}
           md={12}
           sm={12}

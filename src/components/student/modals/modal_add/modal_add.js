@@ -1,10 +1,17 @@
 import { useState } from "react";
 import styles from './modal_add.module.css'
+import { Row, Col } from "react-bootstrap";
 
-const { Dialog, DialogTitle, DialogContent, Slide } = require("@material-ui/core")
-const SlideTransition = (props) => {
-    return <Slide {...props} direction="up" />;
-  };
+/* Components imports */
+
+import AddStudentForm from '../../forms/add_student_form'
+
+
+const { Dialog, DialogTitle, DialogContent, Slide, TextField, FormControlLabel } = require("@material-ui/core")
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+  });
 
 const ModalAddStudent = (props) => {
 
@@ -18,23 +25,19 @@ const ModalAddStudent = (props) => {
             open={show}
             onClose={handleClose}
             fullScreen={true}
-            className="center"
-            TransitionComponent={SlideTransition}
+            className="responsive_modal center"
+            TransitionComponent={Transition}
         >
             <img
                 onClick={handleClose}
                 src="/icons/close.svg"
                 className={styles.close_modal}
             />
-            <DialogTitle>Agregar Alumnos</DialogTitle>
+            <DialogTitle style={{backgroundColor:'var(--main-color-dark)', color:'white'}}>Agregar Alumnos</DialogTitle>
             <DialogContent>
-                <button>
-                    Alumno particular
-            </button>
-                <button>
-                    Alumnos por CSV
-            </button>
-            
+                <div>
+                    <AddStudentForm />
+                </div>
             </DialogContent>
         </Dialog>
     )

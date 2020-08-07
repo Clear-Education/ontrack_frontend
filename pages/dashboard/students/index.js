@@ -7,7 +7,7 @@ import MUIDataTable from 'mui-datatables';
 import { getStudents } from '../../../src/utils/crud_students';
 import BackgroundLoader from '../../../src/components/commons/background_loader/background_loader';
 import Alert from "react-s-alert";
-import Config from '../../../src/utils/Config';
+import config from '../../../src/utils/config';
 import { motion } from "framer-motion";
 import styles from './index.module.css'
 import studen_table_config from '../../../src/utils/table_options/student_table';
@@ -22,7 +22,7 @@ const Students = (props) => {
   const options = studen_table_config.options;
   const columns = studen_table_config.columns;
 
-  const url = `${Config.api_url}/alumnos/list`;
+  const url = `${config.api_url}/alumnos/list`;
   useSWR(url, () => {
     setIsLoading(true);
     getStudents(user.user.token).then((result) => {
@@ -71,7 +71,7 @@ const Students = (props) => {
             />
           </Col>
           <Col className={styles.add_btn_container}>
-            <button className="ontrack_btn_add" onClick={()=>handleAddStudentModal(true)}>
+            <button className="ontrack_btn add_btn" onClick={()=>handleAddStudentModal(true)}>
               Agregar Alumnos
             </button> 
           </Col>

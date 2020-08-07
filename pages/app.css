@@ -1,146 +1,182 @@
 :root {
-    --main-color-dark: #0099CB;
-    --main-color-light: #10BDDC;
-    --black: #303030;
-    --white: #f7f7f7;
-    --gray: #868686;
-  }
+  --main-color-dark: #0099cb;
+  --main-color-light: #10bddc;
+  --black: #303030;
+  --white: #f7f7f7;
+  --gray: #868686;
+  --orange: #ff8d00;
+}
 
-  body {
-    margin: 0;
-    font-family: 'Open Sans', sans-serif;
-  }
+body {
+  margin: 0;
+  font-family: "Open Sans", sans-serif;
+}
 
-  .center {
-    text-align: center;
-  }
-  .left {
-    text-align: left;
-  }
-  .right {
-    text-align: right;
-  }
+.center {
+  text-align: center;
+}
+.left {
+  text-align: left;
+}
+.right {
+  text-align: right;
+}
 
-  #dashboard_container {
-    margin-left: auto;
+#dashboard_container {
+  margin-left: auto;
+}
+#component_container {
+  color: #6f6f6f;
+  margin-top: 70px;
+  margin-right: auto;
+}
+
+/* Modales responsive */
+
+.responsive_modal {
+  top: auto !important;
+}
+
+.responsive_modal .MuiDialog-paperFullScreen {
+  max-height: 95vh !important;
+  min-height: 800px;
+  border-radius: 20px 20px 0 0 !important;
+  background-color: #f1f1f1;
+
+}
+
+/* Inputs form login y reset pass */
+.MuiFormControl-root{
+  width: 100% !important;
+}
+#form_login .MuiFormControl-root,
+#form_reset .MuiFormControl-root {
+  width: 100% !important;
+  margin-top: 20px;
+}
+#form_login .MuiFormLabel-root,
+#form_reset .MuiFormLabel-root {
+  font-family: "Raleway" !important;
+}
+#form_login .MuiInputBase-root,
+#form_reset .MuiInputBase-root {
+  font-family: "Raleway" !important;
+}
+#form_login .MuiOutlinedInput-root.Mui-focused.Mui-focused fieldset,
+#form_reset .MuiOutlinedInput-root.Mui-focused.Mui-focused fieldset {
+  border-color: #000000;
+}
+#form_login .MuiFormLabel-root.Mui-focused,
+#form_reset .MuiFormLabel-root.Mui-focused {
+  color: #000000 !important;
+}
+#form_login .Mui-error:after,
+#form_reset .Mui-error:after {
+  border: 2px solid rgb(182, 60, 47) !important;
+}
+#form_login .MuiOutlinedInput-root.Mui-error.Mui-error fieldset,
+#form_reset .MuiOutlinedInput-root.Mui-error.Mui-error fieldset {
+  border-color: rgb(182, 60, 47);
+}
+#form_login .MuiFormLabel-root.Mui-error,
+#form_reset .MuiFormLabel-root.Mui-error {
+  color: rgb(182, 60, 47) !important;
+}
+#form_login .helper-text,
+#form_reset .helper-text {
+  font-family: "Raleway" !important;
+  color: rgb(182, 60, 47);
+  font-size: 12px;
+  margin-top: 5px;
+  margin-left: 5px !important;
+}
+/* Circular progress */
+.MuiCircularProgress-colorPrimary {
+  color: #ffffff !important;
+}
+.MuiCircularProgress-colorSecondary {
+  color: #000000 !important;
+}
+/* DATE PICKERS */
+.MuiButtonBase-root:focus {
+  outline: none;
+}
+.MuiOutlinedInput-inputAdornedEnd {
+  color: grey !important;
+}
+.MuiPickersToolbar-toolbar {
+  background-color: var(--main-color-dark) !important;
+}
+.MuiPickersDay-daySelected {
+  background-color: black !important;
+}
+.MuiPickersDay-current:default {
+  color: white !important;
+}
+
+.MuiPickersDay-current:not(:focus) {
+  color: var(--main-color-dark) !important;
+}
+.MuiButton-label {
+  color: black;
+}
+
+button:focus {
+  outline: none;
+}
+
+.ontrack_btn {
+  padding: 20px;
+  border-radius: 10px;
+  color: white;
+  transition: all 0.2s;
+  border: none;
+}
+
+.ontrack_btn:active {
+  transform: scale(0.97);
+}
+
+.ontrack_btn_modal{
+  width: 30% !important;
+}
+
+.add_btn{
+  background-color: var(--main-color-dark);
+}
+
+.csv_btn{
+  background-color: var(--orange);
+}
+@media (max-width: 600px){
+  .ontrack_btn_modal{
+    width: 90% !important;
   }
+  
+}
+@media (max-width: 959px) {
+  /* Modales responsive */
+  .responsive_dashboard_modal {
+    top: 75px !important;
+  }
+  .responsive_dashboard_modal .MuiBackdrop-root {
+    background-color: rgba(0, 0, 0, 0.5) !important;
+  }
+  .responsive_dashboard_modal .MuiDialog-paperFullScreen {
+    border-radius: 30px 30px 0 0 !important;
+  }
+  .MuiDialogActions-root {
+    display: block !important;
+    text-align: center !important;
+  }
+}
+@media (max-width: 767px) {
   #component_container {
-    color: #6f6f6f;
     margin-top: 70px;
-    margin-right: auto;
   }
-  /* Inputs form login y reset pass */
-  #form_login .MuiFormControl-root,
-  #form_reset .MuiFormControl-root {
-    width: 100% !important;
-    margin-top: 20px;
+}
+@media (max-width: 559px) {
+  .default_text {
+    font-size: 13px;
   }
-  #form_login .MuiFormLabel-root,
-  #form_reset .MuiFormLabel-root {
-    font-family: "Raleway" !important;
-  }
-  #form_login .MuiInputBase-root,
-  #form_reset .MuiInputBase-root {
-    font-family: "Raleway" !important;
-  }
-  #form_login .MuiOutlinedInput-root.Mui-focused.Mui-focused fieldset,
-  #form_reset .MuiOutlinedInput-root.Mui-focused.Mui-focused fieldset {
-    border-color: #000000;
-  }
-  #form_login .MuiFormLabel-root.Mui-focused,
-  #form_reset .MuiFormLabel-root.Mui-focused {
-    color: #000000 !important;
-  }
-  #form_login .Mui-error:after,
-  #form_reset .Mui-error:after {
-    border: 2px solid rgb(182, 60, 47) !important;
-  }
-  #form_login .MuiOutlinedInput-root.Mui-error.Mui-error fieldset,
-  #form_reset .MuiOutlinedInput-root.Mui-error.Mui-error fieldset {
-    border-color: rgb(182, 60, 47);
-  }
-  #form_login .MuiFormLabel-root.Mui-error,
-  #form_reset .MuiFormLabel-root.Mui-error {
-    color: rgb(182, 60, 47) !important;
-  }
-  #form_login .helper-text,
-  #form_reset .helper-text {
-    font-family: "Raleway" !important;
-    color: rgb(182, 60, 47);
-    font-size: 12px;
-    margin-top: 5px;
-    margin-left: 5px !important;
-  }
-  /* Circular progress */
-  .MuiCircularProgress-colorPrimary {
-    color: #ffffff !important;
-  }
-  .MuiCircularProgress-colorSecondary {
-    color: #000000 !important;
-  }
-  /* DATE PICKERS */
-  .MuiButtonBase-root:focus {
-    outline: none;
-  }
-  .MuiOutlinedInput-inputAdornedEnd {
-    color: grey !important;
-  }
-  .MuiPickersToolbar-toolbar {
-    background-color: var(--main-color-dark) !important;
-  }
-  .MuiPickersDay-daySelected {
-    background-color: black !important;
-  }
-  .MuiPickersDay-current:default {
-    color: white !important;
-  }
-  
-  .MuiPickersDay-current:not(:focus) {
-    color: var(--main-color-dark) !important;
-  }
-  .MuiButton-label {
-    color: black;
-  }
-  
-  button:focus{
-    outline: none;
-  }
-
-  .ontrack_btn_add{
-    padding: 20px;
-    background-color: var(--main-color-dark);
-    border-radius: 10px;
-    color: white;
-    transition: all .2s;
-    border: none;
-  }
-  .ontrack_btn_add:active{
-    transform: scale(0.97);
-  }
-  @media (max-width: 959px) {
-    /* Modales responsive */
-    .responsive_dashboard_modal {
-      top: 75px !important;
-    }
-    .responsive_dashboard_modal .MuiBackdrop-root {
-      background-color: rgba(0, 0, 0, 0.5) !important;
-    }
-    .responsive_dashboard_modal .MuiDialog-paperFullScreen {
-      border-radius: 30px 30px 0 0 !important;
-    }
-    .MuiDialogActions-root {
-      display: block !important;
-      text-align: center !important;
-    }
-  }
-  @media (max-width: 767px) {
-    #component_container {
-      margin-top: 70px;
-    }
-  }
-  @media (max-width: 559px) {
-    .default_text {
-      font-size: 13px;
-    }
-  }
-  
+}

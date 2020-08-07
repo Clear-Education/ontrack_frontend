@@ -1,6 +1,6 @@
 // Axios
 import axios from "axios";
-import Config from "./config";
+import config from "./config";
 import { loadState } from "../../redux/immutableState";
 import errorHandler from "./error_handler";
 
@@ -14,7 +14,7 @@ export async function login(user, password) {
   formData.append("username", user);
   formData.append("password", password);
   return axios
-    .post(`${Config.api_url}/users/login/`, formData)
+    .post(`${config.api_url}/users/login/`, formData)
     .then((json) => {
       console.log(json)
       if (json.status == 200) {
@@ -60,7 +60,7 @@ export async function login(user, password) {
 
 export async function logout(auth_token) {
   return axios
-    .get(`${Config.api_url}/user/logout/`, {
+    .get(`${config.api_url}/user/logout/`, {
       headers: {
         Authorization: `Bearer ${auth_token}`,
       },

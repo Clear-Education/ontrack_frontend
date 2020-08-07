@@ -15,8 +15,9 @@ import "react-s-alert/dist/s-alert-css-effects/stackslide.css";
 import SideBar from '../src/components/commons/sidebar';
 import { Row, Col } from 'react-bootstrap';
 import { checkAuth } from '../src/utils/Auth';
-
-
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
+import DateFnsUtils from '@date-io/date-fns';
+import esLocale from "date-fns/locale/es";
 //APLICACIÓN
 
 const App = ({ Component, pageProps, router }) => {
@@ -42,7 +43,9 @@ const App = ({ Component, pageProps, router }) => {
         />
       </Head>
       <Alert timeout={3000} stack={true} />
+      <MuiPickersUtilsProvider utils={DateFnsUtils} locale={esLocale}>
       {router.route.match(/(dashboard)/i) ? (
+       
         <Row lg={12} md={12} sm={12} xs={12}>
         <div>
            <SideBar />
@@ -65,15 +68,19 @@ const App = ({ Component, pageProps, router }) => {
                 sm={12}
                 xs={12}
               >
+
                 <Component {...pageProps} key={router.route} />
+
               </Col>
             </Row>
         </Col>
       </Row>
       ) :
-        <Component {...pageProps} />
-      }
 
+        <Component {...pageProps} />
+
+      }
+      </MuiPickersUtilsProvider>
     </div>
 
   )

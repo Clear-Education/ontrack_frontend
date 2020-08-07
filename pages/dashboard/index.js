@@ -15,7 +15,7 @@ const Dashboard = () => {
     <AdminDashboard />
   ) : user.user.cargo === "user" ? (
     <UserDashboard />
-  ) : <div></div>
+  ) : <div className="center"></div>
 };
 
 export default Dashboard;

@@ -1,10 +1,10 @@
-import Config from './Config';
+import config from './config';
 import axios from 'axios';
 
 const CrudUser = {
 
     async addUser(data, auth_token) {
-        return axios.post(`${Config.api_url}/users/`, data, {
+        return axios.post(`${config.api_url}/users/`, data, {
             headers: {
                 Authorization: `Token ${auth_token}`,
             },
@@ -17,7 +17,7 @@ const CrudUser = {
 
     async getUsers(auth_token) {
         return axios
-            .get(`${Config.api_url}/users/list`, {
+            .get(`${config.api_url}/users/list`, {
                 headers: {
                     Authorization: `Token ${auth_token}`,
                 },
@@ -32,7 +32,7 @@ const CrudUser = {
     async editUser(data, auth_token) {
         console.log(data);
         return axios
-            .patch(`${Config.api_url}/users/${data.id}/`, data, {
+            .patch(`${config.api_url}/users/${data.id}/`, data, {
                 headers: {
                     Authorization: `Token ${auth_token}`,
                 },
