@@ -11,7 +11,8 @@ import config from '../../../src/utils/config';
 import { motion } from "framer-motion";
 import styles from './index.module.css'
 import studen_table_config from '../../../src/utils/table_options/student_table';
-import ModalAddStudent from '../../../src/components/student/modals/modal_add/modal_add';
+import ModalAdd from '../../../src/components/commons/modals/modal_add/modal_add';
+import AddStudentForm from '../../../src/components/student/forms/add_student_form';
 
 const Students = (props) => {
 
@@ -76,7 +77,13 @@ const Students = (props) => {
             </button> 
           </Col>
         </Row>
-        {addStudentModal && <ModalAddStudent handleClose = {handleAddStudentModal}/>}
+        {addStudentModal && 
+        <ModalAdd 
+        title="Agregar Alumnos" 
+        handleClose = {handleAddStudentModal}
+        formComponent={<AddStudentForm />} 
+        />
+        }
       </motion.div>
     </>
   )
