@@ -14,17 +14,44 @@ import { useEffect } from 'react';
 import "react-s-alert/dist/s-alert-css-effects/stackslide.css";
 import SideBar from '../src/components/commons/sidebar';
 import { Row, Col } from 'react-bootstrap';
-import { checkAuth } from '../src/utils/Auth';
+import { validateLoggedInUser } from '../src/utils/Auth';
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from '@date-io/date-fns';
 import esLocale from "date-fns/locale/es";
+import NProgress from "nprogress";
+import Router from "next/router";
+import "./progress_bar.css";
 //APLICACIÓN
+
+// Animacion de cambio de pagina
+Router.events.on("routeChangeStart", () => NProgress.inc());
+Router.events.on("routeChangeComplete", () => NProgress.done());
+Router.events.on("routeChangeError", () => NProgress.done());
 
 const App = ({ Component, pageProps, router }) => {
 
-  //COMENTAR ESTE CÓDIGO HASTA TENER EL LOGIN LISTO
+  useEffect(() => {
+    let authUser = validateLoggedInUser();
+    if (
+      authUser !== undefined &&
+      authUser.user.isLoggedIn &&
+      (router.route.match(/(login)/) || router.route.match(/(register)/))
+    ) {
+      if (authUser.user.user.role === "user") {
+        router.push("/");
+      } else {
+        router.push("/dashboard");
+      }
+    }
+    if (
+      authUser !== undefined &&
+      router.route.match(/(dashboard)/) &&
+      !authUser.user.isLoggedIn
+    ) {
+      router.push("/");
+    }
+  }, []);
 
-  
 
   return (
     <div>
