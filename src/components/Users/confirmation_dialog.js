@@ -6,6 +6,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
+import styles from './styles.module.css';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" {...props} />;
@@ -31,17 +32,17 @@ export default function AlertDialog(props) {
                 aria-describedby="alert-dialog-description"
                 TransitionComponent={Transition}
             >
-                <DialogTitle id="alert-dialog-title">{`Desea eliminar al usuario ${props.user.name} ${props.user.last_name}`}</DialogTitle>
+                <DialogTitle className={styles.background_title} id="alert-dialog-title">{`Desea eliminar al usuario ${props.user.name} ${props.user.last_name}`}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
                         Los datos serán eliminados de forma permanente.
           </DialogContentText>
                 </DialogContent>
                 <DialogActions className="d-flex justify-content-around">
-                    <button onClick={handleClose} className=" mt-3 mb-3 ontrack_btn_cancel">
+                    <button onClick={handleClose} className=" mt-3 mb-3 ontrack_btn cancel_btn">
                         Cancelar
           </button>
-                    <button onClick={handleDeleteConfirmation} className=" mt-3 mb-3 ontrack_btn_add">
+                    <button onClick={handleDeleteConfirmation} className=" mt-3 mb-3 ontrack_btn add_btn">
                         Eliminar
           </button>
                 </DialogActions>

@@ -67,7 +67,7 @@ const CrudUser = {
     },
 
     async deleteUser(data, auth_token) {
-        return axios.delete(`${Config.api_url}/users/${data.id}/`, {
+        return axios.delete(`${config.api_url}/users/${data.id}/`, {
             headers: {
                 Authorization: `Token ${auth_token}`,
             },
@@ -79,8 +79,8 @@ const CrudUser = {
     },
 
     async getGroups(auth_token) {
-        return axios
-            .get(`${Config.api_url}/users/groups/list/`, {
+        return await axios
+            .get(`${config.api_url}/users/groups/list/`, {
                 headers: {
                     Authorization: `Token ${auth_token}`,
                 },

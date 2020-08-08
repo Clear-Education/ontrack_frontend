@@ -145,6 +145,10 @@ button:focus {
   background-color: var(--main-color-dark);
 }
 
+.cancel_btn {
+  background-color: var(--gray);
+}
+
 .csv_btn{
   background-color: var(--orange);
 }

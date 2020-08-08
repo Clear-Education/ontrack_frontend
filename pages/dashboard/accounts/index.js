@@ -1,37 +1,39 @@
 /* MATERIAL UI */
 import MUIDataTable from "mui-datatables";
+import EditIcon from '@material-ui/icons/Edit';
 import { IconButton } from '@material-ui/core';
 import Delete from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
 
 /* HOOKS */
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useSelector } from "react-redux";
 
 /* COMPONENTS */
-import ModalUser from '../../../src/components/Users/modal_user';
+import ModalAdd from '../../../src/components/commons/modals/modal_add/modal_add';
+import AddUserForm from '../../../src/components/Users/forms/add_user_form';
+import EditUserForm from "../../../src/components/Users/forms/edit_user_form";
 import AlertDialog from '../../../src/components/Users/confirmation_dialog';
 import BackgroundLoader from '../../../src/components/commons/background_loader/background_loader';
 import TitlePage from '../../../src/components/commons/title_page/title_page';
 
-import Config from '../../../src/utils/Config';
+import config from '../../../src/utils/config';
 import CrudUser from '../../../src/utils/crud_user';
 
-import useSWR, { trigger, mutate } from 'swr';
+import useSWR, { mutate } from 'swr';
 import { Row, Col } from 'react-bootstrap';
 import { motion } from "framer-motion";
 
 
 const Accounts = () => {
-  const url = `${Config.api_url}/users/list`;
+  const url = `${config.api_url}/users/list`;
 
   /* const [dataUsers, setDataUsers] = useState(null); */
   const [isLoading, setIsLoading] = useState(false)
   const [selectedUser, setSelectedUser] = useState({});
-  const [type, setType] = useState(null);
-  const [show, setShow] = useState(false);
+  const [addUserModal, setAddUserModal] = useState(false);
+  const [editUserModal, setEditUserModal] = useState(false);
   const [showAlertDialog, setShowAlertDialog] = useState(false);
-  const [groups, setGroups] = useState({});
+
 
   const user = useSelector((store) => store.user);
 
@@ -48,40 +50,10 @@ const Accounts = () => {
   }
   );
 
-  useSWR(`${Config.api_url}/users/groups/list`, () => {
-    CrudUser.getGroups(user.user.token).then((result) => {
-      setGroups(result.data);
-    });
-  })
-
-
-  const handleClose = () => {
-    setShow(false);
+  const handleCloseAlertDialog = () => {
     setShowAlertDialog(false);
     setSelectedUser({});
   };
-
-
-  const handleSubmit = (userData, type) => {
-    if (type == "Editar") {
-
-      CrudUser.editUser(userData, user.user.token).then((result) => {
-        mutate(`${Config.api_url}/users/list`);
-      });
-
-    }
-
-    if (type == "Agregar") {
-      console.log(userData);
-      CrudUser.addUser(userData, user.user.token).then(() => {
-        mutate(`${Config.api_url}/users/list`);
-      });
-    }
-
-    handleClose();
-
-  }
-
 
   const handleDelete = (data) => {
     setShowAlertDialog(true);
@@ -91,15 +63,33 @@ const Accounts = () => {
   const handleDeleteConfirmation = () => {
     setShowAlertDialog(false);
     CrudUser.deleteUser(selectedUser, user.user.token).then(() => {
-      mutate(`${Config.api_url}/users/list`);
+      mutate(`${config.api_url}/users/list`);
     });
 
   }
 
-  function handleShowModal(user, type) {
-    setSelectedUser(user);
-    setType(type);
-    setShow(true);
+  const handleAddUserModal = (value) => {
+    setAddUserModal(value);
+  }
+
+  const handleSubmitNewUser = (e, data) => {
+    e.preventDefault();
+    CrudUser.addUser(data, user.user.token).then(() => {
+      mutate(`${config.api_url}/users/list`);
+    });
+  }
+
+  const handleEditUserModal = (value, data) => {
+    setEditUserModal(value);
+    setSelectedUser(data);
+
+  }
+
+  const handleSubmitEditUser = (e, data) => {
+    e.preventDefault();
+    CrudUser.editUser(data, user.user.token).then((result) => {
+      mutate(`${config.api_url}/users/list`);
+    });
   }
 
   const columns = [
@@ -142,7 +132,7 @@ const Accounts = () => {
       options: {
         customBodyRenderLite: (dataIndex) => {
           return (<>
-            <IconButton onClick={() => handleShowModal(data[dataIndex], "Editar")}>
+            <IconButton onClick={() => handleEditUserModal(true, data[dataIndex])}>
               <EditIcon />
             </IconButton>
             <IconButton onClick={() => handleDelete(data[dataIndex])}>
@@ -178,8 +168,6 @@ const Accounts = () => {
       },
     },
   };
-
-  /*  if (!data) return <div>loading...</div> */
 
   return (
     <>
@@ -219,28 +207,41 @@ const Accounts = () => {
           </Col>
           <Col>
             <button
-              className="d-block mt-3 mb-3 ml-auto ontrack_btn_add"
-              onClick={() => handleShowModal(selectedUser, "Agregar")}>Crear Cuenta</button>
+              className="d-block mt-3 mb-3 ml-auto ontrack_btn add_btn"
+              onClick={() => handleAddUserModal(true)}>Crear Cuenta</button>
           </Col>
         </Row>
 
-        {
-          show ?
-            <ModalUser
-              handleClose={handleClose}
-              handleSubmit={handleSubmit}
-              user={selectedUser}
-              type={type}
-              groups={groups}
-            />
-            : null
+        {addUserModal &&
+          <ModalAdd
+            title="Agregar Usuario"
+            handleClose={handleAddUserModal}
+            formComponent={
+              <AddUserForm
+                handleSubmitNewUser={handleSubmitNewUser}
+                handleClose={handleAddUserModal} />
+            }
+          />
+        }
+
+        {editUserModal &&
+          <ModalAdd
+            title="Editar Usuario"
+            handleClose={handleEditUserModal}
+            formComponent={
+              <EditUserForm
+                handleSubmitEditUser={handleSubmitEditUser}
+                user={selectedUser}
+                handleClose={handleEditUserModal} />
+            }
+          />
         }
 
         {
           showAlertDialog ?
             <AlertDialog
               open={showAlertDialog}
-              handleClose={handleClose}
+              handleClose={handleCloseAlertDialog}
               user={selectedUser}
               handleDeleteConfirmation={handleDeleteConfirmation}
             />
