@@ -74,6 +74,8 @@ const AddStudentForm = (props) => {
     const [date, setDate] = useState(null);
     const user = useSelector((store) => store.user)
 
+
+
     useSWR(url, () =>
         getInstitutions(user.user.token).then((result) => {
             if (result.success == true) {
@@ -120,9 +122,8 @@ const AddStudentForm = (props) => {
       };
 
 
-
-    const handleSubmit = () => {
-
+      const handleSubmit = (e) =>{
+        props.handleSubmitNewStudent(e,'data');
     }
 
     return (
@@ -134,7 +135,7 @@ const AddStudentForm = (props) => {
         >
             <Row>
                 <Col>
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={(e)=>handleSubmit(e)}>
                         <div className={styles.decorator} />{" "}
                         <span id={styles.title_decorator}>
                             {" "}
@@ -154,7 +155,7 @@ const AddStudentForm = (props) => {
                                             variant="outlined"
                                             value={state.name}
                                             onChange={handleChange("name")}
-                                            required
+                                            /* required */
                                         />
                                     </FormControl>
                                     {validation.name && (
@@ -178,7 +179,7 @@ const AddStudentForm = (props) => {
                                             variant="outlined"
                                             value={state.last_name}
                                             onChange={handleChange("last_name")}
-                                            required
+                                            /* required */
                                         />
                                     </FormControl>
                                     {validation.last_name && (
@@ -202,7 +203,7 @@ const AddStudentForm = (props) => {
                                             variant="outlined"
                                             value={state.dni}
                                             onChange={handleChange("dni")}
-                                            required
+                                            /* required */
                                         />
                                     </FormControl>
                                     {validation.dni && (
@@ -229,7 +230,7 @@ const AddStudentForm = (props) => {
                                             variant="outlined"
                                             value={state.email}
                                             onChange={handleChange("email")}
-                                            required
+                                            /* required */
                                         />
                                     </FormControl>
                                     {validation.email && (
@@ -253,7 +254,7 @@ const AddStudentForm = (props) => {
                                             variant="outlined"
                                             value={state.legajo}
                                             onChange={handleChange("legajo")}
-                                            required
+                                            /* required */
                                         />
                                     </FormControl>
                                     {validation.legajo && (
@@ -282,7 +283,7 @@ const AddStudentForm = (props) => {
                                             invalidDateMessage="El formato de fecha es inválido"
                                             minDateMessage="La fecha no puede ser menor al día de hoy"
                                             maxDateMessage="La fecha no puede ser mayor al máximo permitido"
-                                            required
+                                            /* required */
                                         />
                                     </FormControl>
                                 </motion.li>
@@ -301,7 +302,7 @@ const AddStudentForm = (props) => {
                                             variant="outlined"
                                             value={state.direccion}
                                             onChange={handleChange("direccion")}
-                                            required
+                                            /* required */
                                         />
                                     </FormControl>
                                     {validation.direccion && (
@@ -325,7 +326,7 @@ const AddStudentForm = (props) => {
                                             variant="outlined"
                                             value={state.localidad}
                                             onChange={handleChange("localidad")}
-                                            required
+                                            /* required */
                                         />
                                     </FormControl>
                                     {validation.localidad && (
@@ -349,7 +350,7 @@ const AddStudentForm = (props) => {
                                             variant="outlined"
                                             value={state.provincia}
                                             onChange={handleChange("provincia")}
-                                            required
+                                            /* required */
                                         />
                                     </FormControl>
                                     {validation.provincia && (
@@ -388,7 +389,7 @@ const AddStudentForm = (props) => {
                                             invalidDateMessage="El formato de fecha es inválido"
                                             minDateMessage="La fecha no puede ser menor al día de hoy"
                                             maxDateMessage="La fecha no puede ser mayor al máximo permitido"
-                                            required
+                                            /* required */
                                         />
                                     </FormControl>
                                 </motion.li>
@@ -403,7 +404,7 @@ const AddStudentForm = (props) => {
                                             id="institucion"
                                             value={state.institucion}
                                             onChange={handleChange("institucion")}
-                                            required
+                                            /* required */
                                         >
                                             <MenuItem value="">
                                                 <em>Seleccionar</em>
@@ -429,7 +430,7 @@ const AddStudentForm = (props) => {
                                             id="current_year"
                                             value={state.institucion}
                                             onChange={handleChange("current_year")}
-                                            required
+                                            /* required */
                                         >
                                             <MenuItem value="">
                                                 <em>Seleccionar</em>
@@ -453,7 +454,7 @@ const AddStudentForm = (props) => {
                                             id="curso"
                                             value={state.institucion}
                                             onChange={handleChange("curso")}
-                                            required
+                                            /* required */
                                         >
                                             <MenuItem value="">
                                                 <em>Seleccionar</em>
@@ -472,7 +473,7 @@ const AddStudentForm = (props) => {
                         <motion.li variants={item}>
                             <Row lg={12} md={12} sm={12} xs={12} className="center" style={{ justifyContent: 'center' }}>
                                 <Col>
-                                    <button className="ontrack_btn_modal ontrack_btn add_btn">Agregar</button>
+                                    <button className="ontrack_btn_modal ontrack_btn add_btn" type="submit">Agregar</button>
                                 </Col>
 
                             </Row>
