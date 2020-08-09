@@ -52,8 +52,9 @@ const App = ({ Component, pageProps, router }) => {
     }
   }, []);
 
+
   return (
-    <>
+    <div>
       <Head>
         <title>OnTrack</title>
         <link rel="icon" href="#" /> {/* TODO favicon */}
@@ -95,42 +96,19 @@ const App = ({ Component, pageProps, router }) => {
                 xs={12}
               >
 
-          <Row lg={12} md={12} sm={12} xs={12}>
-            <div>
-              <SideBar />
-            </div>
-            <Col
-              id="dashboard_container"
-              className="center"
-              lg={11}
-              md={10}
-              sm={12}
-              xs={12}
-            >
-              <Header />
-              <Row lg={12} md={12} sm={12} xs={12}>
-                <Col
-                  id="component_container"
-                  className="center"
-                  lg={12}
-                  md={12}
-                  sm={12}
-                  xs={12}
-                >
+                <Component {...pageProps} key={router.route} />
 
-                  <Component {...pageProps} key={router.route} />
+              </Col>
+            </Row>
+        </Col>
+      </Row>
+      ) :
 
-                </Col>
-              </Row>
-            </Col>
-          </Row>
-        ) :
+        <Component {...pageProps} />
 
-          <Component {...pageProps} />
-
-        }
+      }
       </MuiPickersUtilsProvider>
-    </>
+    </div>
 
   )
 }
