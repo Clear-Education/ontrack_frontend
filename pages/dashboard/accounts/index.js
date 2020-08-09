@@ -22,6 +22,7 @@ import CrudUser from '../../../src/utils/crud_user';
 import useSWR, { mutate } from 'swr';
 import { Row, Col } from 'react-bootstrap';
 import { motion } from "framer-motion";
+import Alert from "react-s-alert";
 
 
 const Accounts = () => {
@@ -33,6 +34,7 @@ const Accounts = () => {
   const [addUserModal, setAddUserModal] = useState(false);
   const [editUserModal, setEditUserModal] = useState(false);
   const [showAlertDialog, setShowAlertDialog] = useState(false);
+
 
 
   const user = useSelector((store) => store.user);
@@ -76,7 +78,11 @@ const Accounts = () => {
     e.preventDefault();
     CrudUser.addUser(data, user.user.token).then(() => {
       mutate(`${config.api_url}/users/list`);
-    });
+    })
+      .catch(Alert.error("Error al crear usuario", {
+        position: "bottom",
+        effect: "stackslide",
+      }));
   }
 
   const handleEditUserModal = (value, data) => {
@@ -89,7 +95,11 @@ const Accounts = () => {
     e.preventDefault();
     CrudUser.editUser(data, user.user.token).then((result) => {
       mutate(`${config.api_url}/users/list`);
-    });
+    })
+      .catch(Alert.error("Error al editar usuario", {
+        position: "bottom",
+        effect: "stackslide",
+      }));;
   }
 
   const columns = [

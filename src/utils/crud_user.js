@@ -13,6 +13,7 @@ const CrudUser = {
                 console.log(result);
                 return result;
             })
+            .catch(error => error);
     },
 
     async getUsers(auth_token) {
@@ -64,6 +65,7 @@ const CrudUser = {
                 console.log(result);
                 return result;
             })
+            .catch(error => error);
     },
 
     async deleteUser(data, auth_token) {

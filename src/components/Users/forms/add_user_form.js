@@ -12,6 +12,7 @@ import CrudUser from "../../../utils/crud_user";
 import { useSelector } from "react-redux";
 import config from "../../../utils/config";
 import useSWR from "swr";
+import Alert from "react-s-alert";
 
 const list = {
     visible: {
