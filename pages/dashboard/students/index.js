@@ -41,11 +41,11 @@ const Students = (props) => {
     })
   });
 
-  const handleAddStudentModal = (value) =>{
+  const handleAddStudentModal = (value) => {
     setAddStudentModal(value)
   }
 
-  const handleSubmitNewStudent = (e,data) =>{
+  const handleSubmitNewStudent = (e, data) => {
     e.preventDefault();
     console.log('enviando')
   }
@@ -77,20 +77,20 @@ const Students = (props) => {
             />
           </Col>
           <Col className={styles.add_btn_container}>
-            <button className="ontrack_btn add_btn" onClick={()=>handleAddStudentModal(true)}>
+            <button className="ontrack_btn add_btn" onClick={() => handleAddStudentModal(true)}>
               Agregar Alumnos
-            </button> 
+            </button>
           </Col>
         </Row>
-        {addStudentModal && 
-        <ModalAdd  
-        title="Agregar Alumnos" 
-        handleClose = {handleAddStudentModal}
-        formComponent={
-          <AddStudentForm 
-            handleSubmitNewStudent={handleSubmitNewStudent}/>
-          } 
-        />
+        {addStudentModal &&
+          <ModalAdd
+            title="Agregar Alumnos"
+            handleClose={handleAddStudentModal}
+            formComponent={
+              <AddStudentForm
+                handleSubmitNewStudent={handleSubmitNewStudent} />
+            }
+          />
         }
       </motion.div>
     </>

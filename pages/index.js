@@ -112,8 +112,8 @@ const Login = () => {
     } else {
       dispatch(loginAction(loginState.email, loginState.password)).then(
         (status) => {
-          if (status) { 
-              router.push("/dashboard");
+          if (status) {
+            router.push("/dashboard");
           }
         }
       );
@@ -124,7 +124,7 @@ const Login = () => {
     <Row lg={12} md={12} sm={12} xs={12} style={{ margin: 0 }}>
       <div id={styles.login_container}>
         <Row lg={12} md={12} sm={12} xs={12} style={{ margin: 0 }}>
-        <Col
+          <Col
             className="center"
             lg={6}
             md={6}
@@ -291,12 +291,12 @@ const Login = () => {
               </form>
             </Row>
           </Col>
-      
+
         </Row>
       </div>
     </Row>
   ) : (
-      <div id={styles.login_container}></div>
+      <></>
     );
 };
 

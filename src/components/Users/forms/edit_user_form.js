@@ -6,12 +6,13 @@ import { KeyboardDatePicker } from "@material-ui/pickers";
 import { Row, Col } from "react-bootstrap";
 import { InputLabel, Select, MenuItem, useTheme, useMediaQuery } from "@material-ui/core";
 
-import styles from './styles.module.css'
+import styles from './styles.module.css';
 import { useState } from "react";
-import { getInstitutions } from "../../../utils/institution_crud";
+import CrudUser from "../../../utils/crud_user";
 import { useSelector } from "react-redux";
 import config from "../../../utils/config";
 import useSWR from "swr";
+
 const list = {
     visible: {
         opacity: 1,
@@ -34,50 +35,41 @@ const item = {
 };
 
 
-
-const INITIAL_STATE = {
-    name: '',
-    last_name: '',
-    dni: '',
-    legajo: '',
-    email: '',
-    fecha_nacimiento: '',
-    direccion: '',
-    localidad: '',
-    provincia: '',
-    fecha_inscripcion: '',
-    institucion: '',
-}
-
 const VALIDATE_INITIAL_STATE = {
     name: false,
     last_name: false,
+    email: false,
     dni: false,
     legajo: false,
-    email: false,
-    fecha_nacimiento: false,
+    cargo: false,
+    groups: false,
+    phone: false,
+    date_of_birth: false,
     direccion: false,
     localidad: false,
     provincia: false,
-    fecha_inscripcion: false,
-    institucion: false,
 };
 
-const AddStudentForm = (props) => {
-
-    const [state, setState] = useState(INITIAL_STATE);
-    const url = `${config.api_url}/institucion/list`
+const EditUserForm = (props) => {
+    const [state, setState] = useState(props.user);
+    const url = `${config.api_url}/users/groups/list/`;
     const [validation, setValidation] = useState(VALIDATE_INITIAL_STATE);
-    const [institutionData, setInstitutionData] = useState(null)
+    const [groupsData, setGroupsData] = useState(null);
     const theme = useTheme();
     const fullscreen = useMediaQuery(theme.breakpoints.down("719"));
-    const [date, setDate] = useState(null);
-    const user = useSelector((store) => store.user)
+    const [date, setDate] = useState(props.user.date_of_birth);
+    const user = useSelector((store) => store.user);
+
+    /* EL INPUT DE FECHA ME ESTABA TOMANDO UN DIA MENOS QUE LA FECHA REAL DEL USER*/
+    /*    const dateUser = new Date(date);
+       const dateUserFormat = dateUser.setTime(dateUser.getTime() + dateUser.getTimezoneOffset() * 60 * 1000);
+       console.log(dateUserFormat) */
+
 
     useSWR(url, () =>
-        getInstitutions(user.user.token).then((result) => {
-            if (result.success == true) {
-                setInstitutionData(result.result.results);
+        CrudUser.getGroups(user.user.token).then((result) => {
+            if (result.status == 200) {
+                setGroupsData(result.data);
             } else {
                 result.result.forEach((element) => {
                     Alert.error(element.message, {
@@ -89,7 +81,7 @@ const AddStudentForm = (props) => {
         })
     );
 
-    const hadleValidation = (prop, value) => {
+    const handleValidation = (prop, value) => {
         setValidation({
             ...validation,
             [prop]: !(value.split("").length > 0),
@@ -97,11 +89,12 @@ const AddStudentForm = (props) => {
     };
 
     const handleChange = (prop) => (event) => {
-        if (prop !== "institucion") {
-            hadleValidation(prop, event.target.value);
+        if (prop !== "groups") {
+            handleValidation(prop, event.target.value);
         }
 
-        setState({ ...state, [prop]: event.target.value })
+        setState({ ...state, [prop]: event.target.value });
+        console.log(state);
 
     };
 
@@ -110,19 +103,20 @@ const AddStudentForm = (props) => {
             return s < 10 ? "0" + s : s;
         }
         var d = new Date(inputFormat);
-        return [pad(d.getDate()), pad(d.getMonth() + 1), d.getFullYear()].join("/");
+        return [d.getFullYear(), pad(d.getMonth() + 1), pad(d.getDate())].join("-");
     };
-
 
     const handleChangeDate = (date) => {
         setDate(date);
         let formatedDate = convertDate(date);
+        setState({ ...state, ["date_of_birth"]: formatedDate });
     };
 
 
 
-    const handleSubmit = () => {
-
+    const handleSubmit = (e) => {
+        props.handleSubmitEditUser(e, state);
+        props.handleClose(false);
     }
 
     return (
@@ -134,7 +128,7 @@ const AddStudentForm = (props) => {
         >
             <Row>
                 <Col>
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={(e) => handleSubmit(e)}>
                         <div className={styles.decorator} />{" "}
                         <span id={styles.title_decorator}>
                             {" "}
@@ -202,6 +196,7 @@ const AddStudentForm = (props) => {
                                             variant="outlined"
                                             value={state.dni}
                                             onChange={handleChange("dni")}
+                                            type="number"
                                             required
                                         />
                                     </FormControl>
@@ -229,6 +224,7 @@ const AddStudentForm = (props) => {
                                             variant="outlined"
                                             value={state.email}
                                             onChange={handleChange("email")}
+                                            type="email"
                                             required
                                         />
                                     </FormControl>
@@ -253,6 +249,7 @@ const AddStudentForm = (props) => {
                                             variant="outlined"
                                             value={state.legajo}
                                             onChange={handleChange("legajo")}
+                                            type="number"
                                             required
                                         />
                                     </FormControl>
@@ -289,6 +286,81 @@ const AddStudentForm = (props) => {
                             </Col>
                         </Row>
 
+                        <Row lg={12} md={12} sm={12} xs={12} className={styles.row_input_container}>
+                            <Col lg={4} md={4} sm={12} xs={12} className={fullscreen && styles.input_container}>
+                                <motion.li variants={item}>
+                                    <FormControl variant="outlined">
+                                        <TextField
+                                            id="cargo"
+                                            name="cargo"
+                                            label="Cargo"
+                                            variant="outlined"
+                                            value={state.cargo}
+                                            onChange={handleChange("cargo")}
+                                            required
+                                        />
+                                    </FormControl>
+                                    {validation.cargo && (
+                                        <FormHelperText
+                                            className="helper-text"
+                                            style={{ color: "rgb(182, 60, 47)" }}
+                                        >
+                                            Esta campo no puede estar vacio
+                                        </FormHelperText>
+                                    )}
+                                </motion.li>
+                            </Col>
+                            <Col lg={4} md={4} sm={12} xs={12} className={fullscreen && styles.input_container}>
+                                <motion.li variants={item}>
+                                    <FormControl variant="outlined">
+                                        <InputLabel id="groups">Tipo de Cuenta</InputLabel>
+                                        <Select
+                                            labelId="groups"
+                                            id="groups"
+                                            value={state.groups.id || ''}
+                                            onChange={handleChange("groups")}
+                                            required
+                                        >
+                                            <MenuItem disabled value="">
+                                                <em>Seleccionar</em>
+                                            </MenuItem>
+                                            {groupsData && groupsData.map((group) => {
+                                                return (
+                                                    <MenuItem value={group.id} key={group.id}>
+                                                        {group.name}
+                                                    </MenuItem>
+                                                )
+                                            })}
+                                        </Select>
+                                    </FormControl>
+                                </motion.li>
+                            </Col>
+
+                            <Col lg={4} md={4} sm={12} xs={12} className={fullscreen && styles.input_container}>
+                                <motion.li variants={item}>
+                                    <FormControl variant="outlined">
+                                        <TextField
+                                            id="phone"
+                                            name="phone"
+                                            label="Telefono"
+                                            variant="outlined"
+                                            value={state.phone}
+                                            onChange={handleChange("phone")}
+                                            type="number"
+                                            required
+                                        />
+                                    </FormControl>
+                                    {validation.phone && (
+                                        <FormHelperText
+                                            className="helper-text"
+                                            style={{ color: "rgb(182, 60, 47)" }}
+                                        >
+                                            Esta campo no puede estar vacio
+                                        </FormHelperText>
+                                    )}
+                                </motion.li>
+                            </Col>
+                        </Row>
 
                         <Row lg={12} md={12} sm={12} xs={12} className={styles.row_input_container}>
                             <Col lg={4} md={4} sm={12} xs={12} className={fullscreen && styles.input_container}>
@@ -364,150 +436,21 @@ const AddStudentForm = (props) => {
                             </Col>
                         </Row>
 
-                        <div className={styles.decorator} />{" "}
-                        <span id={styles.title_decorator}>
-                            {" "}
-                            Datos referentes a la institución
-                            {" "}
-                        </span>
-                        <div className={styles.decorator} />
-
-                        <Row lg={12} md={12} sm={12} xs={12} className={styles.row_input_container}>
-                            <Col lg={6} md={6} sm={12} xs={12} className={fullscreen && styles.input_container}>
-                                <motion.li variants={item}>
-                                    <FormControl variant="outlined">
-                                        <KeyboardDatePicker
-                                            clearable
-                                            label="Fecha de inscripción"
-                                            value={state.fecha_inscripcion ? state.fecha_inscripcion : null}
-                                            placeholder="01/05/2020"
-                                            onChange={(date) => handleChangeDate(date, "inscription")}
-                                            inputVariant="outlined"
-                                            maxDate={new Date()}
-                                            format="dd/MM/yyyy"
-                                            invalidDateMessage="El formato de fecha es inválido"
-                                            minDateMessage="La fecha no puede ser menor al día de hoy"
-                                            maxDateMessage="La fecha no puede ser mayor al máximo permitido"
-                                            required
-                                        />
-                                    </FormControl>
-                                </motion.li>
-                            </Col>
-
-                            <Col lg={6} md={6} sm={12} xs={12} className={fullscreen && styles.input_container}>
-                                <motion.li variants={item}>
-                                    <FormControl variant="outlined">
-                                        <InputLabel id="institucion">Institución</InputLabel>
-                                        <Select
-                                            labelId="institucion"
-                                            id="institucion"
-                                            value={state.institucion}
-                                            onChange={handleChange("institucion")}
-                                            required
-                                        >
-                                            <MenuItem value="">
-                                                <em>Seleccionar</em>
-                                            </MenuItem>
-                                            {institutionData && institutionData.map((institution) => {
-                                                return (
-                                                    <MenuItem value={institution.id} key={institution.id}>{institution.nombre}</MenuItem>
-                                                )
-                                            })}
-                                        </Select>
-                                    </FormControl>
-                                </motion.li>
-                            </Col>
-                        </Row>
-
-                        <Row lg={12} md={12} sm={12} xs={12} className={styles.row_input_container}>
-                            <Col lg={6} md={6} sm={12} xs={12} className={fullscreen && styles.input_container}>
-                                <motion.li variants={item}>
-                                    <FormControl variant="outlined">
-                                        <InputLabel id="current_year">Año lectivo</InputLabel>
-                                        <Select
-                                            labelId="current_year"
-                                            id="current_year"
-                                            value={state.institucion}
-                                            onChange={handleChange("current_year")}
-                                            required
-                                        >
-                                            <MenuItem value="">
-                                                <em>Seleccionar</em>
-                                            </MenuItem>
-                                            {institutionData && institutionData.map((institution) => {
-                                                return (
-                                                    <MenuItem value={institution.id} key={institution.id}>{institution.nombre}</MenuItem>
-                                                )
-                                            })}
-                                        </Select>
-                                    </FormControl>
-                                </motion.li>
-                            </Col>
-
-                            <Col lg={6} md={6} sm={12} xs={12} className={fullscreen && styles.input_container}>
-                                <motion.li variants={item}>
-                                    <FormControl variant="outlined">
-                                        <InputLabel id="curso">Curso</InputLabel>
-                                        <Select
-                                            labelId="curso"
-                                            id="curso"
-                                            value={state.institucion}
-                                            onChange={handleChange("curso")}
-                                            required
-                                        >
-                                            <MenuItem value="">
-                                                <em>Seleccionar</em>
-                                            </MenuItem>
-                                            {institutionData && institutionData.map((institution) => {
-                                                return (
-                                                    <MenuItem value={institution.id} key={institution.id}>{institution.nombre}</MenuItem>
-                                                )
-                                            })}
-                                        </Select>
-                                    </FormControl>
-                                </motion.li>
-                            </Col>
-
-                        </Row>
                         <motion.li variants={item}>
                             <Row lg={12} md={12} sm={12} xs={12} className="center" style={{ justifyContent: 'center' }}>
                                 <Col>
-                                    <button className="ontrack_btn_modal ontrack_btn add_btn">Agregar</button>
+                                    <button
+                                        className="ontrack_btn_modal ontrack_btn add_btn"
+                                        type="submit">Agregar</button>
                                 </Col>
-
                             </Row>
                         </motion.li>
                     </form>
-
-                    {!fullscreen &&
-                        <>
-                            <div className={styles.decorator} />{" "}
-                            <span id={styles.title_decorator}>
-                                {" "}
-                      Importar mediante un archivo CSV
-                      {" "}
-                            </span>
-                            <div className={styles.decorator} />
-
-                            <motion.li variants={item}>
-                                <Row lg={12} md={12} sm={12} xs={12} className="center" style={{ justifyContent: 'center' }}>
-                                    <Col>
-                                        <button className="ontrack_btn_modal ontrack_btn csv_btn">Importar CSV</button>
-                                    </Col>
-                                </Row>
-                            </motion.li>
-                        </>
-                    }
                 </Col>
             </Row>
-
         </motion.span>
     )
 
-
 }
 
-
-export default AddStudentForm
-
-
+export default EditUserForm;
