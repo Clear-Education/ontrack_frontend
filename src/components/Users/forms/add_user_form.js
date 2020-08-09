@@ -101,8 +101,26 @@ const AddUserForm = (props) => {
         });
     };
 
+    const handleValidationPassword = (prop, value) => {
+        if (state.password != value) {
+            setValidation({
+                ...validation,
+                [prop]: true,
+            });
+        } else {
+            setValidation({
+                ...validation,
+                [prop]: false,
+            });
+        }
+
+    };
+
     const handleChange = (prop) => (event) => {
-        if (prop !== "groups") {
+        if (prop == "password2") {
+            handleValidationPassword(prop, event.target.value);
+        }
+        if (prop !== "groups" && prop !== "password2") {
             handleValidation(prop, event.target.value);
         }
 
@@ -116,7 +134,6 @@ const AddUserForm = (props) => {
             return s < 10 ? "0" + s : s;
         }
         var d = new Date(inputFormat);
-        /* return [pad(d.getDate()), pad(d.getMonth() + 1), d.getFullYear()].join("-"); */
         return [d.getFullYear(), pad(d.getMonth() + 1), pad(d.getDate())].join("-");
 
     };
@@ -131,8 +148,20 @@ const AddUserForm = (props) => {
 
 
     const handleSubmit = (e) => {
-        props.handleSubmitNewUser(e, state);
-        props.handleClose(false);
+        let validateForm = true;
+        Object.values(validation).map(element => {
+            if (element == true) {
+                validateForm = false;
+            }
+        })
+        if (validateForm) {
+            props.handleSubmitNewUser(e, state);
+            props.handleClose(false);
+            console.log("enviando")
+        } else {
+            e.preventDefault();
+            console.log("no se puede enviar.")
+        }
     }
 
     return (
