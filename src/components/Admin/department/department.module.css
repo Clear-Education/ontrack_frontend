@@ -1,0 +1,19 @@
+.structure_container{
+    min-height: 800px;
+    background-color:var(--light-gray);
+    border-radius: 10px;
+    margin: auto;
+    position: relative;
+}
+
+.no_data_msg{
+    padding: 10px;
+    font-weight: 700;
+    margin-top: 10px;
+    display: block;
+}
+
+#add_new_structure{
+    position: absolute;
+    bottom: 10px;
+}

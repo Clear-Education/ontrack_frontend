@@ -35,10 +35,10 @@ const App = ({ Component, pageProps, router }) => {
     if (
       authUser !== undefined &&
       authUser.user.isLoggedIn &&
-      (router.route.match(/(login)/) || router.route.match(/(register)/))
+      (router.route.match(/(login)/) || router.route.match(/(register)/) || router.route.match("/"))
     ) {
-      if (authUser.user.user.role === "user") {
-        router.push("/");
+      if (authUser.user.user.cargo === "user") {
+        router.push("/dashboard");
       } else {
         router.push("/dashboard");
       }
@@ -80,7 +80,7 @@ const App = ({ Component, pageProps, router }) => {
         <Col 
           id="dashboard_container"
           className="center"
-          lg={11}
+          lg={10}
           md={10}
           sm={12}
           xs={12}

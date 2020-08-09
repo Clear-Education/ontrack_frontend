@@ -7,9 +7,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { IconButton, Button } from '@material-ui/core';
 import Delete from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
+import config from "../../../src/utils/config";
 
 const Accounts = () => {
-  const url = "adsad";
+  const url = `${config.api_url}/users/list`
   const [dataUsers, setDataUsers] = useState(null);
   const [selectedUser, setSelectedUser] = useState({});
   const [type, setType] = useState(null);

@@ -5,15 +5,5 @@
     text-transform: uppercase;
     margin-bottom: 40px;
   }
-  @media (max-width: 1200px) {
-    .title {
-      position: relative;
-      left: 40px;
-    }
-  }
-  @media (max-width: 992px) {
-    .title {
-      left: 20px;
-    }
-  }
+
   
