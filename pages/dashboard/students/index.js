@@ -47,7 +47,6 @@ const Students = (props) => {
 
   const handleSubmitNewStudent = (e, data) => {
     e.preventDefault();
-    console.log('enviando')
   }
 
   return (

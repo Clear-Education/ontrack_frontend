@@ -1,5 +1,6 @@
 const handleCrudErrors = (error) => {
     let response = {};
+    console.log({...error})
     if (error.response) {
       if (error.response.status === 400) {
         response = {
@@ -7,7 +8,7 @@ const handleCrudErrors = (error) => {
           unauthorized: false,
           result: [
             {
-              message: error.response.data.non_field_errors,
+              message: error.response.data.detail,
             },
           ],
         };
@@ -37,7 +38,7 @@ const handleCrudErrors = (error) => {
           unauthorized: false,
           result: [
             {
-              message: error.response.data.data[0].message,
+              message: error.response.data.detail
             },
           ],
         };

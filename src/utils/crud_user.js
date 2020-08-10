@@ -10,7 +10,6 @@ const CrudUser = {
             },
         })
             .then((result) => {
-                console.log(result);
                 return result;
             })
             .catch(error => error);
@@ -62,7 +61,6 @@ const CrudUser = {
                 },
             })
             .then((result) => {
-                console.log(result);
                 return result;
             })
             .catch(error => error);
@@ -75,7 +73,6 @@ const CrudUser = {
             },
         })
             .then((result) => {
-                console.log(result);
                 return result;
             })
     },

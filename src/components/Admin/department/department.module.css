@@ -17,3 +17,61 @@
     position: absolute;
     bottom: 10px;
 }
+
+.structure_item_container{
+    padding: 20px;
+    text-align: left;
+    font-weight: 700;
+    color: black;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: all .2s;
+}
+.structure_items_container{
+    height: 700px;
+    overflow: auto;
+}
+
+.structure_item_container:hover{
+transform: scale(1.007);
+}
+
+.color_item{
+    width: 20px;
+    display: inline-block;
+    height: 40px;
+    border-radius: 5px;
+}
+
+.name_item{
+    margin-left: 10px;
+}
+
+.icon_edit_item{
+    position: absolute;
+    right: 70px;
+}
+
+.icon_delete_item{
+    position: absolute;
+    right: 150px;
+}
+
+.icon_arrow_item{
+    position: absolute;
+    right: 5px; 
+}
+
+.actions_container{
+    background-color: rgb(212, 212, 212);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.detail_container{
+    display: flex;
+    align-items: center;
+}

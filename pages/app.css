@@ -6,6 +6,7 @@
   --gray: #868686;
   --light-gray: #f7f7f7;
   --orange: #ff8d00;
+  --red: #c24d4d;
 }
 
 body {
@@ -40,7 +41,7 @@ body {
 
 .responsive_modal .MuiDialog-paperFullScreen {
   max-height: 95vh !important;
-  min-height: 800px;
+  min-height: 500px;
   border-radius: 20px 20px 0 0 !important;
   background-color: #f1f1f1;
 
@@ -152,6 +153,10 @@ button:focus {
 
 .csv_btn{
   background-color: var(--orange);
+}
+
+.delete_btn{
+  background-color: var(--red);
 }
 @media (max-width: 600px){
   .ontrack_btn_modal{

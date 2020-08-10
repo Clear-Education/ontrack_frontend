@@ -12,10 +12,7 @@ import { Row, Col } from "react-bootstrap";
 const StructureContainer = (props) => {
 
     const [currentStep, setCurrentStep] = useState("department");
-    const [isLoading, setIsLoading] = useState(false);
-    const user = useSelector((store) => store.user);
-    const router = useRouter();
-    const dispatch = useDispatch();
+    const [optionalData,setOptionalData] = useState();
 
     const handleNextStep = (step, _data) => {
         setCurrentStep(step);
@@ -33,6 +30,7 @@ const StructureContainer = (props) => {
                 ) : currentStep == "year" ? (
                     <Year
                         handleNextStep={handleNextStep}
+                        data={optionalData}
                     />) : 
                     currentStep == "subject" ? (
                         <Subject
