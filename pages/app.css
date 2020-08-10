@@ -92,6 +92,12 @@ body {
   margin-top: 5px;
   margin-left: 5px !important;
 }
+
+/* TABLE TITLE */
+h6.MuiTypography-root {
+  text-align: left;
+  color: var(--black);
+}
 /* Circular progress */
 .MuiCircularProgress-colorPrimary {
   color: #ffffff !important;

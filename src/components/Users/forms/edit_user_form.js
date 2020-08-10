@@ -52,6 +52,7 @@ const VALIDATE_INITIAL_STATE = {
 
 const EditUserForm = (props) => {
     const [state, setState] = useState(props.user);
+    const initialStateUserAccount = props.user.is_active;
     const url = `${config.api_url}/users/groups/list/`;
     const [validation, setValidation] = useState(VALIDATE_INITIAL_STATE);
     const [groupsData, setGroupsData] = useState(null);
@@ -92,10 +93,11 @@ const EditUserForm = (props) => {
         if (prop !== "groups") {
             handleValidation(prop, event.target.value);
         }
-
-        setState({ ...state, [prop]: event.target.value });
-        console.log(state);
-
+        if (prop !== "is_active") {
+            setState({ ...state, [prop]: event.target.value });
+        } else {
+            setState({ ...state, [prop]: JSON.parse(event.target.value) });
+        }
     };
 
     const convertDate = (inputFormat) => {
@@ -115,8 +117,16 @@ const EditUserForm = (props) => {
 
 
     const handleSubmit = (e) => {
-        props.handleSubmitEditUser(e, state);
-        props.handleClose(false);
+        if (state.is_active != initialStateUserAccount) {
+            props.handleSubmitEditUserState(e, state);
+            props.handleClose(false);
+        } else if (initialStateUserAccount == true) {
+            props.handleSubmitEditUser(e, state);
+            props.handleClose(false);
+        } else {
+            e.preventDefault();
+            props.handleClose(false);
+        }
     }
 
     return (
@@ -129,6 +139,7 @@ const EditUserForm = (props) => {
             <Row>
                 <Col>
                     <form onSubmit={(e) => handleSubmit(e)}>
+                        <p>El usuario debe estar "Activo" para su edición</p>
                         <div className={styles.decorator} />{" "}
                         <span id={styles.title_decorator}>
                             {" "}
@@ -149,6 +160,7 @@ const EditUserForm = (props) => {
                                             value={state.name}
                                             onChange={handleChange("name")}
                                             required
+                                            disabled={initialStateUserAccount == false ? true : false}
                                         />
                                     </FormControl>
                                     {validation.name && (
@@ -173,6 +185,7 @@ const EditUserForm = (props) => {
                                             value={state.last_name}
                                             onChange={handleChange("last_name")}
                                             required
+                                            disabled={initialStateUserAccount == false ? true : false}
                                         />
                                     </FormControl>
                                     {validation.last_name && (
@@ -198,6 +211,7 @@ const EditUserForm = (props) => {
                                             onChange={handleChange("dni")}
                                             type="number"
                                             required
+                                            disabled={initialStateUserAccount == false ? true : false}
                                         />
                                     </FormControl>
                                     {validation.dni && (
@@ -226,6 +240,7 @@ const EditUserForm = (props) => {
                                             onChange={handleChange("email")}
                                             type="email"
                                             required
+                                            disabled={initialStateUserAccount == false ? true : false}
                                         />
                                     </FormControl>
                                     {validation.email && (
@@ -251,6 +266,7 @@ const EditUserForm = (props) => {
                                             onChange={handleChange("legajo")}
                                             type="number"
                                             required
+                                            disabled={initialStateUserAccount == false ? true : false}
                                         />
                                     </FormControl>
                                     {validation.legajo && (
@@ -280,6 +296,7 @@ const EditUserForm = (props) => {
                                             minDateMessage="La fecha no puede ser menor al día de hoy"
                                             maxDateMessage="La fecha no puede ser mayor al máximo permitido"
                                             required
+                                            disabled={initialStateUserAccount == false ? true : false}
                                         />
                                     </FormControl>
                                 </motion.li>
@@ -287,7 +304,7 @@ const EditUserForm = (props) => {
                         </Row>
 
                         <Row lg={12} md={12} sm={12} xs={12} className={styles.row_input_container}>
-                            <Col lg={4} md={4} sm={12} xs={12} className={fullscreen && styles.input_container}>
+                            <Col lg={6} md={6} sm={12} xs={12} className={fullscreen && styles.input_container}>
                                 <motion.li variants={item}>
                                     <FormControl variant="outlined">
                                         <TextField
@@ -298,6 +315,7 @@ const EditUserForm = (props) => {
                                             value={state.cargo}
                                             onChange={handleChange("cargo")}
                                             required
+                                            disabled={initialStateUserAccount == false ? true : false}
                                         />
                                     </FormControl>
                                     {validation.cargo && (
@@ -310,7 +328,7 @@ const EditUserForm = (props) => {
                                     )}
                                 </motion.li>
                             </Col>
-                            <Col lg={4} md={4} sm={12} xs={12} className={fullscreen && styles.input_container}>
+                            <Col lg={6} md={6} sm={12} xs={12} className={fullscreen && styles.input_container}>
                                 <motion.li variants={item}>
                                     <FormControl variant="outlined">
                                         <InputLabel id="groups">Tipo de Cuenta</InputLabel>
@@ -320,6 +338,7 @@ const EditUserForm = (props) => {
                                             value={state.groups.id || ''}
                                             onChange={handleChange("groups")}
                                             required
+                                            disabled={initialStateUserAccount == false ? true : false}
                                         >
                                             <MenuItem disabled value="">
                                                 <em>Seleccionar</em>
@@ -335,8 +354,9 @@ const EditUserForm = (props) => {
                                     </FormControl>
                                 </motion.li>
                             </Col>
-
-                            <Col lg={4} md={4} sm={12} xs={12} className={fullscreen && styles.input_container}>
+                        </Row>
+                        <Row lg={12} md={12} sm={12} xs={12} className={styles.row_input_container}>
+                            <Col lg={6} md={6} sm={12} xs={12} className={fullscreen && styles.input_container}>
                                 <motion.li variants={item}>
                                     <FormControl variant="outlined">
                                         <TextField
@@ -348,6 +368,7 @@ const EditUserForm = (props) => {
                                             onChange={handleChange("phone")}
                                             type="number"
                                             required
+                                            disabled={initialStateUserAccount == false ? true : false}
                                         />
                                     </FormControl>
                                     {validation.phone && (
@@ -358,6 +379,31 @@ const EditUserForm = (props) => {
                                             Esta campo no puede estar vacio
                                         </FormHelperText>
                                     )}
+                                </motion.li>
+                            </Col>
+                            <Col lg={6} md={6} sm={12} xs={12} className={fullscreen && styles.input_container}>
+                                <motion.li variants={item}>
+                                    <FormControl variant="outlined">
+                                        <InputLabel id="estado">Estado Usuario</InputLabel>
+                                        <Select
+                                            labelId="estado"
+                                            id="estado"
+                                            value={state.is_active}
+                                            onChange={handleChange("is_active")}
+                                            required
+                                        >
+                                            <MenuItem disabled value="">
+                                                <em>Seleccionar</em>
+                                            </MenuItem>
+                                            <MenuItem value="true">
+                                                <em>Activo</em>
+                                            </MenuItem>
+                                            <MenuItem value="false">
+                                                <em>Suspendido</em>
+                                            </MenuItem>
+
+                                        </Select>
+                                    </FormControl>
                                 </motion.li>
                             </Col>
                         </Row>
@@ -374,6 +420,7 @@ const EditUserForm = (props) => {
                                             value={state.direccion}
                                             onChange={handleChange("direccion")}
                                             required
+                                            disabled={initialStateUserAccount == false ? true : false}
                                         />
                                     </FormControl>
                                     {validation.direccion && (
@@ -398,6 +445,7 @@ const EditUserForm = (props) => {
                                             value={state.localidad}
                                             onChange={handleChange("localidad")}
                                             required
+                                            disabled={initialStateUserAccount == false ? true : false}
                                         />
                                     </FormControl>
                                     {validation.localidad && (
@@ -422,6 +470,7 @@ const EditUserForm = (props) => {
                                             value={state.provincia}
                                             onChange={handleChange("provincia")}
                                             required
+                                            disabled={initialStateUserAccount == false ? true : false}
                                         />
                                     </FormControl>
                                     {validation.provincia && (

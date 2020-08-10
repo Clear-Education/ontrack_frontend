@@ -28,13 +28,11 @@ import Alert from "react-s-alert";
 const Accounts = () => {
   const url = `${config.api_url}/users/list`;
 
-  /* const [dataUsers, setDataUsers] = useState(null); */
   const [isLoading, setIsLoading] = useState(false)
   const [selectedUser, setSelectedUser] = useState({});
   const [addUserModal, setAddUserModal] = useState(false);
   const [editUserModal, setEditUserModal] = useState(false);
-  const [showAlertDialog, setShowAlertDialog] = useState(false);
-
+  /*   const [showAlertDialog, setShowAlertDialog] = useState(false); */
 
 
   const user = useSelector((store) => store.user);
@@ -42,7 +40,6 @@ const Accounts = () => {
   const { data } = useSWR(url, () => {
     setIsLoading(true);
     return CrudUser.getUsers(user.user.token).then((result) => {
-      /* setDataUsers(result.data.results); */
       if (result.status == 200) {
         setIsLoading(false);
         return result.data.results;
@@ -52,23 +49,24 @@ const Accounts = () => {
   }
   );
 
-  const handleCloseAlertDialog = () => {
-    setShowAlertDialog(false);
-    setSelectedUser({});
-  };
 
-  const handleDelete = (data) => {
-    setShowAlertDialog(true);
-    setSelectedUser(data);
-  }
-
-  const handleDeleteConfirmation = () => {
-    setShowAlertDialog(false);
-    CrudUser.deleteUser(selectedUser, user.user.token).then(() => {
-      mutate(`${config.api_url}/users/list`);
-    });
-
-  }
+  /*   const handleCloseAlertDialog = () => {
+      setShowAlertDialog(false);
+      setSelectedUser({});
+    };
+  
+    const handleDelete = (data) => {
+      setShowAlertDialog(true);
+      setSelectedUser(data);
+    }
+  
+    const handleDeleteConfirmation = () => {
+      setShowAlertDialog(false);
+      CrudUser.deleteUser(selectedUser, user.user.token).then(() => {
+        mutate(`${config.api_url}/users/list`);
+      });
+  
+    } */
 
   const handleAddUserModal = (value) => {
     setAddUserModal(value);
@@ -76,13 +74,22 @@ const Accounts = () => {
 
   const handleSubmitNewUser = (e, data) => {
     e.preventDefault();
-    CrudUser.addUser(data, user.user.token).then(() => {
-      mutate(`${config.api_url}/users/list`);
+    CrudUser.addUser(data, user.user.token).then((result) => {
+      if (result.success == true) {
+        Alert.success("Usuario creado con éxito", {
+          position: "bottom",
+          effect: "stackslide",
+        });
+        mutate(`${config.api_url}/users/list`);
+      } else {
+        result.result.forEach((element) => {
+          Alert.error(element.message, {
+            position: "bottom",
+            effect: "stackslide",
+          });
+        });
+      }
     })
-      .catch(Alert.error("Error al crear usuario", {
-        position: "bottom",
-        effect: "stackslide",
-      }));
   }
 
   const handleEditUserModal = (value, data) => {
@@ -94,12 +101,43 @@ const Accounts = () => {
   const handleSubmitEditUser = (e, data) => {
     e.preventDefault();
     CrudUser.editUser(data, user.user.token).then((result) => {
-      mutate(`${config.api_url}/users/list`);
+      if (result.success == true) {
+        Alert.success("Usuario editado con éxito", {
+          position: "bottom",
+          effect: "stackslide",
+        });
+        mutate(`${config.api_url}/users/list`);
+      } else {
+        result.result.forEach((element) => {
+          Alert.error(element.message, {
+            position: "bottom",
+            effect: "stackslide",
+          });
+        });
+      }
     })
-      .catch(Alert.error("Error al editar usuario", {
-        position: "bottom",
-        effect: "stackslide",
-      }));;
+  }
+
+  const handleSubmitEditUserState = (e, data) => {
+    e.preventDefault();
+    CrudUser.editUserState(data, user.user.token).then((result) => {
+      console.log(data);
+      if (result.success == true) {
+        Alert.success("Se modificó el estado del usuario", {
+          position: "bottom",
+          effect: "stackslide",
+        });
+        mutate(`${config.api_url}/users/list`);
+      } else {
+        result.result.forEach((element) => {
+          Alert.error(element.message, {
+            position: "bottom",
+            effect: "stackslide",
+          });
+        });
+      }
+    })
+
   }
 
   const columns = [
@@ -137,6 +175,10 @@ const Accounts = () => {
       label: "Email",
     },
     {
+      name: "is_active",
+      label: "Estado",
+    },
+    {
       name: "actions",
       label: "Acciones",
       options: {
@@ -145,9 +187,9 @@ const Accounts = () => {
             <IconButton onClick={() => handleEditUserModal(true, data[dataIndex])}>
               <EditIcon />
             </IconButton>
-            <IconButton onClick={() => handleDelete(data[dataIndex])}>
+            {/*             <IconButton onClick={() => handleDelete(data[dataIndex])}>
               <Delete />
-            </IconButton>
+            </IconButton> */}
           </>)
         },
       },
@@ -201,6 +243,7 @@ const Accounts = () => {
             <MUIDataTable
               title={"Lista de Usuarios"}
               data={data?.map(user => {
+                const estado = user.is_active ? "Activo" : "Suspendido";
                 return [
                   user.id,
                   user.name,
@@ -208,7 +251,8 @@ const Accounts = () => {
                   user.dni,
                   user.legajo,
                   user.cargo,
-                  user.email
+                  user.email,
+                  estado
                 ]
               })}
               columns={columns}
@@ -241,13 +285,14 @@ const Accounts = () => {
             formComponent={
               <EditUserForm
                 handleSubmitEditUser={handleSubmitEditUser}
+                handleSubmitEditUserState={handleSubmitEditUserState}
                 user={selectedUser}
                 handleClose={handleEditUserModal} />
             }
           />
         }
 
-        {
+        {/*         {
           showAlertDialog ?
             <AlertDialog
               open={showAlertDialog}
@@ -256,7 +301,7 @@ const Accounts = () => {
               handleDeleteConfirmation={handleDeleteConfirmation}
             />
             : null
-        }
+        } */}
       </motion.div>
     </>
   )
