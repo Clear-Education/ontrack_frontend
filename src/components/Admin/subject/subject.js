@@ -8,36 +8,66 @@ import config from "../../../utils/config";
 import { IconButton } from "@material-ui/core";
 import EditIcon from '@material-ui/icons/Edit';
 import Delete from '@material-ui/icons/Delete';
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import BackgroundLoader from "../../commons/background_loader/background_loader";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import { getSubjectsService } from "../../../utils/subject/services/subject_services";
+import { getSubjectsService, addSubjectsService, editSubjectsService, deleteSubjectsService } from "../../../utils/subject/services/subject_services";
 import Modal from "../../commons/modals/generic_modal/modal";
-import AddSubjectForm from "./forms/addSubjectForm";
+import SubjectForm from "./forms/subjectForm";
+import DeleteForm from "./forms/deleteForm";
 
 const Subject = (props) => {
 
-    const year_url = `${config.api_url}/anio/{anio_id}/materia/list/`
-    const subject_url = `${config.api_url}/materia`
+    const year_url = `${config.api_url}/anio/2/materia/list/`
     const [selectedData, setSelectedData] = useState()
     const user = useSelector((store) => store.user);
     const [isLoading, setIsLoading] = useState(false)
 
 
-    let { data } = useSWR(subject_url, () => {
+    let { data } = useSWR(year_url, () => {
         setIsLoading(true);
         return getSubjectsService(user.user.token, null).then((result) => {
             setIsLoading(false)
+            return result.result
         })
     }
     );
+
+    async function addSubject(e, data) {
+        e.preventDefault();
+        let parseData = { ...data, anio: 2 }
+        setIsLoading(true);
+        return await addSubjectsService(user.user.token, parseData).then((result) => {
+            setIsLoading(false);
+            mutate(year_url);
+            return result;
+        })
+    }
+
+    async function editSubject(e, data) {
+        e.preventDefault();
+        setIsLoading(true);
+        return await editSubjectsService(user.user.token, data).then((result) => {
+            setIsLoading(false);
+            mutate(year_url);
+            return result;
+        })
+    }
+
+    async function deleteSubject(e, data) {
+        e.preventDefault();
+        setIsLoading(true);
+        return await deleteSubjectsService(user.user.token, data).then((result) => {
+            setIsLoading(false);
+            mutate(year_url);
+            return result;
+        })
+    }
 
 
     return (
         <>
             <Row lg={12} md={12} sm={12} xs={12}>
                 <Col lg={11} md={11} sm={11} xs={11} style={{ margin: 'auto' }}>
-                  <TitlePage title="Materias" />
+                    <TitlePage title="Materias" />
                     <div className={styles.structure_container}>
                         {isLoading && <BackgroundLoader show={isLoading} />}
                         <Row lg={12} md={12} sm={12} xs={12} style={{ margin: 'auto' }}>
@@ -47,7 +77,7 @@ const Subject = (props) => {
                                         <Row lg={12} md={12} sm={12} xs={12} key={i}>
                                             <Col lg={12} md={12} sm={12} xs={12} className={styles.structure_item_container}>
                                                 <Row lg={12} md={12} sm={12} xs={12} style={{ width: '100%' }} >
-
+ 
                                                     <Col lg={9} md={9} sm={9} xs={9} className={styles.detail_container}>
                                                         <div className={styles.color_item} style={{ backgroundColor: subject.color }} />
                                                         <span className={styles.name_item}>{subject.nombre.toUpperCase()}</span>
@@ -57,7 +87,7 @@ const Subject = (props) => {
                                                     <Col lg={3} md={3} sm={3} xs={3} className={styles.actions_container}>
                                                         <Modal
                                                             title="¿Seguro que deseas eliminar esta materia?"
-                                                            formComponent={<AddSubjectForm/>}
+                                                            formComponent={<DeleteForm data={selectedData} handleSubmitAction={deleteSubject} />}
                                                             button={
                                                                 <IconButton onClick={() => setSelectedData(subject)} >
                                                                     <Delete />
@@ -66,7 +96,7 @@ const Subject = (props) => {
                                                         />
                                                         <Modal
                                                             title="Editar Materia"
-                                                            formComponent={<AddSubjectForm/>}
+                                                            formComponent={<SubjectForm data={selectedData} handleSubmitAction={editSubject} />}
                                                             button={
                                                                 <IconButton onClick={() => setSelectedData(subject)} >
                                                                     <EditIcon />
@@ -88,7 +118,7 @@ const Subject = (props) => {
                             <Col lg={12} md={12} sm={12} xs={12} id={styles.add_new_structure}>
                                 <Modal
                                     title="Nueva Materia"
-                                    formComponent={<AddSubjectForm/>}
+                                    formComponent={<SubjectForm handleSubmitAction={addSubject} />}
                                     button={
                                         <button className="ontrack_btn add_btn">
                                             Nueva Materia

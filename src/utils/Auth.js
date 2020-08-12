@@ -16,7 +16,6 @@ export async function login(user, password) {
   return axios
     .post(`${config.api_url}/users/login/`, formData)
     .then((json) => {
-      console.log(json)
       if (json.status == 200) {
      const {
           name,

@@ -1,6 +1,5 @@
 const handleCrudErrors = (error) => {
     let response = {};
-    console.log({...error})
     if (error.response) {
       if (error.response.status === 400) {
         response = {
