@@ -121,7 +121,6 @@ const Accounts = () => {
   const handleSubmitEditUserState = (e, data) => {
     e.preventDefault();
     CrudUser.editUserState(data, user.user.token).then((result) => {
-      console.log(data);
       if (result.success == true) {
         Alert.success("Se modificó el estado del usuario", {
           position: "bottom",

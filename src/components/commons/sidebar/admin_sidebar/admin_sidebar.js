@@ -40,7 +40,6 @@ const AdminSideBar = () => {
   };
 
   const changeSelected = (element) => {
-    console.log(element);
     setSelected(element);
   };
 

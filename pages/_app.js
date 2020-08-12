@@ -10,7 +10,7 @@ import Header from '../src/components/commons/header/header';
 import { wrapper } from "../redux/store";
 import Head from "next/head";
 import Alert from "react-s-alert";
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import "react-s-alert/dist/s-alert-css-effects/stackslide.css";
 import SideBar from '../src/components/commons/sidebar';
 import { Row, Col } from 'react-bootstrap';
@@ -52,10 +52,34 @@ const App = ({ Component, pageProps, router }) => {
     }
   }, []);
 
-  /* useEffect(()=>{
-    window.onbeforeunload; Función que protege que el usuario recargue la página
-  },[router])
- */
+/* 
+
+//Código que protege de recargar la página
+
+  const browserTabcloseHandler = e => {
+    e.preventDefault();
+    e.returnValue = "";
+  };
+ 
+  useEffect(() => {
+    if (window) {
+      Router.beforePopState(() => {
+        const result = window.confirm("¿Seguro que quieres salir?");
+        return result;
+      });
+      window.onbeforeunload = browserTabcloseHandler;
+    }
+ 
+    return () => {
+      if (window) {
+        window.onbeforeunload = null;
+      }
+      Router.beforePopState(() => {
+        return true;
+      });
+    };
+  }, [router]); */
+ 
   return (
     <div>
       <Head>

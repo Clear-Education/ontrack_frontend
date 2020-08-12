@@ -126,7 +126,6 @@ const AddUserForm = (props) => {
         }
 
         setState({ ...state, [prop]: event.target.value });
-        console.log(state);
 
     };
 
@@ -142,7 +141,6 @@ const AddUserForm = (props) => {
     const handleChangeDate = (date) => {
         setDate(date);
         let formatedDate = convertDate(date);
-        console.log(formatedDate);
         setState({ ...state, ["date_of_birth"]: formatedDate });
     };
 
@@ -158,10 +156,8 @@ const AddUserForm = (props) => {
         if (validateForm) {
             props.handleSubmitNewUser(e, state);
             props.handleClose(false);
-            console.log("enviando")
         } else {
             e.preventDefault();
-            console.log("no se puede enviar.")
         }
     }
 

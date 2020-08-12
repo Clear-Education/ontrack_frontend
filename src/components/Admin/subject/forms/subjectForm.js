@@ -47,7 +47,7 @@ const VALIDATE_INITIAL_STATE = {
     color: false
 };
 
-const AddSubjectForm = (props) => {
+const SubjectForm = (props) => {
     const [state, setState] = useState(props.data ? props.data : INITIAL_STATE);
     const [validation, setValidation] = useState(VALIDATE_INITIAL_STATE);
     const [isLoading, setIsLoading] = useState(false)
@@ -77,13 +77,6 @@ const AddSubjectForm = (props) => {
             setIsLoading(false)
             if (result.success) {
                 props.handleClose(false);
-            } else {
-                result.result.forEach((element) => {
-                    Alert.error(element.message, {
-                        position: "bottom",
-                        effect: "stackslide",
-                    });
-                });
             }
         });
     }
@@ -172,7 +165,7 @@ const AddSubjectForm = (props) => {
     )
 }
 
-export default AddSubjectForm;
+export default SubjectForm;
 
 
 

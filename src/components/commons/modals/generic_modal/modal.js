@@ -28,10 +28,14 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const Modal = (props) => {
 
+
     const [show, setShow] = useState(false);
     const handleVisibilityModal = (value) => {
         setShow(value);
     }
+    
+    let form_component = {...props.formComponent};
+    form_component.props = {...props.formComponent.props,handleClose:handleVisibilityModal}
 
     return (
         <>
@@ -51,7 +55,7 @@ const Modal = (props) => {
                     <DialogTitle className={styles.modal_title}>{props.title}</DialogTitle>
                     <DialogContent>
                         <div>
-                            {props.formComponent}
+                            {form_component}
                         </div>
                     </DialogContent>
                 </Dialog>
