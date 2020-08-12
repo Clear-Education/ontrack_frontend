@@ -52,7 +52,10 @@ const App = ({ Component, pageProps, router }) => {
     }
   }, []);
 
-
+  /* useEffect(()=>{
+    window.onbeforeunload; Función que protege que el usuario recargue la página
+  },[router])
+ */
   return (
     <div>
       <Head>
@@ -71,42 +74,42 @@ const App = ({ Component, pageProps, router }) => {
       </Head>
       <Alert timeout={3000} stack={true} />
       <MuiPickersUtilsProvider utils={DateFnsUtils} locale={esLocale}>
-      {router.route.match(/(dashboard)/i) ? (
-       
-        <Row lg={12} md={12} sm={12} xs={12}>
-        <div>
-           <SideBar />
-        </div>
-        <Col 
-          id="dashboard_container"
-          className="center"
-          lg={10}
-          md={10}
-          sm={12}
-          xs={12}
-        >
-            <Header />
-            <Row lg={12} md={12} sm={12} xs={12}>
-              <Col
-                id="component_container"
-                className="center"
-                lg={12}
-                md={12}
-                sm={12}
-                xs={12}
-              >
+        {router.route.match(/(dashboard)/i) ? (
 
-                <Component {...pageProps} key={router.route} />
+          <Row lg={12} md={12} sm={12} xs={12}>
+            <div>
+              <SideBar />
+            </div>
+            <Col
+              id="dashboard_container"
+              className="center"
+              lg={10}
+              md={10}
+              sm={12}
+              xs={12}
+            >
+              <Header />
+              <Row lg={12} md={12} sm={12} xs={12}>
+                <Col
+                  id="component_container"
+                  className="center"
+                  lg={12}
+                  md={12}
+                  sm={12}
+                  xs={12}
+                >
 
-              </Col>
-            </Row>
-        </Col>
-      </Row>
-      ) :
+                  <Component {...pageProps} key={router.route} />
 
-        <Component {...pageProps} />
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+        ) :
 
-      }
+          <Component {...pageProps} />
+
+        }
       </MuiPickersUtilsProvider>
     </div>
 
