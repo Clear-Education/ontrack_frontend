@@ -13,6 +13,7 @@ import BackgroundLoader from "../../commons/background_loader/background_loader"
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { getSubjectsService } from "../../../utils/subject/services/subject_services";
 import Modal from "../../commons/modals/generic_modal/modal";
+import AddSubjectForm from "./forms/addSubjectForm";
 
 const Subject = (props) => {
 
@@ -56,7 +57,7 @@ const Subject = (props) => {
                                                     <Col lg={3} md={3} sm={3} xs={3} className={styles.actions_container}>
                                                         <Modal
                                                             title="¿Seguro que deseas eliminar esta materia?"
-                                                            form=""
+                                                            formComponent={<AddSubjectForm/>}
                                                             button={
                                                                 <IconButton onClick={() => setSelectedData(subject)} >
                                                                     <Delete />
@@ -65,7 +66,7 @@ const Subject = (props) => {
                                                         />
                                                         <Modal
                                                             title="Editar Materia"
-                                                            form=""
+                                                            formComponent={<AddSubjectForm/>}
                                                             button={
                                                                 <IconButton onClick={() => setSelectedData(subject)} >
                                                                     <EditIcon />
@@ -87,7 +88,7 @@ const Subject = (props) => {
                             <Col lg={12} md={12} sm={12} xs={12} id={styles.add_new_structure}>
                                 <Modal
                                     title="Nueva Materia"
-                                    form=""
+                                    formComponent={<AddSubjectForm/>}
                                     button={
                                         <button className="ontrack_btn add_btn">
                                             Nueva Materia

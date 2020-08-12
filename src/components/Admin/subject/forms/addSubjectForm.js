@@ -10,6 +10,7 @@ import styles from './styles.module.css'
 import { useState } from "react";
 import ColorPicker from 'material-ui-color-picker'
 
+
 const list = {
     visible: {
         opacity: 1,
@@ -35,17 +36,18 @@ const item = {
 
 const INITIAL_STATE = {
     nombre: '',
-    descripcion: '',
     color: '#000'
 }
 
+
+
+
 const VALIDATE_INITIAL_STATE = {
     nombre: false,
-    descripcion: false,
     color: false
 };
 
-const DepartmentForm = (props) => {
+const AddSubjectForm = (props) => {
     const [state, setState] = useState(props.data ? props.data : INITIAL_STATE);
     const [validation, setValidation] = useState(VALIDATE_INITIAL_STATE);
     const [isLoading, setIsLoading] = useState(false)
@@ -73,16 +75,16 @@ const DepartmentForm = (props) => {
         setIsLoading(true);
         props.handleSubmitAction(e, state).then((result) => {
             setIsLoading(false)
-            if(result.success){
-            props.handleClose(false);
-            }else {
+            if (result.success) {
+                props.handleClose(false);
+            } else {
                 result.result.forEach((element) => {
-                  Alert.error(element.message, {
-                    position: "bottom",
-                    effect: "stackslide",
-                  });
+                    Alert.error(element.message, {
+                        position: "bottom",
+                        effect: "stackslide",
+                    });
                 });
-              }
+            }
         });
     }
 
@@ -96,7 +98,6 @@ const DepartmentForm = (props) => {
             <Row>
                 <Col>
                     <form onSubmit={(e) => handleSubmit(e)}>
-
                         <Row lg={12} md={12} sm={12} xs={12} className={styles.row_input_container}>
                             <Col lg={12} md={12} sm={12} xs={12} className={styles.input_container}>
                                 <motion.li variants={item}>
@@ -112,30 +113,6 @@ const DepartmentForm = (props) => {
                                         />
                                     </FormControl>
                                     {validation.name && (
-                                        <FormHelperText
-                                            className="helper-text"
-                                            style={{ color: "rgb(182, 60, 47)" }}
-                                        >
-                                            Esta campo no puede estar vacio
-                                        </FormHelperText>
-                                    )}
-                                </motion.li>
-                            </Col>
-
-                            <Col lg={12} md={12} sm={12} xs={12} className={styles.input_container}>
-                                <motion.li variants={item}>
-                                    <FormControl variant="outlined">
-                                        <TextField
-                                            id="description"
-                                            name="description"
-                                            label="Descripción"
-                                            variant="outlined"
-                                            value={state.descripcion}
-                                            onChange={handleChange("descripcion")}
-                                            required
-                                        />
-                                    </FormControl>
-                                    {validation.last_name && (
                                         <FormHelperText
                                             className="helper-text"
                                             style={{ color: "rgb(182, 60, 47)" }}
@@ -182,7 +159,7 @@ const DepartmentForm = (props) => {
                                                 color="primary"
                                             />
                                             {" "}Guardando...
-                                        </button>
+                                </button>
                                     }
                                 </Col>
                             </Row>
@@ -193,11 +170,9 @@ const DepartmentForm = (props) => {
 
         </motion.span>
     )
-
-
 }
 
+export default AddSubjectForm;
 
-export default DepartmentForm
 
 

@@ -18,7 +18,7 @@ const handleCrudErrors = (error) => {
           unauthorized: true,
           result: [
             {
-              message: error.response.data.data.message,
+              message: error.response.data.detail,
             },
           ],
         };
@@ -59,7 +59,7 @@ const handleCrudErrors = (error) => {
           error: 409,
           result: [
             {
-              message: error.response.data.data[0].message,
+              message: error.response.data.detail
             },
           ],
         };

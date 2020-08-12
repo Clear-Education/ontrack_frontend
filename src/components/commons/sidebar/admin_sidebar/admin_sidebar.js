@@ -45,6 +45,7 @@ const AdminSideBar = () => {
   };
 
   return (
+    <>
     <div className={styles.sidebar_container}>
       <Row className="center" lg={12} md={12} sm={12} xs={12}>
         <Col
@@ -184,8 +185,8 @@ const AdminSideBar = () => {
         </Col>
 
       </Row>
-
     </div>
+    </>
   );
 };
 
