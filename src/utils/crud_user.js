@@ -1,5 +1,6 @@
 import config from './config';
 import axios from 'axios';
+import errorHandler from "./error_handler";
 
 const CrudUser = {
 
@@ -9,10 +10,18 @@ const CrudUser = {
                 Authorization: `Token ${auth_token}`,
             },
         })
-            .then((result) => {
-                return result;
+            .then((json) => {
+                let response = {
+                    success: true,
+                    result: json.data,
+                };
+
+                return response;
+
             })
-            .catch(error => error);
+            .catch((error) => {
+                return errorHandler(error);
+            });
     },
 
     async getUsers(auth_token) {
@@ -29,6 +38,7 @@ const CrudUser = {
     },
 
     async editUser(data, auth_token) {
+        const groups = data.groups.id;
         const {
             email,
             name,
@@ -37,9 +47,10 @@ const CrudUser = {
             last_name,
             cargo,
             legajo,
+            date_of_birth,
             direccion,
             localidad,
-            provincia,
+            provincia
         } = data;
 
         let dataEditUser = {
@@ -50,20 +61,54 @@ const CrudUser = {
             last_name,
             cargo,
             legajo,
+            date_of_birth,
+            groups,
             direccion,
             localidad,
-            provincia,
+            provincia
         }
+
         return axios
             .patch(`${config.api_url}/users/${data.id}/`, dataEditUser, {
                 headers: {
                     Authorization: `Token ${auth_token}`,
                 },
             })
-            .then((result) => {
-                return result;
+            .then((json) => {
+                let response = {
+                    success: true,
+                    result: json.data,
+                };
+
+                return response;
+
             })
-            .catch(error => error);
+            .catch((error) => {
+                return errorHandler(error);
+            });
+    },
+    async editUserState(data, auth_token) {
+        let { is_active } = data;
+        let dataEditUser = {
+            is_active
+        }
+        return axios.patch(`${config.api_url}/users/${data.id}/status/`, dataEditUser, {
+            headers: {
+                Authorization: `Token ${auth_token}`,
+            },
+        })
+            .then((json) => {
+                let response = {
+                    success: true,
+                    result: json.data,
+                };
+
+                return response;
+
+            })
+            .catch((error) => {
+                return errorHandler(error);
+            });
     },
 
     async deleteUser(data, auth_token) {
