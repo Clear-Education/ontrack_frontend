@@ -139,6 +139,7 @@ button:focus {
   color: white;
   transition: all 0.2s;
   border: none;
+  font-weight: 600;
 }
 
 .ontrack_btn:active {

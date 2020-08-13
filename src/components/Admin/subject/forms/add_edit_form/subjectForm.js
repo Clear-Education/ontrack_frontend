@@ -9,6 +9,7 @@ import Alert from "react-s-alert";
 import styles from './styles.module.css'
 import { useState } from "react";
 import ColorPicker from 'material-ui-color-picker'
+import ExamsTable from "../exams/exams_table";
 
 
 const list = {
@@ -138,6 +139,16 @@ const SubjectForm = (props) => {
                                     )}
                                 </motion.li>
                             </Col>
+
+                            <Col lg={12} md={12} sm={12} xs={12} className={styles.input_container}>
+                                <motion.li variants={item}>
+                                    {props.showTable ? 
+                                        <ExamsTable />
+                                        :
+                                        null
+                                    }
+                                </motion.li>
+                            </Col>
                         </Row>
 
                         <motion.li variants={item}>
@@ -160,7 +171,6 @@ const SubjectForm = (props) => {
                     </form>
                 </Col>
             </Row>
-
         </motion.span>
     )
 }

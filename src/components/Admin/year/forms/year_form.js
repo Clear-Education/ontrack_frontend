@@ -146,24 +146,30 @@ const YearForm = (props) => {
                                     )}
                                 </motion.li>
                             </Col>
+
+                            <Col lg={12} md={12} sm={12} xs={12} className={styles.input_container}>
+                                <motion.li variants={item}>
+
+                                    {!props.addModal ? <div className={styles.table_container}>
+                                        <div className={styles.decorator} />{" "}
+                                        <span id={styles.title_decorator}>
+                                            {" "}
+                                            {`Cursos de ${props.data.nombre}`}
+                                            {" "}
+                                        </span>
+                                        <div className={styles.decorator} />
+                                        <CoursesTable
+                                            data={state}
+                                            carrera={props.data.carrera}
+                                        />
+                                    </div> :
+                                        null
+
+                                    }
+
+                                </motion.li>
+                            </Col>
                         </Row>
-
-                        {!props.addModal ? <div className={styles.table_container}>
-                            <div className={styles.decorator} />{" "}
-                            <span id={styles.title_decorator}>
-                                {" "}
-                                {`Cursos de ${props.data.nombre}`}
-                                {" "}
-                            </span>
-                            <div className={styles.decorator} />
-                            <CoursesTable
-                                data={state}
-                                carrera={props.data.carrera}
-                            />
-                        </div> :
-                            null
-
-                        }
 
                         <motion.li variants={item}>
                             <Row lg={12} md={12} sm={12} xs={12} className="center" style={{ justifyContent: 'center' }}>

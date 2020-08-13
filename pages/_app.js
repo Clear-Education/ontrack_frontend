@@ -95,6 +95,7 @@ const App = ({ Component, pageProps, router }) => {
           integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
           crossOrigin="anonymous"
         />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"></link>
       </Head>
       <Alert timeout={3000} stack={true} />
       <MuiPickersUtilsProvider utils={DateFnsUtils} locale={esLocale}>

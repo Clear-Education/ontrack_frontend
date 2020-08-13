@@ -5,7 +5,7 @@ import errorHandler from "../../error_handler";
 
 export async function getSubjectsCrud(token,year_id){
     return await axios
-    .get(`${config.api_url}/anio/${2}/materia/list/`,{ //TODO cambiar cuando tenga year id
+    .get(`${config.api_url}/anio/${year_id}/materia/list/`,{ //TODO cambiar cuando tenga year id
         headers:{
             Authorization: `Token ${token}`
         }
