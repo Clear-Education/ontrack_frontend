@@ -49,7 +49,8 @@ const VALIDATE_INITIAL_STATE = {
 const YearForm = (props) => {
     const [state, setState] = useState(props.data ? props.data : INITIAL_STATE);
     const [validation, setValidation] = useState(VALIDATE_INITIAL_STATE);
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(false);
+
 
     const hadleValidation = (prop, value) => {
         setValidation({
@@ -87,13 +88,6 @@ const YearForm = (props) => {
         });
     }
 
-    //PARA AGREGAR UN AÑO CON CURSOS
-    const handleSaveCourses = (data) => {
-        setState({ ...state, ["cursos"]: data });
-        console.log(state);
-
-    }
-
     return (
         <motion.span
             initial="hidden"
@@ -103,7 +97,7 @@ const YearForm = (props) => {
         >
             <Row>
                 <Col>
-                    <form>
+                    <form onSubmit={(e) => handleSubmit(e)}>
                         <Row lg={12} md={12} sm={12} xs={12} className={styles.row_input_container}>
                             <Col lg={12} md={12} sm={12} xs={12} className={styles.input_container}>
                                 <motion.li variants={item}>
@@ -153,37 +147,42 @@ const YearForm = (props) => {
                                 </motion.li>
                             </Col>
                         </Row>
+
+                        {!props.addModal ? <div className={styles.table_container}>
+                            <div className={styles.decorator} />{" "}
+                            <span id={styles.title_decorator}>
+                                {" "}
+                                {`Cursos de ${props.data.nombre}`}
+                                {" "}
+                            </span>
+                            <div className={styles.decorator} />
+                            <CoursesTable
+                                data={state}
+                                carrera={props.data.carrera}
+                            />
+                        </div> :
+                            null
+
+                        }
+
+                        <motion.li variants={item}>
+                            <Row lg={12} md={12} sm={12} xs={12} className="center" style={{ justifyContent: 'center' }}>
+                                <Col>
+                                    {!isLoading ?
+                                        <button className="ontrack_btn_modal ontrack_btn add_btn" type="submit">Guardar</button>
+                                        :
+                                        <button className="ontrack_btn_modal ontrack_btn add_btn" disabled>
+                                            <CircularProgress
+                                                size={18}
+                                                color="primary"
+                                            />
+                                            {" "}Guardando...
+                                </button>
+                                    }
+                                </Col>
+                            </Row>
+                        </motion.li>
                     </form>
-
-
-                    <div className={styles.table_container}>
-                        <h5>Cursos del Año</h5>
-                        <CoursesTable
-                            data={state}
-                            handleSaveCourses={handleSaveCourses}
-                        />
-                    </div>
-
-                    <motion.li variants={item}>
-                        <Row lg={12} md={12} sm={12} xs={12} className="center" style={{ justifyContent: 'center' }}>
-                            <Col>
-                                {!isLoading ?
-                                    <button
-                                        className="ontrack_btn_modal ontrack_btn add_btn mb-5"
-                                        onClick={(e) => handleSubmit(e)}>Guardar</button>
-                                    :
-                                    <button className="ontrack_btn_modal ontrack_btn add_btn" disabled>
-                                        <CircularProgress
-                                            size={18}
-                                            color="primary"
-                                        />
-                                        {" "}Guardando...
-                                        </button>
-                                }
-                            </Col>
-                        </Row>
-                    </motion.li>
-
                 </Col>
             </Row>
 

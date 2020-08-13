@@ -2,13 +2,12 @@ import TitlePage from "../../commons/title_page/title_page";
 import { Row, Col } from "react-bootstrap";
 import styles from './year.module.css';
 import { useSelector } from "react-redux";
-import { getYears, newYear } from "../../../utils/crud_years";
+import { getYears } from "../../../utils/crud_years";
 
 import { useState } from "react";
 import useSWR, { mutate } from "swr";
 import config from "../../../utils/config";
 import Alert from "react-s-alert";
-import ModalAdd from "../../commons/modals/modal_add/modal_add";
 import YearForm from "./forms/year_form";
 import { IconButton } from "@material-ui/core";
 import EditIcon from '@material-ui/icons/Edit';
@@ -16,55 +15,51 @@ import Delete from '@material-ui/icons/Delete';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import BackgroundLoader from "../../commons/background_loader/background_loader";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import Modal from "../../commons/modals/generic_modal/modal";
+import { addYearsService, editYearsService, deleteYearsService } from "../../../utils/year/services/year_services";
+import DeleteForm from "../subject/forms/deleteForm";
+
+
 const Year = (props) => {
 
-    const url = `${config.api_url}/carrera/{carrera_id}/anio/list/`;
-    const [addYearModal, setAddYearModal] = useState(false)
-    const [editYeartModal, setEditYearModal] = useState(false)
-    const [deleteYeartModal, setDeleteYearModal] = useState(false)
+    const url = `${config.api_url}/carrera/${props.data}/anio/list/`;
     const [selectedData, setSelectedData] = useState()
     const user = useSelector((store) => store.user);
     const [isLoading, setIsLoading] = useState(false);
 
-    console.log(props.data);
 
-
-    const handleAddYearModal = (value) => {
-        setAddYearModal(value)
+    const handleNextStep = (year_id) => {
+        props.handleNextStep("subject", year_id);
     }
 
-    const handleEditYearModal = (value, data) => {
-        setEditYearModal(value)
-        setSelectedData(data);
-    }
-
-    async function handleSubmitNewYear(e, data) {
+    async function addYear(e, data) {
         e.preventDefault();
-        return await newYear(user.user.token, data, props.data).then((result) => {
+        return await addYearsService(user.user.token, data, props.data).then((result) => {
+            setIsLoading(false);
             mutate(url);
-            if (result.success) {
-                Alert.success("Año agregado correctamente", {
-                    position: "bottom",
-                    effect: "stackslide",
-                });
-            } else {
-                result.result.forEach((element) => {
-                    Alert.error(element.message, {
-                        position: "bottom",
-                        effect: "stackslide",
-                    });
-                });
-            }
             return result;
         })
     }
 
-
-
-    async function handleEditYear(e, data) {
-
+    async function editYear(e, data) {
+        e.preventDefault();
+        setIsLoading(true);
+        return await editYearsService(user.user.token, data).then((result) => {
+            setIsLoading(false);
+            mutate(url);
+            return result;
+        })
     }
 
+    async function deleteYear(e, data) {
+        e.preventDefault();
+        setIsLoading(true);
+        return await deleteYearsService(user.user.token, data).then((result) => {
+            setIsLoading(false);
+            mutate(url);
+            return result;
+        })
+    }
 
     let { data } = useSWR(url, () => {
         setIsLoading(true);
@@ -106,15 +101,29 @@ const Year = (props) => {
                                                     </Col>
 
                                                     <Col lg={3} md={3} sm={3} xs={3} className={styles.actions_container}>
+                                                        <Modal
+                                                            title="¿Seguro que deseas eliminar este año?"
+                                                            formComponent={<DeleteForm data={selectedData} handleSubmitAction={deleteYear} />}
+                                                            button={
+                                                                <IconButton onClick={() => setSelectedData(year)} >
+                                                                    <Delete />
+                                                                </IconButton>
+                                                            }
+                                                        />
 
-                                                        <IconButton onClick={() => handleDeleteDepartmentModal(true, year)} >
-                                                            <Delete />
-                                                        </IconButton>
-
-                                                        <IconButton onClick={() => handleEditYearModal(true, year)}>
-                                                            <EditIcon />
-                                                        </IconButton>
-
+                                                        <Modal
+                                                            title="Editar Año"
+                                                            formComponent={<YearForm
+                                                                data={selectedData}
+                                                                handleSubmitAction={editYear}
+                                                                addModal={false}
+                                                            />}
+                                                            button={
+                                                                <IconButton onClick={() => setSelectedData(year)} >
+                                                                    <EditIcon />
+                                                                </IconButton>
+                                                            }
+                                                        />
                                                         <IconButton onClick={() => handleNextStep(year.id)}>
                                                             <ArrowForwardIosIcon />
                                                         </IconButton>
@@ -130,38 +139,17 @@ const Year = (props) => {
                             </Col>
 
                             <Col lg={12} md={12} sm={12} xs={12} id={styles.add_new_structure}>
-                                <button
-                                    className="ontrack_btn add_btn"
-                                    onClick={() => handleAddYearModal(true)}>
-                                    Nuevo Año
-                                </button>
-                                <button onClick={() => props.handleNextStep('subject')}>Materias</button>
-                                {addYearModal &&
-                                    <ModalAdd
-                                        title="Nuevo Año"
-                                        handleClose={handleAddYearModal}
-                                        formComponent={
-                                            <YearForm
-                                                handleSubmitAction={handleSubmitNewYear}
-                                                handleClose={handleAddYearModal}
-                                            />
-
-                                        }
-                                    />
-                                }
-                                {editYeartModal &&
-                                    <ModalAdd
-                                        title="Editar Año"
-                                        handleClose={handleEditYearModal}
-                                        formComponent={
-                                            <YearForm
-                                                handleSubmitAction={handleEditYear}
-                                                data={selectedData}
-                                                handleClose={handleEditYearModal}
-                                            />
-                                        }
-                                    />
-                                }
+                                <Modal
+                                    title="Nuevo Año"
+                                    formComponent={<YearForm
+                                        handleSubmitAction={addYear}
+                                        addModal={true} />}
+                                    button={
+                                        <button className="ontrack_btn add_btn">
+                                            Nuevo Año
+                                        </button>
+                                    }
+                                />
                             </Col>
                         </Row>
                     </div>

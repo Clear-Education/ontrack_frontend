@@ -75,3 +75,20 @@ transform: scale(1.007);
     display: flex;
     align-items: center;
 }
+
+.decorator {
+    display: inline-block;
+    height: 1px;
+    background-color: #bebebe50;
+    width: 100%;
+    margin-bottom: 3px;
+  }
+  
+
+#title_decorator {
+    color: grey;
+    font-size: 15px;
+    padding: 10px;
+    margin-top: 10px;
+    display: inline-block;
+  }

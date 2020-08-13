@@ -17,6 +17,8 @@ import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import { useState } from 'react';
+import { useSelector } from "react-redux";
+import { addCoursesService, editCoursesService, deleteCoursesService } from '../../../../utils/course/services/course_services';
 
 const tableIcons = {
     Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -38,90 +40,91 @@ const tableIcons = {
     ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
 };
 
-
 export default function CoursesTable(props) {
     const [yearCourses, setYearCourses] = useState(props.data.cursos !== [] ? props.data.cursos : []);
+    const user = useSelector((store) => store.user);
     const [state, setState] = React.useState({
         columns: [
-            { title: 'Name', field: 'name' },
+            /* { title: 'id', field: 'id', editable: 'never' }, */
+            {
+                title: '', field: 'id', editable: 'never', render: () => null,
+                editComponent: props => (
+                    <input
+                        type="text"
+                        value={props.value}
+                        onChange={e => props.onChange(e.target.value)}
+                    />
+                )
+            },
+            { title: 'Nombre', field: 'nombre' },
+
         ],
         data:
             props.data ?
                 props.data.cursos.map((curso) => {
                     return {
-                        name: curso.nombre
+                        id: curso.id,
+                        nombre: curso.nombre
                     }
                 }) :
                 [{}]
         ,
     });
 
-    const handleSaveCourses = () => {
-        props.handleSaveCourses(yearCourses);
-    }
-
 
     return (
-        <>
-            <MaterialTable
-                title="Cursos"
-                columns={state.columns}
-                data={state.data}
-                icons={tableIcons}
-                editable={{
-                    /*                     onRowAdd: (newData) => {
-                                            addNewCourseService(token, data).then
-                                            new Promise((resolve) => {
-                                                setTimeout(() => {
-                                                    resolve();
-                                                    setState((prevState) => {
-                                                        const data = [...prevState.data];
-                                                        data.push(newData);
-                                                        return { ...prevState, data };
-                                                    });
-                                                    const coursesCopy = [...yearCourses];
-                                                    const newCourse = { name: newData.name };
-                                                    coursesCopy.push(newCourse);
-                                                    setYearCourses(coursesCopy);
-                                                }, 600);
-                                            }, */
-                    onRowUpdate: (newData, oldData) =>
-                        new Promise((resolve) => {
-                            setTimeout(() => {
-                                resolve();
-                                if (oldData) {
-                                    setState((prevState) => {
-                                        const data = [...prevState.data];
-                                        data[data.indexOf(oldData)] = newData;
-                                        return { ...prevState, data };
-                                    });
-                                    const coursesCopy = [...yearCourses];
-                                    const newCourse = { name: newData.name };
-                                    coursesCopy[coursesCopy.indexOf(oldData) + 1] = newCourse;
-                                    setYearCourses(coursesCopy);
-                                }
-                            }, 600);
-                        }),
-                    onRowDelete: (oldData) =>
-                        new Promise((resolve) => {
-                            setTimeout(() => {
-                                resolve();
-                                setState((prevState) => {
-                                    const data = [...prevState.data];
-                                    data.splice(data.indexOf(oldData), 1);
-                                    return { ...prevState, data };
-                                });
-                                const coursesCopy = [...yearCourses];
-                                coursesCopy.splice(coursesCopy.indexOf(oldData) + 1, 1);
-                                setYearCourses(coursesCopy);
+        <MaterialTable
+            title=""
+            columns={state.columns}
+            data={state.data}
+            icons={tableIcons}
+            editable={{
+                onRowAdd: (newData) => {
+                    setState((prevState) => {
+                        const data = [...prevState.data];
+                        data.push(newData);
+                        return { ...prevState, data };
+                    });
+                    const { nombre } = newData;
+                    let data = {
+                        nombre,
+                        anio: props.data.id,
+                    }
 
-                            }, 600);
-                        }),
-                }}
-            />
-            <div className="d-flex justify-content-end mt-3">
-                <button className=" ontrack_btn cancel_btn" onClick={() => handleSaveCourses()}>Guardar Cursos</button>
-            </div>
-        </>
+                    return addCoursesService(user.user.token, data).then((result) => {
+                        return result;
+                    })
+
+                },
+                onRowUpdate: (newData, oldData) => {
+                    if (oldData) {
+                        setState((prevState) => {
+                            const data = [...prevState.data];
+                            data[data.indexOf(oldData)] = newData;
+                            return { ...prevState, data };
+                        });
+                    }
+                    const { id, nombre } = newData;
+                    let data = {
+                        id,
+                        nombre
+                    }
+                    return editCoursesService(user.user.token, data).then((result) => {
+                        return result;
+                    })
+                },
+                onRowDelete: (oldData) => {
+                    setState((prevState) => {
+                        const data = [...prevState.data];
+                        data.splice(data.indexOf(oldData), 1);
+                        return { ...prevState, data };
+                    });
+                    const { id } = oldData;
+                    return deleteCoursesService(user.user.token, id).then((result) => {
+                        return result;
+                    })
+                },
+            }}
+        />
     );
 }
