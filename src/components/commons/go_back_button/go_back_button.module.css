@@ -1,0 +1,9 @@
+.go_back_button{
+    position: absolute;
+    left: 15px;
+    top: 20px;
+    padding: 10px;
+    width: 100px;
+    background-color: var(--main-color-dark);
+    z-index: 999;
+}

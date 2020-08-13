@@ -11,20 +11,25 @@ import Delete from '@material-ui/icons/Delete';
 import BackgroundLoader from "../../commons/background_loader/background_loader";
 import { getSubjectsService, addSubjectsService, editSubjectsService, deleteSubjectsService } from "../../../utils/subject/services/subject_services";
 import Modal from "../../commons/modals/generic_modal/modal";
-import SubjectForm from "./forms/subjectForm";
-import DeleteForm from "./forms/deleteForm";
+import SubjectForm from "./forms/add_edit_form/subjectForm";
+import DeleteForm from "./forms/delete_form/deleteForm";
+import GoBackButton from "../../commons/go_back_button/go_back_button";
 
 const Subject = (props) => {
 
-    const year_url = `${config.api_url}/anio/2/materia/list/`
+    const year_url = `${config.api_url}/anio/${props.data}/materia/list/`
     const [selectedData, setSelectedData] = useState()
     const user = useSelector((store) => store.user);
     const [isLoading, setIsLoading] = useState(false)
 
 
+    const handleBackStep = () => {
+        props.handleNextStep("year");
+    }
+
     let { data } = useSWR(year_url, () => {
         setIsLoading(true);
-        return getSubjectsService(user.user.token, null).then((result) => {
+        return getSubjectsService(user.user.token, props.data).then((result) => {
             setIsLoading(false)
             return result.result
         })
@@ -33,7 +38,7 @@ const Subject = (props) => {
 
     async function addSubject(e, data) {
         e.preventDefault();
-        let parseData = { ...data, anio: 2 }
+        let parseData = { ...data, anio: props.data }
         setIsLoading(true);
         return await addSubjectsService(user.user.token, parseData).then((result) => {
             setIsLoading(false);
@@ -67,6 +72,7 @@ const Subject = (props) => {
         <>
             <Row lg={12} md={12} sm={12} xs={12}>
                 <Col lg={11} md={11} sm={11} xs={11} style={{ margin: 'auto' }}>
+                    <GoBackButton action={handleBackStep}/>
                     <TitlePage title="Materias" />
                     <div className={styles.structure_container}>
                         {isLoading && <BackgroundLoader show={isLoading} />}
@@ -96,7 +102,7 @@ const Subject = (props) => {
                                                         />
                                                         <Modal
                                                             title="Editar Materia"
-                                                            formComponent={<SubjectForm data={selectedData} handleSubmitAction={editSubject} />}
+                                                            formComponent={<SubjectForm data={selectedData} handleSubmitAction={editSubject} showTable={true}/>}
                                                             button={
                                                                 <IconButton onClick={() => setSelectedData(subject)} >
                                                                     <EditIcon />

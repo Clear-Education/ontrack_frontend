@@ -17,7 +17,8 @@ import BackgroundLoader from "../../commons/background_loader/background_loader"
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Modal from "../../commons/modals/generic_modal/modal";
 import { addYearsService, editYearsService, deleteYearsService } from "../../../utils/year/services/year_services";
-import DeleteForm from "../subject/forms/deleteForm";
+import DeleteForm from "../subject/forms/delete_form/deleteForm";
+import GoBackButton from "../../commons/go_back_button/go_back_button";
 
 
 const Year = (props) => {
@@ -30,6 +31,10 @@ const Year = (props) => {
 
     const handleNextStep = (year_id) => {
         props.handleNextStep("subject", year_id);
+    }
+
+    const handleBackStep = () => {
+        props.handleNextStep("department");
     }
 
     async function addYear(e, data) {
@@ -83,6 +88,7 @@ const Year = (props) => {
         <>
             <Row lg={12} md={12} sm={12} xs={12}>
                 <Col lg={11} md={11} sm={11} xs={11} style={{ margin: 'auto' }}>
+                    <GoBackButton action={handleBackStep}/>
                     <TitlePage title="Años" />
                     <div className={styles.structure_container}>
                         {isLoading && <BackgroundLoader show={isLoading} />}
