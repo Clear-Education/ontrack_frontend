@@ -10,6 +10,11 @@ import styles from './styles.module.css'
 import { useState } from "react";
 import ColorPicker from 'material-ui-color-picker'
 import ExamsTable from "../exams/exams_table";
+import useSWR from "swr";
+import { getSchoolYearService } from "../../../../../utils/school_year/services/school_year_services";
+import config from "../../../../../utils/config";
+import { useSelector } from "react-redux";
+import { MenuItem, Select, InputLabel } from "@material-ui/core";
 
 
 const list = {
@@ -37,21 +42,23 @@ const item = {
 
 const INITIAL_STATE = {
     nombre: '',
-    color: '#000'
+    color: '#000',
+    anio_lectivo: ''
 }
-
-
-
 
 const VALIDATE_INITIAL_STATE = {
     nombre: false,
-    color: false
+    color: false,
+    anio_lectivo: false
 };
 
 const SubjectForm = (props) => {
     const [state, setState] = useState(props.data ? props.data : INITIAL_STATE);
     const [validation, setValidation] = useState(VALIDATE_INITIAL_STATE);
     const [isLoading, setIsLoading] = useState(false)
+    const user = useSelector((store) => store.user);
+    const [schoolYearData, setSchoolYearData] = useState();
+    const school_year_url = `${config.api_url}/anio_lectivo/list/`;
 
     const hadleValidation = (prop, value) => {
         setValidation({
@@ -62,7 +69,10 @@ const SubjectForm = (props) => {
 
     const handleChange = (prop) => (event) => {
 
-        hadleValidation(prop, event.target.value);
+        if (prop !== "anio_lectivo") {
+            hadleValidation(prop, event.target.value);
+        }
+
         setState({ ...state, [prop]: event.target.value })
 
     };
@@ -81,6 +91,16 @@ const SubjectForm = (props) => {
             }
         });
     }
+
+
+    useSWR(school_year_url, () => {
+        setIsLoading(true);
+        return getSchoolYearService(user.user.token).then((result) => {
+            setIsLoading(false)
+            setSchoolYearData(result.result);
+        })
+    }
+    );
 
     return (
         <motion.span
@@ -139,23 +159,10 @@ const SubjectForm = (props) => {
                                     )}
                                 </motion.li>
                             </Col>
-
                             <Col lg={12} md={12} sm={12} xs={12} className={styles.input_container}>
                                 <motion.li variants={item}>
-                                    {props.showTable ? 
-                                        <ExamsTable />
-                                        :
-                                        null
-                                    }
-                                </motion.li>
-                            </Col>
-                        </Row>
-
-                        <motion.li variants={item}>
-                            <Row lg={12} md={12} sm={12} xs={12} className="center" style={{ justifyContent: 'center' }}>
-                                <Col>
                                     {!isLoading ?
-                                        <button className="ontrack_btn_modal ontrack_btn add_btn" type="submit">Guardar</button>
+                                        <button className="ontrack_btn_modal ontrack_btn add_btn" type="submit">Guardar Materia</button>
                                         :
                                         <button className="ontrack_btn_modal ontrack_btn add_btn" disabled>
                                             <CircularProgress
@@ -165,9 +172,40 @@ const SubjectForm = (props) => {
                                             {" "}Guardando...
                                 </button>
                                     }
-                                </Col>
-                            </Row>
-                        </motion.li>
+                                </motion.li>
+                            </Col>
+                            <Col lg={12} md={12} sm={12} xs={12} className={styles.input_container}>
+                                <motion.li variants={item}>
+                                    {props.showTable ?
+                                        <>
+                                            <FormControl variant="outlined" style={{ marginBottom: '20px' }}>
+                                                <InputLabel id="institucion">Año Lectivo</InputLabel>
+                                                <Select
+                                                    labelId="anio_lectivo"
+                                                    id="anio_lectivo"
+                                                    value={state.anio_lectivo ? state.anio_lectivo : "Seleccionar"}
+                                                    onChange={handleChange("anio_lectivo")}
+                                                >
+                                                    <MenuItem value="Seleccionar">
+                                                        <em>Seleccionar</em>
+                                                    </MenuItem>
+                                                    {schoolYearData && schoolYearData.map((schoolYear) => {
+                                                        return (
+                                                            <MenuItem value={schoolYear.id} key={schoolYear.id}>{schoolYear.nombre}</MenuItem>
+                                                        )
+                                                    })}
+                                                </Select>
+                                            </FormControl>
+                                            <ExamsTable subject={props.data} schoolYear={state.anio_lectivo} />
+                                        </>
+                                        :
+                                        null
+                                    }
+                                </motion.li>
+                            </Col>
+                        </Row>
+
+
                     </form>
                 </Col>
             </Row>

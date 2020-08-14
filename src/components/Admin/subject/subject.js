@@ -15,9 +15,10 @@ import SubjectForm from "./forms/add_edit_form/subjectForm";
 import DeleteForm from "./forms/delete_form/deleteForm";
 import GoBackButton from "../../commons/go_back_button/go_back_button";
 
+
 const Subject = (props) => {
 
-    const year_url = `${config.api_url}/anio/${props.data}/materia/list/`
+    const url = `${config.api_url}/anio/${props.data}/materia/list/`
     const [selectedData, setSelectedData] = useState()
     const user = useSelector((store) => store.user);
     const [isLoading, setIsLoading] = useState(false)
@@ -27,7 +28,7 @@ const Subject = (props) => {
         props.handleNextStep("year");
     }
 
-    let { data } = useSWR(year_url, () => {
+    let { data } = useSWR(url, () => {
         setIsLoading(true);
         return getSubjectsService(user.user.token, props.data).then((result) => {
             setIsLoading(false)
@@ -36,13 +37,15 @@ const Subject = (props) => {
     }
     );
 
+
+
     async function addSubject(e, data) {
         e.preventDefault();
         let parseData = { ...data, anio: props.data }
         setIsLoading(true);
         return await addSubjectsService(user.user.token, parseData).then((result) => {
             setIsLoading(false);
-            mutate(year_url);
+            mutate(url);
             return result;
         })
     }
@@ -52,7 +55,7 @@ const Subject = (props) => {
         setIsLoading(true);
         return await editSubjectsService(user.user.token, data).then((result) => {
             setIsLoading(false);
-            mutate(year_url);
+            mutate(url);
             return result;
         })
     }
@@ -62,7 +65,7 @@ const Subject = (props) => {
         setIsLoading(true);
         return await deleteSubjectsService(user.user.token, data).then((result) => {
             setIsLoading(false);
-            mutate(year_url);
+            mutate(url);
             return result;
         })
     }

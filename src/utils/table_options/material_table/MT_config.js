@@ -27,7 +27,7 @@ export const MTConfig = {
 
     options:{
         searchFieldStyle: { width: '30%', margin: 'auto', marginRight: '0px' },
-        actionsColumnIndex: -1
+        actionsColumnIndex: -1,
     },
     
     components:{

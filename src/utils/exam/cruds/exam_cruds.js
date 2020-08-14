@@ -3,9 +3,9 @@ import axios from 'axios';
 import errorHandler from "../../error_handler";
 
 
-export async function getSchoolYearCrud(token){
+export async function getExamsCrud(token,subject_id){
     return await axios
-    .get(`${config.api_url}/anio_lectivo/list/`,{ 
+    .get(`${config.api_url}/materia/${subject_id}/evaluacion/list/`,{ //TODO cambiar cuando tenga year id
         headers:{
             Authorization: `Token ${token}`
         }
@@ -22,9 +22,9 @@ export async function getSchoolYearCrud(token){
     });
 }
 
-export async function addSchoolYearCrud(token,data){
+export async function addExamsCrud(token,data){
     return await axios
-    .post(`${config.api_url}/anio_lectivo/`,data,{
+    .post(`${config.api_url}/evaluacion/`,data,{
         headers:{
             Authorization: `Token ${token}`
         }
@@ -43,12 +43,9 @@ export async function addSchoolYearCrud(token,data){
 
 
 
-export async function editSchoolYearCrud(token,data){
-  const parsedData = {
-
-  }
+export async function editExamsCrud(token,data){
   return await axios
-  .patch(`${config.api_url}/anio_lectivo/${data.id}/`,parsedData,{
+  .put(`${config.api_url}/evaluacion/`,data,{
       headers:{
           Authorization: `Token ${token}`
       }
@@ -67,12 +64,18 @@ export async function editSchoolYearCrud(token,data){
 
 
 
-export async function deleteSchoolYearCrud(token,data){
+export async function deleteExamsCrud(token,data){
+  const parseData = {
+    anio_lectivo:data.anio_lectivo,
+    materia: data.materia
+  }
+  debugger;
   return await axios
-  .delete(`${config.api_url}/anio_lectivo/${data.id}/`,{ 
+  .delete(`${config.api_url}/evaluacion/`,{ 
       headers:{
-          Authorization: `Token ${token}`
-      }
+          Authorization: `Token 984b229bf46e444407c3ca65a9be87b8d3bc37eb`
+      },
+      data: parseData
   })
   .then((json) => {
     let response = {

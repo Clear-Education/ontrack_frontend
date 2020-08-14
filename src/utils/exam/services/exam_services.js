@@ -1,9 +1,9 @@
-import { getSchoolYearCrud, addSchoolYearCrud, deleteSchoolYearCrud, editSchoolYearCrud } from "../cruds/school_year_cruds";
+import { getExamsCrud, addExamsCrud, deleteExamsCrud, editExamsCrud } from "../cruds/exam_cruds";
 import Alert from "react-s-alert";
 
 
-export async function getSchoolYearService(token){
-    return await getSchoolYearCrud(token).then((result)=>{
+export async function getExamsService(token,subject_id){
+    return await getExamsCrud(token,subject_id).then((result)=>{
         if (result.success) {
             
           } else {
@@ -18,8 +18,8 @@ export async function getSchoolYearService(token){
     })
 }
 
-export async function addSchoolYearService(token,data){
-  return await addSchoolYearCrud(token,data).then((result)=>{
+export async function addExamsService(token,data){
+  return await addExamsCrud(token,data).then((result)=>{
       if (result.success) {
           
         } else {
@@ -35,10 +35,10 @@ export async function addSchoolYearService(token,data){
 }
 
 
-export async function editSchoolYearService(token,data){
-  return await editSchoolYearCrud(token,data).then((result)=>{
+export async function editExamsService(token,data){
+    return await editExamsCrud(token,data).then((result)=>{
       if (result.success) {
-        Alert.success("Año lectivo editado correctamente", {
+        Alert.success("Exámen editado correctamente", {
           position: "bottom",
           effect: "stackslide",
         });
@@ -54,10 +54,15 @@ export async function editSchoolYearService(token,data){
   })
 }
 
-export async function deleteSchoolYearService(token,data){
-  return await deleteSchoolYearCrud(token,data).then((result)=>{
+export async function deleteExamsService(token,data){
+  console.log(data);
+  let parsedData= {
+    anio_lectivo: data.anio_lectivo,
+    materia: data.materia
+  }
+  return await deleteExamsCrud(token,parsedData).then((result)=>{
       if (result.success) {
-        Alert.success("Año lectivo eliminado correctamente", {
+        Alert.success("Exámen eliminado correctamente", {
           position: "bottom",
           effect: "stackslide",
         });
