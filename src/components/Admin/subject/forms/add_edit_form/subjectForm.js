@@ -143,7 +143,7 @@ const SubjectForm = (props) => {
                             <Col lg={12} md={12} sm={12} xs={12} className={styles.input_container}>
                                 <motion.li variants={item}>
                                     {props.showTable ? 
-                                        <ExamsTable />
+                                        <ExamsTable data={props.data} />
                                         :
                                         null
                                     }
