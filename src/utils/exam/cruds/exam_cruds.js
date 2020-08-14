@@ -44,12 +44,8 @@ export async function addExamsCrud(token,data){
 
 
 export async function editExamsCrud(token,data){
-  const parsedData = {
-    nombre: data.nombre,
-    color: data.color
-  }
   return await axios
-  .put(`${config.api_url}/evaluacion/${data.id}/`,parsedData,{
+  .put(`${config.api_url}/evaluacion/`,data,{
       headers:{
           Authorization: `Token ${token}`
       }
@@ -69,11 +65,17 @@ export async function editExamsCrud(token,data){
 
 
 export async function deleteExamsCrud(token,data){
+  const parseData = {
+    anio_lectivo:data.anio_lectivo,
+    materia: data.materia
+  }
+  debugger;
   return await axios
-  .delete(`${config.api_url}/evaluacion/${data.id}/`,{ 
+  .delete(`${config.api_url}/evaluacion/`,{ 
       headers:{
-          Authorization: `Token ${token}`
-      }
+          Authorization: `Token 984b229bf46e444407c3ca65a9be87b8d3bc37eb`
+      },
+      data: parseData
   })
   .then((json) => {
     let response = {

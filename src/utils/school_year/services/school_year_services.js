@@ -1,9 +1,9 @@
-import { getExamsCrud, addExamsCrud, deleteExamsCrud, editExamsCrud } from "../cruds/exam_cruds";
+import { getSchoolYearCrud, addSchoolYearCrud, deleteSchoolYearCrud, editSchoolYearCrud } from "../cruds/school_year_cruds";
 import Alert from "react-s-alert";
 
 
-export async function getExamsService(token,subject_id){
-    return await getExamsCrud(token,subject_id).then((result)=>{
+export async function getSchoolYearService(token){
+    return await getSchoolYearCrud(token).then((result)=>{
         if (result.success) {
             
           } else {
@@ -18,8 +18,8 @@ export async function getExamsService(token,subject_id){
     })
 }
 
-export async function addExamsService(token,data){
-  return await addExamsCrud(token,data).then((result)=>{
+export async function addSchoolYearService(token,data){
+  return await addSchoolYearCrud(token,data).then((result)=>{
       if (result.success) {
           
         } else {
@@ -35,10 +35,10 @@ export async function addExamsService(token,data){
 }
 
 
-export async function editExamsService(token,data){
-    return await editExamsCrud(token,data).then((result)=>{
+export async function editSchoolYearService(token,data){
+  return await editSchoolYearCrud(token,data).then((result)=>{
       if (result.success) {
-        Alert.success("Exámen editado correctamente", {
+        Alert.success("Año lectivo editado correctamente", {
           position: "bottom",
           effect: "stackslide",
         });
@@ -54,15 +54,10 @@ export async function editExamsService(token,data){
   })
 }
 
-export async function deleteExamsService(token,data){
-  console.log(data);
-  let parsedData= {
-    anio_lectivo: data.anio_lectivo,
-    materia: data.materia
-  }
-  return await deleteExamsCrud(token,parsedData).then((result)=>{
+export async function deleteSchoolYearService(token,data){
+  return await deleteSchoolYearCrud(token,data).then((result)=>{
       if (result.success) {
-        Alert.success("Exámen eliminado correctamente", {
+        Alert.success("Año lectivo eliminado correctamente", {
           position: "bottom",
           effect: "stackslide",
         });

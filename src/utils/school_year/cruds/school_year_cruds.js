@@ -3,9 +3,9 @@ import axios from 'axios';
 import errorHandler from "../../error_handler";
 
 
-export async function getSubjectsCrud(token,year_id){
+export async function getSchoolYearCrud(token){
     return await axios
-    .get(`${config.api_url}/anio/${year_id}/materia/list/`,{
+    .get(`${config.api_url}/anio_lectivo/list/`,{ 
         headers:{
             Authorization: `Token ${token}`
         }
@@ -22,9 +22,9 @@ export async function getSubjectsCrud(token,year_id){
     });
 }
 
-export async function addSubjectsCrud(token,data){
+export async function addSchoolYearCrud(token,data){
     return await axios
-    .post(`${config.api_url}/materia/`,data,{
+    .post(`${config.api_url}/anio_lectivo/`,data,{
         headers:{
             Authorization: `Token ${token}`
         }
@@ -43,13 +43,12 @@ export async function addSubjectsCrud(token,data){
 
 
 
-export async function editSubjectsCrud(token,data){
+export async function editSchoolYearCrud(token,data){
   const parsedData = {
-    nombre: data.nombre,
-    color: data.color
+
   }
   return await axios
-  .patch(`${config.api_url}/materia/${data.id}/`,parsedData,{
+  .patch(`${config.api_url}/anio_lectivo/${data.id}/`,parsedData,{
       headers:{
           Authorization: `Token ${token}`
       }
@@ -68,9 +67,9 @@ export async function editSubjectsCrud(token,data){
 
 
 
-export async function deleteSubjectsCrud(token,data){
+export async function deleteSchoolYearCrud(token,data){
   return await axios
-  .delete(`${config.api_url}/materia/${data.id}/`,{ 
+  .delete(`${config.api_url}/anio_lectivo/${data.id}/`,{ 
       headers:{
           Authorization: `Token ${token}`
       }

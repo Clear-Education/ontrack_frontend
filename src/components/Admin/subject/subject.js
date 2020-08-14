@@ -15,6 +15,7 @@ import SubjectForm from "./forms/add_edit_form/subjectForm";
 import DeleteForm from "./forms/delete_form/deleteForm";
 import GoBackButton from "../../commons/go_back_button/go_back_button";
 
+
 const Subject = (props) => {
 
     const url = `${config.api_url}/anio/${props.data}/materia/list/`
@@ -35,6 +36,8 @@ const Subject = (props) => {
         })
     }
     );
+
+
 
     async function addSubject(e, data) {
         e.preventDefault();

@@ -44,11 +44,16 @@ body {
   min-height: 500px;
   border-radius: 20px 20px 0 0 !important;
   background-color: #f1f1f1;
-
 }
 
 /* Inputs form login y reset pass */
-.MuiFormControl-root{
+
+.MuiInputLabel-outlined.MuiInputLabel-shrink {
+  background: #f1f1f1;
+  border-left: 5px solid #f1f1f1;
+  border-right: 5px solid #f1f1f1;
+}
+.MuiFormControl-root {
   width: 100% !important;
 }
 #form_login .MuiFormControl-root,
@@ -146,11 +151,11 @@ button:focus {
   transform: scale(0.97);
 }
 
-.ontrack_btn_modal{
+.ontrack_btn_modal {
   width: 30% !important;
 }
 
-.add_btn{
+.add_btn {
   background-color: var(--main-color-dark);
 }
 
@@ -158,18 +163,17 @@ button:focus {
   background-color: var(--gray);
 }
 
-.csv_btn{
+.csv_btn {
   background-color: var(--orange);
 }
 
-.delete_btn{
+.delete_btn {
   background-color: var(--red);
 }
-@media (max-width: 600px){
-  .ontrack_btn_modal{
+@media (max-width: 600px) {
+  .ontrack_btn_modal {
     width: 90% !important;
   }
-  
 }
 @media (max-width: 959px) {
   /* Modales responsive */
