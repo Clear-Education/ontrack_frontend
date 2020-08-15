@@ -80,7 +80,6 @@ const ExamsTable = (props) => {
     }
 
     async function deleteExam(data) {
-        debugger;
         let newExamsArray = !!examsArray && examsArray.filter((exam) => { return exam.id !== data.id })
         if(!newExamsArray.length){
             newExamsArray ={

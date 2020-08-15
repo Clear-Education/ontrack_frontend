@@ -7,11 +7,18 @@ import { Row, Col } from "react-bootstrap";
 import { InputLabel, Select, MenuItem, useTheme, useMediaQuery } from "@material-ui/core";
 
 import styles from './styles.module.css'
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { getInstitutions } from "../../../utils/institution_crud";
 import { useSelector } from "react-redux";
 import config from "../../../utils/config";
-import useSWR from "swr";
+import useSWR, { mutate } from "swr";
+import { getSchoolYearService } from "../../../utils/school_year/services/school_year_services";
+import { getDepartmentService } from "../../../utils/department/services/department_services";
+import { getYearService } from "../../../utils/year/services/year_services";
+import { getCourseService } from "../../../utils/course/services/course_services";
+import { addStudentService } from "../../../utils/student/service/student_service";
+import CircularProgress from "@material-ui/core/CircularProgress";
+
 const list = {
     visible: {
         opacity: 1,
@@ -47,6 +54,10 @@ const INITIAL_STATE = {
     provincia: '',
     fecha_inscripcion: '',
     institucion: '',
+    school_year: '',
+    department: '',
+    year: '',
+    curso: ''
 }
 
 const VALIDATE_INITIAL_STATE = {
@@ -61,18 +72,29 @@ const VALIDATE_INITIAL_STATE = {
     provincia: false,
     fecha_inscripcion: false,
     institucion: false,
+    school_year: false,
+    department: false,
+    year: false,
+    curso: false
 };
 
 const AddStudentForm = (props) => {
 
     const [state, setState] = useState(INITIAL_STATE);
-    const url = `${config.api_url}/institucion/list`
     const [validation, setValidation] = useState(VALIDATE_INITIAL_STATE);
     const [institutionData, setInstitutionData] = useState(null)
+    const [schoolYearData, setSchoolYearData] = useState(null)
+    const [departmentData, setDepartmentData] = useState(null)
+    const [yearData, setYearData] = useState(null)
+    const [courseData, setCourseData] = useState(null)
     const theme = useTheme();
     const fullscreen = useMediaQuery(theme.breakpoints.down("719"));
-    const [date, setDate] = useState(null);
     const user = useSelector((store) => store.user)
+    const [isLoading, setIsLoading] = useState(false)
+
+    const url = `${config.api_url}/institucion/list/`
+    const school_year_url = `${config.api_url}/anio/anio_lectivo/list/`;
+    const department_url = `${config.api_url}/carrera/list/`;
 
     useSWR(url, () =>
         getInstitutions(user.user.token).then((result) => {
@@ -89,6 +111,38 @@ const AddStudentForm = (props) => {
         })
     );
 
+    useSWR(school_year_url, () => {
+        return getSchoolYearService(user.user.token).then((result) => {
+            setSchoolYearData(result.result);
+        })
+    }
+    );
+
+
+    useSWR(department_url, () => {
+        return getDepartmentService(user.user.token).then((result) => {
+            setDepartmentData(result.result);
+        })
+    }
+    );
+
+    useEffect(() => {
+        if (state.department !== '') {
+            getYearService(user.user.token, state.department).then((result) => {
+                setYearData(result.result);
+            })
+        }
+    }, [state.department])
+
+    useEffect(() => {
+        if (state.year !== '') {
+            getCourseService(user.user.token, state.year).then((result) => {
+                setCourseData(result.result);
+            })
+        }
+    }, [state.year])
+
+
     const hadleValidation = (prop, value) => {
         setValidation({
             ...validation,
@@ -97,7 +151,12 @@ const AddStudentForm = (props) => {
     };
 
     const handleChange = (prop) => (event) => {
-        if (prop !== "institucion") {
+        if (prop !== "institucion"
+            && prop !== "school_year"
+            && prop !== "department"
+            && prop !== "year"
+            && prop !== "curso"
+        ) {
             hadleValidation(prop, event.target.value);
         }
 
@@ -114,15 +173,27 @@ const AddStudentForm = (props) => {
     };
 
 
-    const handleChangeDate = (date) => {
-        setDate(date);
-        let formatedDate = convertDate(date);
+    const handleChangeDate = (date, type) => {
+        if (type === 'birth') {
+            setState({ ...state, ['fecha_nacimiento']: date })
+        } else {
+            setState({ ...state, ['fecha_inscripcion']: date })
+        }
     };
 
 
 
-    const handleSubmit = () => {
-
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setIsLoading(true);
+        let parseData = {...state};
+        parseData['fecha_nacimiento'] = convertDate(parseData['fecha_nacimiento']);
+        parseData['fecha_inscripcion'] = convertDate(parseData['fecha_inscripcion']);
+        addStudentService(user.user.token,parseData).then((result)=>{
+            setIsLoading(false);
+            mutate(url);
+            console.log(result);
+        })
     }
 
     return (
@@ -273,9 +344,9 @@ const AddStudentForm = (props) => {
                                         <KeyboardDatePicker
                                             clearable
                                             label="Fecha de nacimiento"
-                                            value={date ? date : null}
+                                            value={state.fecha_nacimiento ? state.fecha_nacimiento : null}
                                             placeholder="01/05/2020"
-                                            onChange={(date) => handleChangeDate(date)}
+                                            onChange={(date) => handleChangeDate(date, 'birth')}
                                             inputVariant="outlined"
                                             maxDate={new Date()}
                                             format="dd/MM/yyyy"
@@ -423,20 +494,70 @@ const AddStudentForm = (props) => {
                             <Col lg={6} md={6} sm={12} xs={12} className={fullscreen && styles.input_container}>
                                 <motion.li variants={item}>
                                     <FormControl variant="outlined">
-                                        <InputLabel id="current_year">Año lectivo</InputLabel>
+                                        <InputLabel id="school_year">Año lectivo</InputLabel>
                                         <Select
-                                            labelId="current_year"
-                                            id="current_year"
-                                            value={state.institucion}
-                                            onChange={handleChange("current_year")}
+                                            labelId="school_year"
+                                            id="school_year"
+                                            value={state.school_year}
+                                            onChange={handleChange("school_year")}
                                             required
                                         >
                                             <MenuItem value="">
                                                 <em>Seleccionar</em>
                                             </MenuItem>
-                                            {institutionData && institutionData.map((institution) => {
+                                            {schoolYearData && schoolYearData.map((schoolYear) => {
                                                 return (
-                                                    <MenuItem value={institution.id} key={institution.id}>{institution.nombre}</MenuItem>
+                                                    <MenuItem value={schoolYear.id} key={schoolYear.id}>{schoolYear.nombre}</MenuItem>
+                                                )
+                                            })}
+                                        </Select>
+                                    </FormControl>
+                                </motion.li>
+                            </Col>
+
+                            <Col lg={6} md={6} sm={12} xs={12} className={fullscreen && styles.input_container}>
+                                <motion.li variants={item}>
+                                    <FormControl variant="outlined">
+                                        <InputLabel id="department">Carrera</InputLabel>
+                                        <Select
+                                            labelId="department"
+                                            id="department"
+                                            value={state.department}
+                                            onChange={handleChange("department")}
+                                            required
+                                        >
+                                            <MenuItem value="">
+                                                <em>Seleccionar</em>
+                                            </MenuItem>
+                                            {departmentData && departmentData.map((department) => {
+                                                return (
+                                                    <MenuItem value={department.id} key={department.id}>{department.nombre}</MenuItem>
+                                                )
+                                            })}
+                                        </Select>
+                                    </FormControl>
+                                </motion.li>
+                            </Col>
+                        </Row>
+                        <Row lg={12} md={12} sm={12} xs={12} className={styles.row_input_container}>
+                            <Col lg={6} md={6} sm={12} xs={12} className={fullscreen && styles.input_container}>
+                                <motion.li variants={item}>
+                                    <FormControl variant="outlined">
+                                        <InputLabel id="year">Año</InputLabel>
+                                        <Select
+                                            labelId="year"
+                                            id="year"
+                                            value={state.year}
+                                            disabled={state.department === ''}
+                                            onChange={handleChange("year")}
+                                            required
+                                        >
+                                            <MenuItem value="">
+                                                <em>Seleccionar</em>
+                                            </MenuItem>
+                                            {yearData && yearData.map((year) => {
+                                                return (
+                                                    <MenuItem value={year.id} key={year.id}>{year.nombre}</MenuItem>
                                                 )
                                             })}
                                         </Select>
@@ -451,28 +572,38 @@ const AddStudentForm = (props) => {
                                         <Select
                                             labelId="curso"
                                             id="curso"
-                                            value={state.institucion}
+                                            value={state.course}
                                             onChange={handleChange("curso")}
+                                            disabled={state.year === ''}
                                             required
                                         >
                                             <MenuItem value="">
                                                 <em>Seleccionar</em>
                                             </MenuItem>
-                                            {institutionData && institutionData.map((institution) => {
+                                            {courseData && courseData.map((course) => {
                                                 return (
-                                                    <MenuItem value={institution.id} key={institution.id}>{institution.nombre}</MenuItem>
+                                                    <MenuItem value={course.id} key={course.id}>{course.nombre}</MenuItem>
                                                 )
                                             })}
                                         </Select>
                                     </FormControl>
                                 </motion.li>
                             </Col>
-
                         </Row>
                         <motion.li variants={item}>
                             <Row lg={12} md={12} sm={12} xs={12} className="center" style={{ justifyContent: 'center' }}>
                                 <Col>
-                                    <button className="ontrack_btn_modal ontrack_btn add_btn">Agregar</button>
+                                {!isLoading ?
+                                        <button className="ontrack_btn_modal ontrack_btn add_btn" type="submit">Guardar</button>
+                                        :
+                                        <button className="ontrack_btn_modal ontrack_btn add_btn" disabled>
+                                            <CircularProgress
+                                                size={18}
+                                                color="primary"
+                                            />
+                                            {" "}Guardando...
+                                        </button>
+                                    }
                                 </Col>
 
                             </Row>

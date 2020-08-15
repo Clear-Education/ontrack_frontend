@@ -4,7 +4,7 @@ import TitlePage from '../../../src/components/commons/title_page/title_page';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import MUIDataTable from 'mui-datatables';
-import { getStudents } from '../../../src/utils/crud_students';
+import { getStudentService } from '../../../src/utils/student/service/student_service';
 import BackgroundLoader from '../../../src/components/commons/background_loader/background_loader';
 import Alert from "react-s-alert";
 import config from '../../../src/utils/config';
@@ -26,18 +26,10 @@ const Students = (props) => {
   const url = `${config.api_url}/alumnos/list`;
   useSWR(url, () => {
     setIsLoading(true);
-    getStudents(user.user.token).then((result) => {
+    getStudentService(user.user.token).then((result) => {
       setIsLoading(false);
-      if (result.success == true) {
+      console.log(result.result.results);
         setAllData(result.result.results)
-      } else {
-        result.result.forEach((element) => {
-          Alert.error(element.message, {
-            position: "bottom",
-            effect: "stackslide",
-          });
-        });
-      }
     })
   });
 

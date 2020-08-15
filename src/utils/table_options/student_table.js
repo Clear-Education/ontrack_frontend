@@ -40,11 +40,11 @@ const studen_table_config = {
         
             },
             {
-              name: "name",
+              name: "nombre",
               label: "Nombre",
             },
             {
-              name: "surname",
+              name: "apellido",
               label: "Apellido",
             },
             {
@@ -52,8 +52,8 @@ const studen_table_config = {
               label: "Legajo",
             },
             {
-              name: "curso",
-              label: "Curso",
+              name: "email",
+              label: "Email",
             },
             {
               name: "actions",
