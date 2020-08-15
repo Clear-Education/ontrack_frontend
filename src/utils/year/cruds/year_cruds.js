@@ -2,9 +2,9 @@ import config from '../../config';
 import axios from 'axios';
 import errorHandler from "../../error_handler";
 
-export async function getYears(data, token) {
+export async function getYears(token,subject_id) {
     return await axios
-        .get(`${config.api_url}/carrera/${data}/anio/list`, {
+        .get(`${config.api_url}/carrera/${subject_id}/anio/list`, {
             headers: {
                 Authorization: `Token ${token}`
             }

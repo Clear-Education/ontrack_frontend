@@ -2,7 +2,7 @@ import TitlePage from "../../commons/title_page/title_page";
 import { Row, Col } from "react-bootstrap";
 import styles from './department.module.css'
 import { useSelector } from "react-redux";
-import { getDepartments, newDepartment, editDepartment, deleteDepartment } from "../../../utils/crud_departments";
+import { getDepartments, newDepartment, editDepartment, deleteDepartment } from "../../../utils/department/cruds/department_cruds";
 import { useState } from "react";
 import useSWR, { mutate } from "swr";
 import config from "../../../utils/config";

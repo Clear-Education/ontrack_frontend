@@ -1,5 +1,25 @@
-import { addYearsCrud, editYearsCrud, deleteYearsCrud } from "../cruds/year_cruds";
+import { addYearsCrud, editYearsCrud, deleteYearsCrud, getYears } from "../cruds/year_cruds";
 import Alert from "react-s-alert";
+
+
+
+
+export async function getYearService(token,subject_id){
+    return await getYears(token,subject_id).then((result)=>{
+        if (result.success) {
+            
+          } else {
+            result.result.forEach((element) => {
+              Alert.error(element.message, {
+                position: "bottom",
+                effect: "stackslide",
+              });
+            });
+          }
+          return result;
+    })
+}
+
 
 export async function addYearsService(token, data, idCarrera) {
     return await addYearsCrud(token, data, idCarrera).then((result) => {

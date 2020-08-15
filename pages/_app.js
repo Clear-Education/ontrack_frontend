@@ -35,7 +35,7 @@ const App = ({ Component, pageProps, router }) => {
     if (
       authUser !== undefined &&
       authUser.user.isLoggedIn &&
-      (router.route.match(/(login)/) || router.route.match(/(register)/) || router.route.match("/"))
+      (router.route.match(/(login)/) || router.route.match(/(register)/))
     ) {
       if (authUser.user.user.cargo === "user") {
         router.push("/dashboard");

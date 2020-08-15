@@ -69,7 +69,6 @@ export async function deleteExamsCrud(token,data){
     anio_lectivo:data.anio_lectivo,
     materia: data.materia
   }
-  debugger;
   return await axios
   .delete(`${config.api_url}/evaluacion/`,{ 
       headers:{
