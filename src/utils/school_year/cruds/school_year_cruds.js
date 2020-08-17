@@ -3,12 +3,12 @@ import axios from 'axios';
 import errorHandler from "../../error_handler";
 
 
-export async function getSchoolYearCrud(token){
-    return await axios
-    .get(`${config.api_url}/anio_lectivo/list/`,{ 
-        headers:{
-            Authorization: `Token ${token}`
-        }
+export async function getSchoolYearCrud(token) {
+  return await axios
+    .get(`${config.api_url}/anio_lectivo/list/`, {
+      headers: {
+        Authorization: `Token ${token}`
+      }
     })
     .then((json) => {
       let response = {
@@ -22,12 +22,12 @@ export async function getSchoolYearCrud(token){
     });
 }
 
-export async function addSchoolYearCrud(token,data){
-    return await axios
-    .post(`${config.api_url}/anio_lectivo/`,data,{
-        headers:{
-            Authorization: `Token ${token}`
-        }
+export async function addSchoolYearCrud(token, data) {
+  return await axios
+    .post(`${config.api_url}/anio_lectivo/`, data, {
+      headers: {
+        Authorization: `Token ${token}`
+      }
     })
     .then((json) => {
       let response = {
@@ -43,45 +43,42 @@ export async function addSchoolYearCrud(token,data){
 
 
 
-export async function editSchoolYearCrud(token,data){
-  const parsedData = {
-
-  }
+export async function editSchoolYearCrud(token, data) {
   return await axios
-  .patch(`${config.api_url}/anio_lectivo/${data.id}/`,parsedData,{
-      headers:{
-          Authorization: `Token ${token}`
+    .patch(`${config.api_url}/anio_lectivo/${data.id}/`, data, {
+      headers: {
+        Authorization: `Token ${token}`
       }
-  })
-  .then((json) => {
-    let response = {
-      success: true,
-      result: json.data,
-    };
-    return response;
-  })
-  .catch((error) => {
-    return errorHandler(error);
-  });
+    })
+    .then((json) => {
+      let response = {
+        success: true,
+        result: json.data,
+      };
+      return response;
+    })
+    .catch((error) => {
+      return errorHandler(error);
+    });
 }
 
 
 
-export async function deleteSchoolYearCrud(token,data){
+export async function deleteSchoolYearCrud(token, data) {
   return await axios
-  .delete(`${config.api_url}/anio_lectivo/${data.id}/`,{ 
-      headers:{
-          Authorization: `Token ${token}`
+    .delete(`${config.api_url}/anio_lectivo/${data.id}/`, {
+      headers: {
+        Authorization: `Token ${token}`
       }
-  })
-  .then((json) => {
-    let response = {
-      success: true,
-      result: json.data,
-    };
-    return response;
-  })
-  .catch((error) => {
-    return errorHandler(error);
-  });
+    })
+    .then((json) => {
+      let response = {
+        success: true,
+        result: json.data,
+      };
+      return response;
+    })
+    .catch((error) => {
+      return errorHandler(error);
+    });
 }
