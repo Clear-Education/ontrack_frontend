@@ -8,11 +8,11 @@ import { InputLabel, Select, MenuItem, useTheme, useMediaQuery } from "@material
 
 import styles from './styles.module.css';
 import { useState } from "react";
-import CrudUser from "../../../utils/crud_user";
 import { useSelector } from "react-redux";
 import config from "../../../utils/config";
 import useSWR from "swr";
 import Alert from "react-s-alert";
+import { getGroupsService } from "../../../utils/user/service/user_services";
 
 const list = {
     visible: {
@@ -81,17 +81,8 @@ const AddUserForm = (props) => {
 
 
     useSWR(url, () =>
-        CrudUser.getGroups(user.user.token).then((result) => {
-            if (result.status == 200) {
-                setGroupsData(result.data);
-            } else {
-                result.result.forEach((element) => {
-                    Alert.error(element.message, {
-                        position: "bottom",
-                        effect: "stackslide",
-                    });
-                });
-            }
+        getGroupsService(user.user.token).then((result) => {
+            setGroupsData(result.result);
         })
     );
 
@@ -359,6 +350,7 @@ const AddUserForm = (props) => {
                                         <TextField
                                             id="password"
                                             name="password"
+                                            type="password"
                                             label="Contraseña"
                                             variant="outlined"
                                             value={state.password}
@@ -383,6 +375,7 @@ const AddUserForm = (props) => {
                                         <TextField
                                             id="password2"
                                             name="password2"
+                                            type="password"
                                             label="Repetir Contraseña"
                                             variant="outlined"
                                             value={state.password2}

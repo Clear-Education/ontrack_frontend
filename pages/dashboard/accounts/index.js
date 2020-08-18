@@ -17,17 +17,19 @@ import BackgroundLoader from '../../../src/components/commons/background_loader/
 import TitlePage from '../../../src/components/commons/title_page/title_page';
 
 import config from '../../../src/utils/config';
+
 import CrudUser from '../../../src/utils/crud_user';
+import { getUserService, addUserService, editUserService, editUserStateService } from '../../../src/utils/user/service/user_services';
 
 import useSWR, { mutate } from 'swr';
 import { Row, Col } from 'react-bootstrap';
 import { motion } from "framer-motion";
-import Alert from "react-s-alert";
 
 
 const Accounts = () => {
   const url = `${config.api_url}/users/list`;
 
+  const [allData, setAllData] = useState([]);
   const [isLoading, setIsLoading] = useState(false)
   const [selectedUser, setSelectedUser] = useState({});
   const [addUserModal, setAddUserModal] = useState(false);
@@ -37,58 +39,26 @@ const Accounts = () => {
 
   const user = useSelector((store) => store.user);
 
-  const { data } = useSWR(url, () => {
+  useSWR(url, () => {
     setIsLoading(true);
-    return CrudUser.getUsers(user.user.token).then((result) => {
-      if (result.status == 200) {
-        setIsLoading(false);
-        return result.data.results;
-      }
-
+    getUserService(user.user.token).then((result) => {
+      setIsLoading(false);
+      setAllData(result.result.results);
     })
-  }
-  );
-
-
-  /*   const handleCloseAlertDialog = () => {
-      setShowAlertDialog(false);
-      setSelectedUser({});
-    };
-  
-    const handleDelete = (data) => {
-      setShowAlertDialog(true);
-      setSelectedUser(data);
-    }
-  
-    const handleDeleteConfirmation = () => {
-      setShowAlertDialog(false);
-      CrudUser.deleteUser(selectedUser, user.user.token).then(() => {
-        mutate(`${config.api_url}/users/list`);
-      });
-  
-    } */
+  });
 
   const handleAddUserModal = (value) => {
     setAddUserModal(value);
   }
 
-  const handleSubmitNewUser = (e, data) => {
+  async function handleSubmitNewUser(e, data) {
     e.preventDefault();
-    CrudUser.addUser(data, user.user.token).then((result) => {
-      if (result.success == true) {
-        Alert.success("Usuario creado con éxito", {
-          position: "bottom",
-          effect: "stackslide",
-        });
-        mutate(`${config.api_url}/users/list`);
-      } else {
-        result.result.forEach((element) => {
-          Alert.error(element.message, {
-            position: "bottom",
-            effect: "stackslide",
-          });
-        });
-      }
+    setIsLoading(true);
+    return await addUserService(data, user.user.token).then((result) => {
+      setIsLoading(false);
+      mutate(url);
+      return result;
+
     })
   }
 
@@ -98,45 +68,23 @@ const Accounts = () => {
 
   }
 
-  const handleSubmitEditUser = (e, data) => {
+  async function handleSubmitEditUser(e, data) {
     e.preventDefault();
-    CrudUser.editUser(data, user.user.token).then((result) => {
-      if (result.success == true) {
-        Alert.success("Usuario editado con éxito", {
-          position: "bottom",
-          effect: "stackslide",
-        });
-        mutate(`${config.api_url}/users/list`);
-      } else {
-        result.result.forEach((element) => {
-          Alert.error(element.message, {
-            position: "bottom",
-            effect: "stackslide",
-          });
-        });
-      }
+    setIsLoading(true);
+    return await editUserService(data, user.user.token).then((result) => {
+      setIsLoading(false);
+      mutate(url);
+      return result;
     })
   }
 
-  const handleSubmitEditUserState = (e, data) => {
+  async function handleSubmitEditUserState(e, data) {
     e.preventDefault();
-    CrudUser.editUserState(data, user.user.token).then((result) => {
-      if (result.success == true) {
-        Alert.success("Se modificó el estado del usuario", {
-          position: "bottom",
-          effect: "stackslide",
-        });
-        mutate(`${config.api_url}/users/list`);
-      } else {
-        result.result.forEach((element) => {
-          Alert.error(element.message, {
-            position: "bottom",
-            effect: "stackslide",
-          });
-        });
-      }
+    return await editUserStateService(data, user.user.token).then((result) => {
+      setIsLoading(false);
+      mutate(url);
+      return result;
     })
-
   }
 
   const columns = [
@@ -183,7 +131,7 @@ const Accounts = () => {
       options: {
         customBodyRenderLite: (dataIndex) => {
           return (<>
-            <IconButton onClick={() => handleEditUserModal(true, data[dataIndex])}>
+            <IconButton onClick={() => handleEditUserModal(true, allData[dataIndex])}>
               <EditIcon />
             </IconButton>
             {/*             <IconButton onClick={() => handleDelete(data[dataIndex])}>
@@ -241,7 +189,7 @@ const Accounts = () => {
           >
             <MUIDataTable
               title={"Lista de Usuarios"}
-              data={data?.map(user => {
+              data={allData?.map(user => {
                 const estado = user.is_active ? "Activo" : "Suspendido";
                 return [
                   user.id,
