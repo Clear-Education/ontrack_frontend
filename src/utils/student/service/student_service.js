@@ -94,7 +94,21 @@ export async function addStudentCourseService(token,data){
 }
 
 export async function editStudentService(token,data){
-  return await editStudentCrud(token,data).then((result)=>{
+  const parseStudentData ={
+    id: data.id,
+    nombre: data.name,
+    apellido: data.last_name,
+    dni: data.dni,
+    email: data.email,
+    legajo: data.legajo,
+    fecha_nacimiento: data.fecha_nacimiento,
+    fecha_inscripcion: data.fecha_inscripcion,
+    direccion: data.direccion,
+    localidad: data.localidad,
+    provincia: data.provincia,
+    instutucion: data.institucion,
+   }
+  return await editStudentCrud(token,parseStudentData).then((result)=>{
       if (result.success) {
         Alert.success("Alumno editado correctamente", {
           position: "bottom",

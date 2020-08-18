@@ -114,9 +114,7 @@ h6.MuiTypography-root {
 .MuiButtonBase-root:focus {
   outline: none;
 }
-.MuiOutlinedInput-inputAdornedEnd {
-  color: grey !important;
-}
+
 .MuiPickersToolbar-toolbar {
   background-color: var(--main-color-dark) !important;
 }

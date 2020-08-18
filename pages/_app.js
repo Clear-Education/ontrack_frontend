@@ -35,13 +35,9 @@ const App = ({ Component, pageProps, router }) => {
     if (
       authUser !== undefined &&
       authUser.user.isLoggedIn &&
-      (router.route.match(/(login)/) || router.route.match(/(register)/))
+      (router.route.match(/(login)/) || router.route.match(/(register)/) || router.route === '/' )
     ) {
-      if (authUser.user.user.cargo === "user") {
-        router.push("/dashboard");
-      } else {
-        router.push("/dashboard");
-      }
+      router.push("/dashboard");
     }
     if (
       authUser !== undefined &&

@@ -8,7 +8,6 @@ import { InputLabel, Select, MenuItem, useTheme, useMediaQuery } from "@material
 
 import styles from './styles.module.css'
 import { useState, useEffect } from "react";
-import { getInstitutions } from "../../../utils/institution_crud";
 import { useSelector } from "react-redux";
 import config from "../../../utils/config";
 import useSWR, { mutate } from "swr";
@@ -53,7 +52,6 @@ const INITIAL_STATE = {
     localidad: '',
     provincia: '',
     fecha_inscripcion: '',
-    institucion: '',
     school_year: '',
     department: '',
     year: '',
@@ -71,7 +69,6 @@ const VALIDATE_INITIAL_STATE = {
     localidad: false,
     provincia: false,
     fecha_inscripcion: false,
-    institucion: false,
     school_year: false,
     department: false,
     year: false,
@@ -82,8 +79,8 @@ const AddEditStudentForm = (props) => {
 
     const [state, setState] = useState(INITIAL_STATE);
     const [validation, setValidation] = useState(VALIDATE_INITIAL_STATE);
-    const [institutionData, setInstitutionData] = useState(null)
     const [schoolYearData, setSchoolYearData] = useState(null)
+    const [showInstitutionOptions, setShowInstitutionOptions] = useState(true)
     const [departmentData, setDepartmentData] = useState(null)
     const [yearData, setYearData] = useState(null)
     const [courseData, setCourseData] = useState(null)
@@ -92,36 +89,48 @@ const AddEditStudentForm = (props) => {
     const user = useSelector((store) => store.user)
     const [isLoading, setIsLoading] = useState(false)
 
-    const url = `${config.api_url}/institucion/list/`
     const school_year_url = `${config.api_url}/anio/anio_lectivo/list/`;
     const department_url = `${config.api_url}/carrera/list/`;
 
 
-    useEffect(()=>{
-        if(props.data){
-            getStudentCourseService(user.user.token,props.data).then((result)=>{
-                if(result.success){
+    useEffect(() => {
+        if (props.data) {
+            getStudentCourseService(user.user.token, props.data).then((result) => {
+                if (!result.success) {
                     props.handleClose();
+                } else {
+                    console.log(result);
+                    const studentData = result.result.results[0].alumno;
+                    const schoolYearData = result.result.results[0].anio_lectivo;
+                    const courseData = result.result.results[0].curso;
+                    let selectedData = { ...state }
+                    selectedData = {
+                        id: studentData.id,
+                        name: studentData.nombre,
+                        last_name: studentData.apellido,
+                        dni: studentData.dni,
+                        legajo: studentData.legajo,
+                        email: studentData.email,
+                        fecha_nacimiento: studentData.fecha_nacimiento,
+                        direccion: studentData.direccion,
+                        localidad: studentData.localidad,
+                        provincia: studentData.provincia,
+                        fecha_inscripcion: studentData.fecha_inscripcion,
+                        school_year: schoolYearData.id,
+                        department: courseData.anio.carrera,
+                        year: courseData.anio.id,
+                        curso: courseData.id
+                    }
+                    setState(selectedData);
                 }
             })
+        } else {
+            setShowInstitutionOptions(false);
         }
 
-    },[])
+    }, [])
 
-    useSWR(url, () =>
-        getInstitutions(user.user.token).then((result) => {
-            if (result.success == true) {
-                setInstitutionData(result.result.results);
-            } else {
-                result.result.forEach((element) => {
-                    Alert.error(element.message, {
-                        position: "bottom",
-                        effect: "stackslide",
-                    });
-                });
-            }
-        })
-    );
+
 
     useSWR(school_year_url, () => {
         return getSchoolYearService(user.user.token).then((result) => {
@@ -163,8 +172,7 @@ const AddEditStudentForm = (props) => {
     };
 
     const handleChange = (prop) => (event) => {
-        if (prop !== "institucion"
-            && prop !== "school_year"
+        if (prop !== "school_year"
             && prop !== "department"
             && prop !== "year"
             && prop !== "curso"
@@ -181,7 +189,7 @@ const AddEditStudentForm = (props) => {
             return s < 10 ? "0" + s : s;
         }
         var d = new Date(inputFormat);
-        return [pad(d.getDate()), pad(d.getMonth() + 1), d.getFullYear()].join("/");
+        return [pad(d.getDate() + 1), pad(d.getMonth() + 1), d.getFullYear()].join("/");
     };
 
 
@@ -197,7 +205,7 @@ const AddEditStudentForm = (props) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         setIsLoading(true);
-        let parseData = {...state};
+        let parseData = { ...state };
         parseData['fecha_nacimiento'] = convertDate(parseData['fecha_nacimiento']);
         parseData['fecha_inscripcion'] = convertDate(parseData['fecha_inscripcion']);
         props.handleSubmitAction(e, parseData).then((result) => {
@@ -314,7 +322,7 @@ const AddEditStudentForm = (props) => {
                                             variant="outlined"
                                             value={state.email}
                                             onChange={handleChange("email")}
-                                            required
+
                                         />
                                     </FormControl>
                                     {validation.email && (
@@ -338,7 +346,7 @@ const AddEditStudentForm = (props) => {
                                             variant="outlined"
                                             value={state.legajo}
                                             onChange={handleChange("legajo")}
-                                            required
+
                                         />
                                     </FormControl>
                                     {validation.legajo && (
@@ -367,7 +375,7 @@ const AddEditStudentForm = (props) => {
                                             invalidDateMessage="El formato de fecha es inválido"
                                             minDateMessage="La fecha no puede ser menor al día de hoy"
                                             maxDateMessage="La fecha no puede ser mayor al máximo permitido"
-                                            required
+
                                         />
                                     </FormControl>
                                 </motion.li>
@@ -386,7 +394,7 @@ const AddEditStudentForm = (props) => {
                                             variant="outlined"
                                             value={state.direccion}
                                             onChange={handleChange("direccion")}
-                                            required
+
                                         />
                                     </FormControl>
                                     {validation.direccion && (
@@ -410,7 +418,6 @@ const AddEditStudentForm = (props) => {
                                             variant="outlined"
                                             value={state.localidad}
                                             onChange={handleChange("localidad")}
-                                            required
                                         />
                                     </FormControl>
                                     {validation.localidad && (
@@ -434,7 +441,6 @@ const AddEditStudentForm = (props) => {
                                             variant="outlined"
                                             value={state.provincia}
                                             onChange={handleChange("provincia")}
-                                            required
                                         />
                                     </FormControl>
                                     {validation.provincia && (
@@ -473,38 +479,11 @@ const AddEditStudentForm = (props) => {
                                             invalidDateMessage="El formato de fecha es inválido"
                                             minDateMessage="La fecha no puede ser menor al día de hoy"
                                             maxDateMessage="La fecha no puede ser mayor al máximo permitido"
-                                            required
                                         />
                                     </FormControl>
                                 </motion.li>
                             </Col>
 
-                            <Col lg={6} md={6} sm={12} xs={12} className={fullscreen && styles.input_container}>
-                                <motion.li variants={item}>
-                                    <FormControl variant="outlined">
-                                        <InputLabel id="institucion">Institución</InputLabel>
-                                        <Select
-                                            labelId="institucion"
-                                            id="institucion"
-                                            value={state.institucion}
-                                            onChange={handleChange("institucion")}
-                                            required
-                                        >
-                                            <MenuItem value="">
-                                                <em>Seleccionar</em>
-                                            </MenuItem>
-                                            {institutionData && institutionData.map((institution) => {
-                                                return (
-                                                    <MenuItem value={institution.id} key={institution.id}>{institution.nombre}</MenuItem>
-                                                )
-                                            })}
-                                        </Select>
-                                    </FormControl>
-                                </motion.li>
-                            </Col>
-                        </Row>
-
-                        <Row lg={12} md={12} sm={12} xs={12} className={styles.row_input_container}>
                             <Col lg={6} md={6} sm={12} xs={12} className={fullscreen && styles.input_container}>
                                 <motion.li variants={item}>
                                     <FormControl variant="outlined">
@@ -514,6 +493,7 @@ const AddEditStudentForm = (props) => {
                                             id="school_year"
                                             value={state.school_year}
                                             onChange={handleChange("school_year")}
+                                            disabled={showInstitutionOptions}
                                             required
                                         >
                                             <MenuItem value="">
@@ -529,7 +509,11 @@ const AddEditStudentForm = (props) => {
                                 </motion.li>
                             </Col>
 
-                            <Col lg={6} md={6} sm={12} xs={12} className={fullscreen && styles.input_container}>
+                        </Row>
+
+                        <Row lg={12} md={12} sm={12} xs={12} className={styles.row_input_container}>
+
+                            <Col lg={4} md={4} sm={12} xs={12} className={fullscreen && styles.input_container}>
                                 <motion.li variants={item}>
                                     <FormControl variant="outlined">
                                         <InputLabel id="department">Carrera</InputLabel>
@@ -538,7 +522,8 @@ const AddEditStudentForm = (props) => {
                                             id="department"
                                             value={state.department}
                                             onChange={handleChange("department")}
-                                            required
+                                            disabled={showInstitutionOptions}
+                                            /* required */
                                         >
                                             <MenuItem value="">
                                                 <em>Seleccionar</em>
@@ -552,9 +537,7 @@ const AddEditStudentForm = (props) => {
                                     </FormControl>
                                 </motion.li>
                             </Col>
-                        </Row>
-                        <Row lg={12} md={12} sm={12} xs={12} className={styles.row_input_container}>
-                            <Col lg={6} md={6} sm={12} xs={12} className={fullscreen && styles.input_container}>
+                            <Col lg={4} md={4} sm={12} xs={12} className={fullscreen && styles.input_container}>
                                 <motion.li variants={item}>
                                     <FormControl variant="outlined">
                                         <InputLabel id="year">Año</InputLabel>
@@ -562,7 +545,7 @@ const AddEditStudentForm = (props) => {
                                             labelId="year"
                                             id="year"
                                             value={state.year}
-                                            disabled={state.department === ''}
+                                            disabled={state.department === '' || showInstitutionOptions}
                                             onChange={handleChange("year")}
                                             required
                                         >
@@ -579,16 +562,16 @@ const AddEditStudentForm = (props) => {
                                 </motion.li>
                             </Col>
 
-                            <Col lg={6} md={6} sm={12} xs={12} className={fullscreen && styles.input_container}>
+                            <Col lg={4} md={4} sm={12} xs={12} className={fullscreen && styles.input_container}>
                                 <motion.li variants={item}>
                                     <FormControl variant="outlined">
                                         <InputLabel id="curso">Curso</InputLabel>
                                         <Select
                                             labelId="curso"
                                             id="curso"
-                                            value={state.course}
+                                            value={state.curso}
                                             onChange={handleChange("curso")}
-                                            disabled={state.year === ''}
+                                            disabled={state.year === '' || showInstitutionOptions}
                                             required
                                         >
                                             <MenuItem value="">
@@ -604,10 +587,11 @@ const AddEditStudentForm = (props) => {
                                 </motion.li>
                             </Col>
                         </Row>
+
                         <motion.li variants={item}>
                             <Row lg={12} md={12} sm={12} xs={12} className="center" style={{ justifyContent: 'center' }}>
                                 <Col>
-                                {!isLoading ?
+                                    {!isLoading ?
                                         <button className="ontrack_btn_modal ontrack_btn add_btn" type="submit">Guardar</button>
                                         :
                                         <button className="ontrack_btn_modal ontrack_btn add_btn" disabled>
@@ -622,6 +606,7 @@ const AddEditStudentForm = (props) => {
 
                             </Row>
                         </motion.li>
+
                     </form>
 
                 </Col>

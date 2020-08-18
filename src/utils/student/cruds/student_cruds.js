@@ -24,11 +24,13 @@ export async function getStudentCrud(token){
 
 
 export async function getStudentCourseCrud(token,student_id){
-  console.log(token)
   return await axios
-  .get(`${config.api_url}/alumnos/curso/${student_id}/`,{ 
+  .get(`${config.api_url}/alumnos/curso/list/`,{ 
       headers:{
           Authorization: `Token ${token}`
+      },
+      params:{
+        alumno: student_id
       }
   })
   .then((json) => {
@@ -72,7 +74,6 @@ export async function addStudentCourseCrud(token,data){
       }
   })
   .then((json) => {
-    console.log(json)
     let response = {
       success: true,
       result: json.data,
@@ -87,11 +88,8 @@ export async function addStudentCourseCrud(token,data){
 
 
 export async function editStudentCrud(token,data){
-  const parsedData = {
-
-  }
   return await axios
-  .patch(`${config.api_url}/alumnos/curso/${data.id}/`,parsedData,{
+  .patch(`${config.api_url}/alumnos/${data.id}/`,data,{
       headers:{
           Authorization: `Token ${token}`
       }

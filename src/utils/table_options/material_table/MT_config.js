@@ -1,14 +1,14 @@
 import { MTableToolbar } from "material-table";
 
 export const MTConfig = {
-    localization:{
+    localization: {
         pagination: {
             labelDisplayedRows: '{from}-{to} de {count}',
             labelRowsSelect: 'Filas',
             firstTooltip: 'Primer página',
             previousTooltip: 'Página anterior',
             nextTooltip: 'Página siguiente',
-            lastTooltip:'Última Página',
+            lastTooltip: 'Última Página',
         },
         header: {
             actions: 'Acciones'
@@ -17,20 +17,23 @@ export const MTConfig = {
             emptyDataSourceMessage: 'No se encontraron resultados',
             filterRow: {
                 filterTooltip: 'Filtrar'
+            },
+            editRow: {
+                deleteText: 'Está seguro que desea eliminar esta fila?'
             }
         },
-        toolbar:{
+        toolbar: {
             searchPlaceholder: 'Buscar',
-            searchTooltip:'Buscar'
+            searchTooltip: 'Buscar'
         }
     },
 
-    options:{
+    options: {
         searchFieldStyle: { width: '30%', margin: 'auto', marginRight: '0px' },
         actionsColumnIndex: -1,
     },
-    
-    components:{
+
+    components: {
         Toolbar: props => (
             <div style={{ backgroundColor: 'var(--light-gray)' }}>
                 <MTableToolbar {...props} />

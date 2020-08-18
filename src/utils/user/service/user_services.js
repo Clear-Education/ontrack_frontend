@@ -20,7 +20,6 @@ export async function getUserService(token) {
 
 export async function addUserService(data, token) {
     return await addUserCrud(data, token).then((result) => {
-        console.log(result);
         if (result.success) {
             Alert.success("Usuario creado correctamente", {
                 position: "bottom",

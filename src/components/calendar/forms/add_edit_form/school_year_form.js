@@ -50,9 +50,9 @@ const SchoolYearForm = (props) => {
     const [isLoading, setIsLoading] = useState(false);
 
     const [startDate, setStartDate] = useState(
-        props.data?.fecha_desde ? new Date(startLocalDate.getTime() + startLocalDate.getTimezoneOffset() * 60000) : new Date());
+        props.data?.fecha_desde ? new Date(startLocalDate.getTime() + startLocalDate.getTimezoneOffset() * 60000) : null);
     const [endDate, setEndDate] = useState(
-        props.data?.fecha_hasta ? new Date(endLocalDate.getTime() + endLocalDate.getTimezoneOffset() * 60000) : new Date());
+        props.data?.fecha_hasta ? new Date(endLocalDate.getTime() + endLocalDate.getTimezoneOffset() * 60000) : null);
 
 
     const convertDate = (inputFormat) => {
@@ -64,7 +64,10 @@ const SchoolYearForm = (props) => {
     }
 
     useEffect(() => {
-        setState({ ...state, ["fecha_desde"]: startDate.toLocaleDateString(), ["fecha_hasta"]: endDate.toLocaleDateString() });
+        if (startDate != null && endDate != null) {
+            setState({ ...state, ["fecha_desde"]: startDate.toLocaleDateString(), ["fecha_hasta"]: endDate.toLocaleDateString() });
+        }
+
     }, []);
 
 
@@ -96,12 +99,38 @@ const SchoolYearForm = (props) => {
 
     const handleSubmit = (e) => {
         setIsLoading(true);
-        props.handleSubmitAction(e, state).then((result) => {
-            setIsLoading(false)
-            if (result.success) {
-                props.handleClose(false);
+        let startDateFormatted = startDate.toLocaleDateString();
+        let endDateFormatted = endDate.toLocaleDateString();
+        if (startDateFormatted == state.fecha_desde && endDateFormatted == state.fecha_hasta && props.data.fecha_desde != undefined) {
+            if (startDate < new Date()) {
+                const data = {
+                    id: state.id,
+                    nombre: state.nombre
+                }
+                props.handleSubmitAction(e, data).then((result) => {
+                    setIsLoading(false)
+                    if (result.success) {
+                        props.handleClose(false);
+                    }
+                });
+            } else {
+                props.handleSubmitAction(e, state).then((result) => {
+                    setIsLoading(false)
+                    if (result.success) {
+                        props.handleClose(false);
+                    }
+                });
             }
-        });
+        }
+        else {
+            props.handleSubmitAction(e, state).then((result) => {
+                setIsLoading(false)
+                if (result.success) {
+                    props.handleClose(false);
+                }
+            });
+        }
+
     }
 
     return (
@@ -153,6 +182,7 @@ const SchoolYearForm = (props) => {
                                             /* minDate={new Date()} */
                                             format="dd/MM/yyyy"
                                             invalidDateMessage="Formato de fecha inválido"
+                                            required
                                         />
                                     </motion.li>
                                 </Col>
@@ -167,6 +197,7 @@ const SchoolYearForm = (props) => {
                                             onChange={date => handleEndDate(date)}
                                             format="dd/MM/yyyy"
                                             invalidDateMessage="Formato de fecha inválido"
+                                            required
                                         />
                                     </motion.li>
                                 </Col>
