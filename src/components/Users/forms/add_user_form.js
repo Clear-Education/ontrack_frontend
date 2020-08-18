@@ -36,37 +36,18 @@ const item = {
 };
 
 const INITIAL_STATE = {
-    name: '',
-    last_name: '',
     email: '',
-    dni: '',
-    legajo: '',
-    cargo: '',
     password: '',
     password2: '',
-    groups: '',
-    phone: '',
-    date_of_birth: '',
-    direccion: '',
-    localidad: '',
-    provincia: '',
+    groups: ''
 }
 
 const VALIDATE_INITIAL_STATE = {
-    name: false,
-    last_name: false,
     email: false,
-    dni: false,
-    legajo: false,
-    cargo: false,
     password: false,
     password2: false,
-    groups: false,
-    phone: false,
-    date_of_birth: false,
-    direccion: false,
-    localidad: false,
-    provincia: false,
+    groups: false
+
 };
 
 const AddUserForm = (props) => {
@@ -112,11 +93,12 @@ const AddUserForm = (props) => {
         if (prop == "password2") {
             handleValidationPassword(prop, event.target.value);
         }
-        if (prop !== "groups" && prop !== "password2") {
+        if (prop == "email" || prop == "password") {
             handleValidation(prop, event.target.value);
         }
 
         setState({ ...state, [prop]: event.target.value });
+        console.log(state);
 
     };
 
@@ -145,6 +127,13 @@ const AddUserForm = (props) => {
             }
         })
         if (validateForm) {
+            for (var key in state) {
+                if (key == "legajo" || key == "dni") {
+                    if (state[key] === "") {
+                        delete state[key]
+                    }
+                }
+            }
             props.handleSubmitNewUser(e, state);
             props.handleClose(false);
         } else {
@@ -181,7 +170,7 @@ const AddUserForm = (props) => {
                                             variant="outlined"
                                             value={state.name}
                                             onChange={handleChange("name")}
-                                            required
+
                                         />
                                     </FormControl>
                                     {validation.name && (
@@ -205,7 +194,7 @@ const AddUserForm = (props) => {
                                             variant="outlined"
                                             value={state.last_name}
                                             onChange={handleChange("last_name")}
-                                            required
+
                                         />
                                     </FormControl>
                                     {validation.last_name && (
@@ -230,7 +219,7 @@ const AddUserForm = (props) => {
                                             value={state.dni}
                                             onChange={handleChange("dni")}
                                             type="number"
-                                            required
+
                                         />
                                     </FormControl>
                                     {validation.dni && (
@@ -283,7 +272,7 @@ const AddUserForm = (props) => {
                                             value={state.legajo}
                                             onChange={handleChange("legajo")}
                                             type="number"
-                                            required
+
                                         />
                                     </FormControl>
                                     {validation.legajo && (
@@ -312,7 +301,7 @@ const AddUserForm = (props) => {
                                             invalidDateMessage="El formato de fecha es inválido"
                                             minDateMessage="La fecha no puede ser menor al día de hoy"
                                             maxDateMessage="La fecha no puede ser mayor al máximo permitido"
-                                            required
+
                                         />
                                     </FormControl>
                                 </motion.li>
@@ -330,7 +319,7 @@ const AddUserForm = (props) => {
                                             variant="outlined"
                                             value={state.cargo}
                                             onChange={handleChange("cargo")}
-                                            required
+
                                         />
                                     </FormControl>
                                     {validation.cargo && (
@@ -434,7 +423,7 @@ const AddUserForm = (props) => {
                                             value={state.phone}
                                             onChange={handleChange("phone")}
                                             type="number"
-                                            required
+
                                         />
                                     </FormControl>
                                     {validation.phone && (
@@ -460,7 +449,7 @@ const AddUserForm = (props) => {
                                             variant="outlined"
                                             value={state.direccion}
                                             onChange={handleChange("direccion")}
-                                            required
+
                                         />
                                     </FormControl>
                                     {validation.direccion && (
@@ -484,7 +473,7 @@ const AddUserForm = (props) => {
                                             variant="outlined"
                                             value={state.localidad}
                                             onChange={handleChange("localidad")}
-                                            required
+
                                         />
                                     </FormControl>
                                     {validation.localidad && (
@@ -508,7 +497,7 @@ const AddUserForm = (props) => {
                                             variant="outlined"
                                             value={state.provincia}
                                             onChange={handleChange("provincia")}
-                                            required
+
                                         />
                                     </FormControl>
                                     {validation.provincia && (
