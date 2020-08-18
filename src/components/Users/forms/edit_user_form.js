@@ -12,6 +12,7 @@ import CrudUser from "../../../utils/crud_user";
 import { useSelector } from "react-redux";
 import config from "../../../utils/config";
 import useSWR from "swr";
+import { getGroupsService } from "../../../utils/user/service/user_services";
 
 const list = {
     visible: {
@@ -68,17 +69,8 @@ const EditUserForm = (props) => {
 
 
     useSWR(url, () =>
-        CrudUser.getGroups(user.user.token).then((result) => {
-            if (result.status == 200) {
-                setGroupsData(result.data);
-            } else {
-                result.result.forEach((element) => {
-                    Alert.error(element.message, {
-                        position: "bottom",
-                        effect: "stackslide",
-                    });
-                });
-            }
+        getGroupsService(user.user.token).then((result) => {
+            setGroupsData(result.result);
         })
     );
 
@@ -335,7 +327,7 @@ const EditUserForm = (props) => {
                                         <Select
                                             labelId="groups"
                                             id="groups"
-                                            value={state.groups.id || ''}
+                                            value={state.groups.id ? state.groups.id : state.groups}
                                             onChange={handleChange("groups")}
                                             required
                                             disabled={initialStateUserAccount == false ? true : false}
@@ -490,7 +482,7 @@ const EditUserForm = (props) => {
                                 <Col>
                                     <button
                                         className="ontrack_btn_modal ontrack_btn add_btn"
-                                        type="submit">Agregar</button>
+                                        type="submit">Editar</button>
                                 </Col>
                             </Row>
                         </motion.li>

@@ -28,8 +28,7 @@ const Students = (props) => {
     setIsLoading(true);
     getStudentService(user.user.token).then((result) => {
       setIsLoading(false);
-      console.log(result.result.results);
-        setAllData(result.result.results)
+      setAllData(result.result.results)
     })
   });
 
