@@ -37,9 +37,9 @@ const Students = () => {
 
 
   async function addStudent(e, data) {
-    let parsedData = {...data};
-    Object.keys(parsedData).forEach((key)=>{
-      if(parsedData[key] === ""){
+    let parsedData = { ...data };
+    Object.keys(parsedData).forEach((key) => {
+      if (parsedData[key] === "") {
         delete parsedData[key];
       }
     })
@@ -126,32 +126,27 @@ const Students = () => {
                   options: {
                     customBodyRender: (value, tableMeta, updateValue) => {
                       return (<>
-                        <Row>
-                          <Col>
+                        <div style={{display: 'flex'}}>
+                          <Modal
+                            title="Editar Alumno"
+                            formComponent={<AddEditStudentForm data={selectedData} handleSubmitAction={editStudent} />}
+                            button={
+                              <IconButton onClick={() => setSelectedData(tableMeta.rowData[0])} >
+                                <EditIcon />
+                              </IconButton>
+                            }
+                          />
 
-                            <Modal
-                              title="Editar Alumno"
-                              formComponent={<AddEditStudentForm data={selectedData} handleSubmitAction={editStudent} />}
-                              button={
-                                <IconButton onClick={() => setSelectedData(tableMeta.rowData[0])} >
-                                  <EditIcon />
-                                </IconButton>
-                              }
-                            />
-                          </Col>
-                          <Col>
-                            <Modal
-                              title="¿Seguro que deseas eliminar este alumno?"
-                              formComponent={<DeleteForm data={selectedData} handleSubmitAction={deleteStudent} />}
-                              button={
-                                <IconButton onClick={() => setSelectedData(tableMeta.rowData[0])} >
-                                  <Delete />
-                                </IconButton>
-                              }
-                            />
-                          </Col>
-                        </Row>
-
+                          <Modal
+                            title="¿Seguro que deseas eliminar este alumno?"
+                            formComponent={<DeleteForm data={selectedData} handleSubmitAction={deleteStudent} />}
+                            button={
+                              <IconButton onClick={() => setSelectedData(tableMeta.rowData[0])} >
+                                <Delete />
+                              </IconButton>
+                            }
+                          />
+                        </div>
                       </>)
                     },
                   },
