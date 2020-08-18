@@ -24,7 +24,6 @@ export async function getStudentCrud(token){
 
 
 export async function getStudentCourseCrud(token,student_id){
-  console.log(token)
   return await axios
   .get(`${config.api_url}/alumnos/curso/list/`,{ 
       headers:{
@@ -75,7 +74,6 @@ export async function addStudentCourseCrud(token,data){
       }
   })
   .then((json) => {
-    console.log(json)
     let response = {
       success: true,
       result: json.data,

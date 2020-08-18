@@ -99,6 +99,7 @@ const AddEditStudentForm = (props) => {
                 if (!result.success) {
                     props.handleClose();
                 } else {
+                    console.log(result);
                     const studentData = result.result.results[0].alumno;
                     const schoolYearData = result.result.results[0].anio_lectivo;
                     const courseData = result.result.results[0].curso;
@@ -116,8 +117,8 @@ const AddEditStudentForm = (props) => {
                         provincia: studentData.provincia,
                         fecha_inscripcion: studentData.fecha_inscripcion,
                         school_year: schoolYearData.id,
-                        department: "",
-                        year: courseData.anio,
+                        department: courseData.anio.carrera,
+                        year: courseData.anio.id,
                         curso: courseData.id
                     }
                     setState(selectedData);
