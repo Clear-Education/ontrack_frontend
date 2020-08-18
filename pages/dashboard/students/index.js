@@ -4,7 +4,7 @@ import TitlePage from '../../../src/components/commons/title_page/title_page';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import MUIDataTable from 'mui-datatables';
-import { getStudentService, deleteStudentService, addStudentService } from '../../../src/utils/student/service/student_service';
+import { getStudentService, deleteStudentService, addStudentService, editStudentService } from '../../../src/utils/student/service/student_service';
 import BackgroundLoader from '../../../src/components/commons/background_loader/background_loader';
 import config from '../../../src/utils/config';
 import { motion } from "framer-motion";
@@ -34,6 +34,28 @@ const Students = () => {
     })
   });
 
+
+
+  async function addStudent(e, data) {
+    e.preventDefault();
+    setIsLoading(true);
+    return await addStudentService(user.user.token, data).then((result) => {
+      setIsLoading(false);
+      mutate(url);
+      return result;
+    })
+  }
+
+  async function editStudent(e, data) {
+    e.preventDefault();
+    setIsLoading(true);
+    return await editStudentService(user.user.token, data).then((result) => {
+      setIsLoading(false);
+      mutate(url);
+      return result;
+    })
+  }
+
   async function deleteStudent(e, data) {
     e.preventDefault();
     setIsLoading(true);
@@ -43,17 +65,6 @@ const Students = () => {
       return result;
     })
   }
-
-  async function addStudent(e, data) {
-    e.preventDefault();
-    setIsLoading(true);
-    return await addStudentService(user.user.token, data).then((result) => {
-        setIsLoading(false);
-        mutate(url);
-        return result;
-    })
-}
-
   return (
     <>
       {isLoading && <BackgroundLoader show={isLoading} />}
@@ -113,7 +124,7 @@ const Students = () => {
 
                             <Modal
                               title="Editar Alumno"
-                              formComponent={<AddEditStudentForm data={selectedData} />}
+                              formComponent={<AddEditStudentForm data={selectedData} handleSubmitAction={editStudent} />}
                               button={
                                 <IconButton onClick={() => setSelectedData(tableMeta.rowData[0])} >
                                   <EditIcon />
@@ -124,7 +135,7 @@ const Students = () => {
                           <Col>
                             <Modal
                               title="¿Seguro que deseas eliminar este alumno?"
-                              formComponent={<DeleteForm data={selectedData} handleSubmitAction={deleteStudent}  />}
+                              formComponent={<DeleteForm data={selectedData} handleSubmitAction={deleteStudent} />}
                               button={
                                 <IconButton onClick={() => setSelectedData(tableMeta.rowData[0])} >
                                   <Delete />
@@ -145,7 +156,7 @@ const Students = () => {
           <Col className={styles.add_btn_container}>
             <Modal
               title="Agregar Alumno"
-              formComponent={<AddEditStudentForm  handleSubmitAction={addStudent} />}
+              formComponent={<AddEditStudentForm handleSubmitAction={addStudent} />}
               button={
                 <button className="ontrack_btn add_btn">Nuevo Alumno</button>
               }
