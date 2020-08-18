@@ -37,9 +37,16 @@ const Students = () => {
 
 
   async function addStudent(e, data) {
+    let parsedData = {...data};
+    Object.keys(parsedData).forEach((key)=>{
+      if(parsedData[key] === ""){
+        delete parsedData[key];
+      }
+    })
+    console.log(parsedData)
     e.preventDefault();
     setIsLoading(true);
-    return await addStudentService(user.user.token, data).then((result) => {
+    return await addStudentService(user.user.token, parsedData).then((result) => {
       setIsLoading(false);
       mutate(url);
       return result;
