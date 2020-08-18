@@ -17,7 +17,7 @@ import BackgroundLoader from "../../commons/background_loader/background_loader"
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Modal from "../../commons/modals/generic_modal/modal";
 import { addYearsService, editYearsService, deleteYearsService } from "../../../utils/year/services/year_services";
-import DeleteForm from "../subject/forms/delete_form/deleteForm";
+import DeleteForm from "../../commons/delete_form/deleteForm";
 import GoBackButton from "../../commons/go_back_button/go_back_button";
 
 

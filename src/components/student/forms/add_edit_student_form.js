@@ -16,7 +16,7 @@ import { getSchoolYearService } from "../../../utils/school_year/services/school
 import { getDepartmentService } from "../../../utils/department/services/department_services";
 import { getYearService } from "../../../utils/year/services/year_services";
 import { getCourseService } from "../../../utils/course/services/course_services";
-import { addStudentService } from "../../../utils/student/service/student_service";
+import { addStudentService, getStudentCourseService } from "../../../utils/student/service/student_service";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 const list = {
@@ -78,7 +78,7 @@ const VALIDATE_INITIAL_STATE = {
     curso: false
 };
 
-const AddStudentForm = (props) => {
+const AddEditStudentForm = (props) => {
 
     const [state, setState] = useState(INITIAL_STATE);
     const [validation, setValidation] = useState(VALIDATE_INITIAL_STATE);
@@ -95,6 +95,18 @@ const AddStudentForm = (props) => {
     const url = `${config.api_url}/institucion/list/`
     const school_year_url = `${config.api_url}/anio/anio_lectivo/list/`;
     const department_url = `${config.api_url}/carrera/list/`;
+
+
+    useEffect(()=>{
+        if(props.data){
+            getStudentCourseService(user.user.token,props.data).then((result)=>{
+                if(result.success){
+                    props.handleClose();
+                }
+            })
+        }
+
+    },[])
 
     useSWR(url, () =>
         getInstitutions(user.user.token).then((result) => {
@@ -182,19 +194,20 @@ const AddStudentForm = (props) => {
     };
 
 
-
     const handleSubmit = (e) => {
         e.preventDefault();
         setIsLoading(true);
         let parseData = {...state};
         parseData['fecha_nacimiento'] = convertDate(parseData['fecha_nacimiento']);
         parseData['fecha_inscripcion'] = convertDate(parseData['fecha_inscripcion']);
-        addStudentService(user.user.token,parseData).then((result)=>{
-            setIsLoading(false);
-            mutate(url);
-            console.log(result);
-        })
+        props.handleSubmitAction(e, parseData).then((result) => {
+            setIsLoading(false)
+            if (result.success) {
+                props.handleClose(false);
+            }
+        });
     }
+
 
     return (
         <motion.span
@@ -273,6 +286,7 @@ const AddStudentForm = (props) => {
                                             variant="outlined"
                                             value={state.dni}
                                             onChange={handleChange("dni")}
+                                            type='number'
                                             required
                                         />
                                     </FormControl>
@@ -610,25 +624,6 @@ const AddStudentForm = (props) => {
                         </motion.li>
                     </form>
 
-                    {!fullscreen &&
-                        <>
-                            <div className={styles.decorator} />{" "}
-                            <span id={styles.title_decorator}>
-                                {" "}
-                      Importar mediante un archivo CSV
-                      {" "}
-                            </span>
-                            <div className={styles.decorator} />
-
-                            <motion.li variants={item}>
-                                <Row lg={12} md={12} sm={12} xs={12} className="center" style={{ justifyContent: 'center' }}>
-                                    <Col>
-                                        <button className="ontrack_btn_modal ontrack_btn csv_btn">Importar CSV</button>
-                                    </Col>
-                                </Row>
-                            </motion.li>
-                        </>
-                    }
                 </Col>
             </Row>
 
@@ -639,6 +634,6 @@ const AddStudentForm = (props) => {
 }
 
 
-export default AddStudentForm
+export default AddEditStudentForm
 
 

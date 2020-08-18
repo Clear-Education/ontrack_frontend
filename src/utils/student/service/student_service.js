@@ -1,6 +1,23 @@
-import { getStudentCrud, addStudentCrud, deleteStudentCrud, editStudentCrud, addStudentCourseCrud } from "../cruds/student_cruds";
+import { getStudentCrud, addStudentCrud, deleteStudentCrud, editStudentCrud, addStudentCourseCrud,getStudentCourseCrud } from "../cruds/student_cruds";
 import Alert from "react-s-alert";
 
+
+export async function getStudentCourseService(token,student_id){
+    return await getStudentCourseCrud(token,student_id).then((result)=>{
+      if (result.success) {
+            
+      } else {
+        result.result.forEach((element) => {
+          Alert.error(element.message, {
+            position: "bottom",
+            effect: "stackslide",
+          });
+        });
+      }
+      return result;
+    })
+
+    }
 
 export async function getStudentService(token){
     return await getStudentCrud(token).then((result)=>{
@@ -35,11 +52,13 @@ export async function addStudentService(token,data){
   return await addStudentCrud(token,parseStudentData).then((result)=>{
       if (result.success) {
           const parseStudentCourseData = {
-            alumno: result.result,
+            alumno: result.result[parseStudentData[0].dni],
             curso: data.curso,
             anio_lectivo: data.school_year
            }
-          addStudentCourseService(token,parseStudentCourseData);
+          return addStudentCourseService(token,parseStudentCourseData).then((result)=>{
+            return result;
+          });
         } else {
           result.result.forEach((element) => {
             Alert.error(element.message, {
@@ -47,8 +66,8 @@ export async function addStudentService(token,data){
               effect: "stackslide",
             });
           });
+          return result;
         }
-        return result;
   })
 }
 

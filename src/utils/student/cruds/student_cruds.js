@@ -22,6 +22,27 @@ export async function getStudentCrud(token){
     });
 }
 
+
+export async function getStudentCourseCrud(token,student_id){
+  console.log(token)
+  return await axios
+  .get(`${config.api_url}/alumnos/curso/${student_id}/`,{ 
+      headers:{
+          Authorization: `Token ${token}`
+      }
+  })
+  .then((json) => {
+    let response = {
+      success: true,
+      result: json.data,
+    };
+    return response;
+  })
+  .catch((error) => {
+    return errorHandler(error);
+  });
+}
+
 export async function addStudentCrud(token,data){
     return await axios
     .post(`${config.api_url}/alumnos/`,data,{
@@ -44,7 +65,6 @@ export async function addStudentCrud(token,data){
 
 
 export async function addStudentCourseCrud(token,data){
-  debugger;
   return await axios
   .post(`${config.api_url}/alumnos/curso/`,data,{
       headers:{
@@ -52,7 +72,7 @@ export async function addStudentCourseCrud(token,data){
       }
   })
   .then((json) => {
-
+    console.log(json)
     let response = {
       success: true,
       result: json.data,
@@ -92,7 +112,7 @@ export async function editStudentCrud(token,data){
 
 export async function deleteStudentCrud(token,data){
   return await axios
-  .delete(`${config.api_url}/alumnos/curso/${data.id}/`,{ 
+  .delete(`${config.api_url}/alumnos/${data}/`,{ 
       headers:{
           Authorization: `Token ${token}`
       }

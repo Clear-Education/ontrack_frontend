@@ -61,12 +61,6 @@ const EditUserForm = (props) => {
     const [date, setDate] = useState(props.user.date_of_birth);
     const user = useSelector((store) => store.user);
 
-    /* EL INPUT DE FECHA ME ESTABA TOMANDO UN DIA MENOS QUE LA FECHA REAL DEL USER*/
-    /*    const dateUser = new Date(date);
-       const dateUserFormat = dateUser.setTime(dateUser.getTime() + dateUser.getTimezoneOffset() * 60 * 1000);
-       console.log(dateUserFormat) */
-
-
     useSWR(url, () =>
         CrudUser.getGroups(user.user.token).then((result) => {
             if (result.status == 200) {

@@ -55,7 +55,6 @@ export async function editExamsService(token,data){
 }
 
 export async function deleteExamsService(token,data){
-  console.log(data);
   let parsedData= {
     anio_lectivo: data.anio_lectivo,
     materia: data.materia

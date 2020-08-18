@@ -59,21 +59,13 @@ export async function login(user, password) {
 
 export async function logout(auth_token) {
   return axios
-    .get(`${config.api_url}/user/logout/`, {
+    .get(`${config.api_url}/users/logout/`, {
       headers: {
-        Authorization: `Bearer ${auth_token}`,
+        Authorization: `Token ${auth_token}`,
       },
     })
     .then((json) => {
-      if (json.data.success) {
-        return { success: true, data: json.data.data };
-      } else {
-        return {
-          success: false,
-          unauthorized: false,
-          result: [{ message: `${json.data.data}. Intenta nuevamente!` }],
-        };
-      }
+      return { success: true, data: json.data};
     })
     .catch((error) => {
       return errorHandler(error);

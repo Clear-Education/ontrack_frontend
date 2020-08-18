@@ -54,10 +54,6 @@ export const logoutAction = (auth_token) => async (dispatch) => {
     if (result.success) {
       return dispatch({ type: types.LOGOUT });
     } else {
-      dispatch({ type: types.NO_LOADING_USER });
-      if (result.unauthorized) {
-        return "unauthorized";
-      } else {
         result.result.forEach((element) => {
           Alert.error(element.message, {
             position: "bottom",
@@ -65,7 +61,6 @@ export const logoutAction = (auth_token) => async (dispatch) => {
           });
         });
         return false;
-      }
     }
   });
 };

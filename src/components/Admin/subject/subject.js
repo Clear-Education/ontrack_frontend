@@ -12,7 +12,7 @@ import BackgroundLoader from "../../commons/background_loader/background_loader"
 import { getSubjectsService, addSubjectsService, editSubjectsService, deleteSubjectsService } from "../../../utils/subject/services/subject_services";
 import Modal from "../../commons/modals/generic_modal/modal";
 import SubjectForm from "./forms/add_edit_form/subjectForm";
-import DeleteForm from "./forms/delete_form/deleteForm";
+import DeleteForm from "../../commons/delete_form/deleteForm";
 import GoBackButton from "../../commons/go_back_button/go_back_button";
 
 

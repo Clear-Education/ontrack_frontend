@@ -94,7 +94,6 @@ const ExamsTable = (props) => {
 
     const handleExams = () =>{
         setIsLoading(true);
-        console.log(examsArray.length);
         if(!!examsArray.length){
             editExamsService(user.user.token,examsArray).then((result)=>{
             setIsLoading(false);
