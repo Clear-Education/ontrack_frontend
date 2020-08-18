@@ -206,8 +206,13 @@ const AddEditStudentForm = (props) => {
         e.preventDefault();
         setIsLoading(true);
         let parseData = { ...state };
-        parseData['fecha_nacimiento'] = convertDate(parseData['fecha_nacimiento']);
-        parseData['fecha_inscripcion'] = convertDate(parseData['fecha_inscripcion']);
+        if(parseData['fecha_nacimiento'] !== ""){
+            parseData['fecha_nacimiento'] = convertDate(parseData['fecha_nacimiento']);
+        }
+        if(parseData['fecha_inscripcion'] !== ""){
+            parseData['fecha_inscripcion'] = convertDate(parseData['fecha_inscripcion']);
+        }
+        
         props.handleSubmitAction(e, parseData).then((result) => {
             setIsLoading(false)
             if (result.success) {
