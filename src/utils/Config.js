@@ -1,5 +1,5 @@
-const Config = {
-    api_url: "http://127.0.0.1:8000/api",
+const config = {
+    api_url: "https://ontrack-education.herokuapp.com/api",
 }
 
-export default Config
+export default config

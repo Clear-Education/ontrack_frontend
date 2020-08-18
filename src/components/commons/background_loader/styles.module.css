@@ -1,0 +1,15 @@
+#loader_container {
+    background-color: var(--main-color-dark);
+    border-radius: 20px;
+    padding: 8px 20px 8px 28px;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 14px;
+    box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.1);
+  }
+  .circular_progress {
+    position: relative;
+    right: 10px;
+    top: 3px;
+  }
+  

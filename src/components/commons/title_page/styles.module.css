@@ -1,0 +1,9 @@
+.title {
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--grey);
+    text-transform: uppercase;
+    margin-bottom: 40px;
+  }
+
+  
