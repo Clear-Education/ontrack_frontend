@@ -40,12 +40,12 @@ export default function CoursesTable(props) {
 
     return (
         <MaterialTable
-        title={<span
-            style={{
-                position:'absolute',
-                top:'25px',
-                fontWeight:600
-            }}
+            title={<span
+                style={{
+                    position: 'absolute',
+                    top: '25px',
+                    fontWeight: 600
+                }}
             >Cursos</span>}
             components={MTConfig.components}
             options={MTConfig.options}
@@ -74,9 +74,14 @@ export default function CoursesTable(props) {
                 onRowUpdate: (newData, oldData) => {
                     if (oldData) {
                         setState((prevState) => {
-                            const data = [...prevState.data];
-                            data[data.indexOf(oldData)] = newData;
-                            return { ...prevState, data };
+                            if (newData.nombre == "") {
+                                return { ...prevState }
+                            } else {
+                                const data = [...prevState.data];
+                                data[data.indexOf(oldData)] = newData;
+                                return { ...prevState, data };
+                            }
+
                         });
                     }
                     const { id, nombre } = newData;
