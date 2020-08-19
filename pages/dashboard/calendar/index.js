@@ -88,7 +88,7 @@ const Calendar = () => {
                           <Col lg={3} md={3} sm={3} xs={3} className={styles.actions_container}>
                             <Modal
                               title="¿Seguro que deseas eliminar este año lectivo?"
-                              formComponent={<DeleteForm data={selectedData} handleSubmitAction={deleteSchoolYear} />}
+                              body={<DeleteForm data={selectedData} handleSubmitAction={deleteSchoolYear} />}
                               button={
                                 <IconButton onClick={() => setSelectedData(school_year)} >
                                   <Delete />
@@ -97,7 +97,7 @@ const Calendar = () => {
                             />
                             <Modal
                               title="Editar Año Lectivo"
-                              formComponent={<SchoolYearForm data={selectedData} handleSubmitAction={editSchoolYear} showTable={true} />}
+                              body={<SchoolYearForm data={selectedData} handleSubmitAction={editSchoolYear} showTable={true} />}
                               button={
                                 <IconButton onClick={() => setSelectedData(school_year)} >
                                   <EditIcon />
@@ -119,7 +119,7 @@ const Calendar = () => {
               <Col lg={12} md={12} sm={12} xs={12} id={styles.add_new_structure}>
                 <Modal
                   title="Nuevo Año Lectivo"
-                  formComponent={<SchoolYearForm handleSubmitAction={addSchoolYear} />}
+                  body={<SchoolYearForm handleSubmitAction={addSchoolYear} />}
                   button={
                     <button className="ontrack_btn add_btn">
                       Nuevo Año Lectivo

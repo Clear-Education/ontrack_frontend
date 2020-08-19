@@ -96,7 +96,7 @@ const Subject = (props) => {
                                                     <Col lg={3} md={3} sm={3} xs={3} className={styles.actions_container}>
                                                         <Modal
                                                             title="¿Seguro que deseas eliminar esta materia?"
-                                                            formComponent={<DeleteForm data={selectedData} handleSubmitAction={deleteSubject} />}
+                                                            body={<DeleteForm data={selectedData} handleSubmitAction={deleteSubject} />}
                                                             button={
                                                                 <IconButton onClick={() => setSelectedData(subject)} >
                                                                     <Delete />
@@ -105,7 +105,7 @@ const Subject = (props) => {
                                                         />
                                                         <Modal
                                                             title="Editar Materia"
-                                                            formComponent={<SubjectForm data={selectedData} handleSubmitAction={editSubject} showTable={true}/>}
+                                                            body={<SubjectForm data={selectedData} handleSubmitAction={editSubject} showTable={true}/>}
                                                             button={
                                                                 <IconButton onClick={() => setSelectedData(subject)} >
                                                                     <EditIcon />
@@ -127,7 +127,7 @@ const Subject = (props) => {
                             <Col lg={12} md={12} sm={12} xs={12} id={styles.add_new_structure}>
                                 <Modal
                                     title="Nueva Materia"
-                                    formComponent={<SubjectForm handleSubmitAction={addSubject} />}
+                                    body={<SubjectForm handleSubmitAction={addSubject} />}
                                     button={
                                         <button className="ontrack_btn add_btn">
                                             Nueva Materia

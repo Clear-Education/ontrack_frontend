@@ -109,7 +109,7 @@ const Year = (props) => {
                                                     <Col lg={3} md={3} sm={3} xs={3} className={styles.actions_container}>
                                                         <Modal
                                                             title="¿Seguro que deseas eliminar este año?"
-                                                            formComponent={<DeleteForm data={selectedData} handleSubmitAction={deleteYear} />}
+                                                            body={<DeleteForm data={selectedData} handleSubmitAction={deleteYear} />}
                                                             button={
                                                                 <IconButton onClick={() => setSelectedData(year)} >
                                                                     <Delete />
@@ -119,7 +119,7 @@ const Year = (props) => {
 
                                                         <Modal
                                                             title="Editar Año"
-                                                            formComponent={<YearForm
+                                                            body={<YearForm
                                                                 data={selectedData}
                                                                 handleSubmitAction={editYear}
                                                                 addModal={false}
@@ -147,7 +147,7 @@ const Year = (props) => {
                             <Col lg={12} md={12} sm={12} xs={12} id={styles.add_new_structure}>
                                 <Modal
                                     title="Nuevo Año"
-                                    formComponent={<YearForm
+                                    body={<YearForm
                                         handleSubmitAction={addYear}
                                         addModal={true} />}
                                     button={

@@ -1,0 +1,77 @@
+import { get${name}Crud, add${name}Crud,edit${name}Crud, delete${name}Crud } from "../cruds/${name}_cruds";
+import Alert from "react-s-alert";
+
+
+export async function get${name}Service(token) {
+    return await get${name}Crud(token).then((result) => {
+        if (result.success) {
+
+        } else {
+            result.result.forEach((element) => {
+                Alert.error(element.message, {
+                    position: "bottom",
+                    effect: "stackslide",
+                });
+            });
+        }
+        return result;
+    })
+}
+
+export async function add${name}Service(data, token) {
+    return await add${name}Crud(data, token).then((result) => {
+        if (result.success) {
+            Alert.success("${name} creado correctamente", {
+                position: "bottom",
+                effect: "stackslide",
+            });
+        } else {
+            result.result.forEach((element) => {
+                Alert.error(element.message, {
+                    position: "bottom",
+                    effect: "stackslide",
+                });
+            });
+        }
+        return result;
+    })
+}
+
+export async function edit${name}Service(data, token) {
+    return await edit${name}Crud(data, token).then((result) => {
+        if (result.success) {
+            Alert.success("${name} editado correctamente", {
+                position: "bottom",
+                effect: "stackslide",
+            });
+        } else {
+            result.result.forEach((element) => {
+                Alert.error(element.message, {
+                    position: "bottom",
+                    effect: "stackslide",
+                });
+            });
+        }
+        return result;
+    })
+}
+
+
+export async function delete${name}Service(token,data){
+  return await delete${name}Crud(token,data).then((result)=>{
+      if (result.success) {
+        Alert.success("Materia eliminada correctamente", {
+          position: "bottom",
+          effect: "stackslide",
+        });
+        } else {
+          result.result.forEach((element) => {
+            Alert.error(element.message, {
+              position: "bottom",
+              effect: "stackslide",
+            });
+          });
+        }
+        return result;
+  })
+}
