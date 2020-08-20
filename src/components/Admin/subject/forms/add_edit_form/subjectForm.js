@@ -1,20 +1,20 @@
-import { motion } from "./node_modules/framer-motion";
-import TextField from "./node_modules/@material-ui/core/TextField";
-import FormControl from "./node_modules/@material-ui/core/FormControl";
-import FormHelperText from "./node_modules/@material-ui/core/FormHelperText";
-import { Row, Col } from "./node_modules/react-bootstrap";
-import CircularProgress from "./node_modules/@material-ui/core/CircularProgress";
-import Alert from "./node_modules/react-s-alert";
+import { motion } from "framer-motion";
+import TextField from "@material-ui/core/TextField";
+import FormControl from "@material-ui/core/FormControl";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import { Row, Col } from "react-bootstrap";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Alert from "react-s-alert";
 
 import styles from './styles.module.css'
-import { useState } from "./node_modules/react";
-import ColorPicker from './node_modules/material-ui-color-picker'
+import { useState } from "react";
+import ColorPicker from 'material-ui-color-picker'
 import ExamsTable from "../exams/exams_table";
-import useSWR from "./node_modules/swr";
+import useSWR from "swr";
 import { getSchoolYearService } from "../../../../../utils/school_year/services/school_year_services";
 import config from "../../../../../utils/config";
-import { useSelector } from "./node_modules/react-redux";
-import { MenuItem, Select, InputLabel } from "./node_modules/@material-ui/core";
+import { useSelector } from "react-redux";
+import { MenuItem, Select, InputLabel } from "@material-ui/core";
 
 
 const list = {

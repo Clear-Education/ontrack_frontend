@@ -1,13 +1,13 @@
-import MaterialTable from "./node_modules/material-table";
-import { useState, useEffect } from "./node_modules/react";
+import MaterialTable from "material-table";
+import { useState, useEffect } from "react";
 import styles from './styles.module.css'
 import { MTConfig } from "../../../../../utils/table_options/material_table/MT_config";
-import useSWR, { mutate } from "./node_modules/swr";
-import { useSelector } from "./node_modules/react-redux";
+import useSWR, { mutate } from "swr";
+import { useSelector } from "react-redux";
 import { getExamsService, editExamsService, deleteExamsService } from "../../../../../utils/exam/services/exam_services";
 import config from "../../../../../utils/config";
-import { Col } from "./node_modules/react-bootstrap";
-import CircularProgress from "./node_modules/@material-ui/core/CircularProgress";
+import { Col } from "react-bootstrap";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 
 const ExamsTable = (props) => {
