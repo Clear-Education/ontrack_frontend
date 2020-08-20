@@ -1,0 +1,39 @@
+// Change this on main color change
+$main_color: #7a00f9;
+.preview_photo {
+  margin: 10px 0px;
+  border: 3px solid lighten($color: $main_color, $amount: 45);
+  border-radius: 15px;
+  padding: 10px;
+  .photo_container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    .selected_img {
+      width: 45px;
+      height: 45px;
+      border-radius: 15px;
+    }
+    img.defaul_img {
+      width: 38px;
+      height: 38px;
+    }
+    .file_detail {
+      position: relative;
+      left: 10px;
+      width: 90%;
+      p {
+        font-size: 14px;
+        margin-bottom: 0px;
+        &:first-child {
+          font-weight: 700;
+          font-size: 16px;
+          width: 90%;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+    }
+  }
+}
