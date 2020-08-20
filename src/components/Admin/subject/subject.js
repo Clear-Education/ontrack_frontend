@@ -1,13 +1,13 @@
 import TitlePage from "../../commons/title_page/title_page";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col } from "./node_modules/react-bootstrap";
 import styles from './subject.module.css'
-import { useSelector } from "react-redux";
-import { useState } from "react";
-import useSWR, { mutate } from "swr";
+import { useSelector } from "./node_modules/react-redux";
+import { useState } from "./node_modules/react";
+import useSWR, { mutate } from "./node_modules/swr";
 import config from "../../../utils/config";
-import { IconButton } from "@material-ui/core";
-import EditIcon from '@material-ui/icons/Edit';
-import Delete from '@material-ui/icons/Delete';
+import { IconButton } from "./node_modules/@material-ui/core";
+import EditIcon from './node_modules/@material-ui/icons/Edit';
+import Delete from './node_modules/@material-ui/icons/Delete';
 import BackgroundLoader from "../../commons/background_loader/background_loader";
 import { getSubjectsService, addSubjectsService, editSubjectsService, deleteSubjectsService } from "../../../utils/subject/services/subject_services";
 import Modal from "../../commons/modals/generic_modal/modal";

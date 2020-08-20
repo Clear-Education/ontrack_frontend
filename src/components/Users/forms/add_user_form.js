@@ -1,17 +1,17 @@
-import { motion } from "framer-motion";
-import TextField from "@material-ui/core/TextField";
-import FormControl from "@material-ui/core/FormControl";
-import FormHelperText from "@material-ui/core/FormHelperText";
-import { KeyboardDatePicker } from "@material-ui/pickers";
-import { Row, Col } from "react-bootstrap";
-import { InputLabel, Select, MenuItem, useTheme, useMediaQuery } from "@material-ui/core";
+import { motion } from "./node_modules/framer-motion";
+import TextField from "./node_modules/@material-ui/core/TextField";
+import FormControl from "./node_modules/@material-ui/core/FormControl";
+import FormHelperText from "./node_modules/@material-ui/core/FormHelperText";
+import { KeyboardDatePicker } from "./node_modules/@material-ui/pickers";
+import { Row, Col } from "./node_modules/react-bootstrap";
+import { InputLabel, Select, MenuItem, useTheme, useMediaQuery } from "./node_modules/@material-ui/core";
 
 import styles from './styles.module.css';
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useState } from "./node_modules/react";
+import { useSelector } from "./node_modules/react-redux";
 import config from "../../../utils/config";
-import useSWR from "swr";
-import Alert from "react-s-alert";
+import useSWR from "./node_modules/swr";
+import Alert from "./node_modules/react-s-alert";
 import { getGroupsService } from "../../../utils/user/service/user_services";
 
 const list = {
