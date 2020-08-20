@@ -1,0 +1,28 @@
+// Change this on main color change
+$main_color: #7a00f9;
+.drop_zone {
+  height: 200px;
+  background-color: transparent;
+  border: 3px dashed $main_color;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+  &:hover {
+    background-color: lighten($color: $main_color, $amount: 45);
+  }
+  .input_title {
+    margin: 20px 10px 5px 10px;
+    font-weight: 700;
+  }
+  .input_description {
+    margin: 5px;
+    font-weight: 300;
+  }
+  .file_input {
+    // Do not change this property
+    display: none;
+  }
+}

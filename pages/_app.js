@@ -46,6 +46,9 @@ const App = ({ Component, pageProps, router }) => {
     ) {
       router.push("/");
     }
+    if(authUser === undefined){
+      router.push("/");
+    }
   }, []);
 
 /* 
