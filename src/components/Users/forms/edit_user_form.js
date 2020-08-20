@@ -1,17 +1,16 @@
-import { motion } from "./node_modules/framer-motion";
-import TextField from "./node_modules/@material-ui/core/TextField";
-import FormControl from "./node_modules/@material-ui/core/FormControl";
-import FormHelperText from "./node_modules/@material-ui/core/FormHelperText";
-import { KeyboardDatePicker } from "./node_modules/@material-ui/pickers";
-import { Row, Col } from "./node_modules/react-bootstrap";
-import { InputLabel, Select, MenuItem, useTheme, useMediaQuery } from "./node_modules/@material-ui/core";
+import { motion } from "framer-motion";
+import TextField from "@material-ui/core/TextField";
+import FormControl from "@material-ui/core/FormControl";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import { KeyboardDatePicker } from "@material-ui/pickers";
+import { Row, Col } from "react-bootstrap";
+import { InputLabel, Select, MenuItem, useTheme, useMediaQuery } from "@material-ui/core";
 
 import styles from './styles.module.css';
-import { useState } from "./node_modules/react";
-import CrudUser from "../../../utils/crud_user";
-import { useSelector } from "./node_modules/react-redux";
+import { useState } from "react";
+import { useSelector } from "react-redux";
 import config from "../../../utils/config";
-import useSWR from "./node_modules/swr";
+import useSWR from "swr";
 import { getGroupsService } from "../../../utils/user/service/user_services";
 
 const list = {
@@ -62,6 +61,8 @@ const EditUserForm = (props) => {
     const [date, setDate] = useState(props.user.date_of_birth);
     const user = useSelector((store) => store.user);
 
+    console.log(state)
+
     useSWR(url, () =>
         getGroupsService(user.user.token).then((result) => {
             setGroupsData(result.result);
@@ -107,6 +108,17 @@ const EditUserForm = (props) => {
             props.handleSubmitEditUserState(e, state);
             props.handleClose(false);
         } else if (initialStateUserAccount == true) {
+
+            for (var key in state) {
+                if (key == "legajo" || key == "dni") {
+                    if (state[key] === null || state[key] === "") {
+                        delete state[key]
+                    }
+                } else if (state[key] === null) {
+                    delete state[key]
+                }
+            }
+
             props.handleSubmitEditUser(e, state);
             props.handleClose(false);
         } else {
@@ -145,18 +157,10 @@ const EditUserForm = (props) => {
                                             variant="outlined"
                                             value={state.name}
                                             onChange={handleChange("name")}
-                                            required
+
                                             disabled={initialStateUserAccount == false ? true : false}
                                         />
                                     </FormControl>
-                                    {validation.name && (
-                                        <FormHelperText
-                                            className="helper-text"
-                                            style={{ color: "rgb(182, 60, 47)" }}
-                                        >
-                                            Esta campo no puede estar vacio
-                                        </FormHelperText>
-                                    )}
                                 </motion.li>
                             </Col>
 
@@ -170,18 +174,10 @@ const EditUserForm = (props) => {
                                             variant="outlined"
                                             value={state.last_name}
                                             onChange={handleChange("last_name")}
-                                            required
+
                                             disabled={initialStateUserAccount == false ? true : false}
                                         />
                                     </FormControl>
-                                    {validation.last_name && (
-                                        <FormHelperText
-                                            className="helper-text"
-                                            style={{ color: "rgb(182, 60, 47)" }}
-                                        >
-                                            Esta campo no puede estar vacio
-                                        </FormHelperText>
-                                    )}
                                 </motion.li>
                             </Col>
 
@@ -196,7 +192,7 @@ const EditUserForm = (props) => {
                                             value={state.dni}
                                             onChange={handleChange("dni")}
                                             type="number"
-                                            required
+
                                             disabled={initialStateUserAccount == false ? true : false}
                                         />
                                     </FormControl>
@@ -251,7 +247,7 @@ const EditUserForm = (props) => {
                                             value={state.legajo}
                                             onChange={handleChange("legajo")}
                                             type="number"
-                                            required
+
                                             disabled={initialStateUserAccount == false ? true : false}
                                         />
                                     </FormControl>
@@ -281,7 +277,7 @@ const EditUserForm = (props) => {
                                             invalidDateMessage="El formato de fecha es inválido"
                                             minDateMessage="La fecha no puede ser menor al día de hoy"
                                             maxDateMessage="La fecha no puede ser mayor al máximo permitido"
-                                            required
+
                                             disabled={initialStateUserAccount == false ? true : false}
                                         />
                                     </FormControl>
@@ -300,18 +296,10 @@ const EditUserForm = (props) => {
                                             variant="outlined"
                                             value={state.cargo}
                                             onChange={handleChange("cargo")}
-                                            required
+
                                             disabled={initialStateUserAccount == false ? true : false}
                                         />
                                     </FormControl>
-                                    {validation.cargo && (
-                                        <FormHelperText
-                                            className="helper-text"
-                                            style={{ color: "rgb(182, 60, 47)" }}
-                                        >
-                                            Esta campo no puede estar vacio
-                                        </FormHelperText>
-                                    )}
                                 </motion.li>
                             </Col>
                             <Col lg={6} md={6} sm={12} xs={12} className={fullscreen && styles.input_container}>
@@ -353,18 +341,10 @@ const EditUserForm = (props) => {
                                             value={state.phone}
                                             onChange={handleChange("phone")}
                                             type="number"
-                                            required
+
                                             disabled={initialStateUserAccount == false ? true : false}
                                         />
                                     </FormControl>
-                                    {validation.phone && (
-                                        <FormHelperText
-                                            className="helper-text"
-                                            style={{ color: "rgb(182, 60, 47)" }}
-                                        >
-                                            Esta campo no puede estar vacio
-                                        </FormHelperText>
-                                    )}
                                 </motion.li>
                             </Col>
                             <Col lg={6} md={6} sm={12} xs={12} className={fullscreen && styles.input_container}>
@@ -405,18 +385,10 @@ const EditUserForm = (props) => {
                                             variant="outlined"
                                             value={state.direccion}
                                             onChange={handleChange("direccion")}
-                                            required
+
                                             disabled={initialStateUserAccount == false ? true : false}
                                         />
                                     </FormControl>
-                                    {validation.direccion && (
-                                        <FormHelperText
-                                            className="helper-text"
-                                            style={{ color: "rgb(182, 60, 47)" }}
-                                        >
-                                            Esta campo no puede estar vacio
-                                        </FormHelperText>
-                                    )}
                                 </motion.li>
                             </Col>
 
@@ -430,18 +402,10 @@ const EditUserForm = (props) => {
                                             variant="outlined"
                                             value={state.localidad}
                                             onChange={handleChange("localidad")}
-                                            required
+
                                             disabled={initialStateUserAccount == false ? true : false}
                                         />
                                     </FormControl>
-                                    {validation.localidad && (
-                                        <FormHelperText
-                                            className="helper-text"
-                                            style={{ color: "rgb(182, 60, 47)" }}
-                                        >
-                                            Esta campo no puede estar vacio
-                                        </FormHelperText>
-                                    )}
                                 </motion.li>
                             </Col>
 
@@ -455,18 +419,10 @@ const EditUserForm = (props) => {
                                             variant="outlined"
                                             value={state.provincia}
                                             onChange={handleChange("provincia")}
-                                            required
+
                                             disabled={initialStateUserAccount == false ? true : false}
                                         />
                                     </FormControl>
-                                    {validation.provincia && (
-                                        <FormHelperText
-                                            className="helper-text"
-                                            style={{ color: "rgb(182, 60, 47)" }}
-                                        >
-                                            Esta campo no puede estar vacio
-                                        </FormHelperText>
-                                    )}
                                 </motion.li>
                             </Col>
                         </Row>
