@@ -34,8 +34,8 @@ const Modal = (props) => {
         setShow(value);
     }
     
-    let form_component = {...props.formComponent};
-    form_component.props = {...props.formComponent.props,handleClose:handleVisibilityModal}
+    let body = {...props.body};
+    body.props = {...props.body.props,handleClose:handleVisibilityModal}
 
     return (
         <>
@@ -55,7 +55,7 @@ const Modal = (props) => {
                     <DialogTitle className={styles.modal_title}>{props.title}</DialogTitle>
                     <DialogContent>
                         <div>
-                            {form_component}
+                            {body}
                         </div>
                     </DialogContent>
                 </Dialog>

@@ -10,15 +10,13 @@ import { useSelector } from "react-redux";
 
 /* COMPONENTS */
 import ModalAdd from '../../../src/components/commons/modals/modal_add/modal_add';
-import AddUserForm from '../../../src/components/Users/forms/add_user_form';
-import EditUserForm from "../../../src/components/Users/forms/edit_user_form";
-import AlertDialog from '../../../src/components/Users/confirmation_dialog';
+import AddUserForm from '../../../src/components/users/forms/add_user_form';
+import EditUserForm from "../../../src/components/users/forms/edit_user_form";
 import BackgroundLoader from '../../../src/components/commons/background_loader/background_loader';
 import TitlePage from '../../../src/components/commons/title_page/title_page';
 
 import config from '../../../src/utils/config';
 
-import CrudUser from '../../../src/utils/crud_user';
 import { getUserService, addUserService, editUserService, editUserStateService } from '../../../src/utils/user/service/user_services';
 
 import useSWR, { mutate } from 'swr';

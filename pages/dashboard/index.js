@@ -2,7 +2,7 @@ import React from "react";
 
 // Import componentes
 import styles from "./index.module.css";
-import UserDashboard from '../../src/components/Users/dashboard/user_dashboard'
+import UserDashboard from '../../src/components/users/dashboard/user_dashboard'
 
 // Import redux tools
 import { useSelector } from "react-redux";

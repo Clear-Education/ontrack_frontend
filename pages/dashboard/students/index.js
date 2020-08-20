@@ -129,7 +129,7 @@ const Students = () => {
                         <div style={{display: 'flex'}}>
                           <Modal
                             title="Editar Alumno"
-                            formComponent={<AddEditStudentForm data={selectedData} handleSubmitAction={editStudent} />}
+                            body={<AddEditStudentForm data={selectedData} handleSubmitAction={editStudent} />}
                             button={
                               <IconButton onClick={() => setSelectedData(tableMeta.rowData[0])} >
                                 <EditIcon />
@@ -139,7 +139,7 @@ const Students = () => {
 
                           <Modal
                             title="¿Seguro que deseas eliminar este alumno?"
-                            formComponent={<DeleteForm data={selectedData} handleSubmitAction={deleteStudent} />}
+                            body={<DeleteForm data={selectedData} handleSubmitAction={deleteStudent} />}
                             button={
                               <IconButton onClick={() => setSelectedData(tableMeta.rowData[0])} >
                                 <Delete />
@@ -158,7 +158,7 @@ const Students = () => {
           <Col className={styles.add_btn_container}>
             <Modal
               title="Agregar Alumno"
-              formComponent={<AddEditStudentForm handleSubmitAction={addStudent} />}
+              body={<AddEditStudentForm handleSubmitAction={addStudent} />}
               button={
                 <button className="ontrack_btn add_btn">Nuevo Alumno</button>
               }

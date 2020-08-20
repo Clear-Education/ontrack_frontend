@@ -1,13 +1,13 @@
 import TitlePage from "../../commons/title_page/title_page";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col } from "./node_modules/react-bootstrap";
 import styles from './subject.module.css'
-import { useSelector } from "react-redux";
-import { useState } from "react";
-import useSWR, { mutate } from "swr";
+import { useSelector } from "./node_modules/react-redux";
+import { useState } from "./node_modules/react";
+import useSWR, { mutate } from "./node_modules/swr";
 import config from "../../../utils/config";
-import { IconButton } from "@material-ui/core";
-import EditIcon from '@material-ui/icons/Edit';
-import Delete from '@material-ui/icons/Delete';
+import { IconButton } from "./node_modules/@material-ui/core";
+import EditIcon from './node_modules/@material-ui/icons/Edit';
+import Delete from './node_modules/@material-ui/icons/Delete';
 import BackgroundLoader from "../../commons/background_loader/background_loader";
 import { getSubjectsService, addSubjectsService, editSubjectsService, deleteSubjectsService } from "../../../utils/subject/services/subject_services";
 import Modal from "../../commons/modals/generic_modal/modal";
@@ -96,7 +96,7 @@ const Subject = (props) => {
                                                     <Col lg={3} md={3} sm={3} xs={3} className={styles.actions_container}>
                                                         <Modal
                                                             title="¿Seguro que deseas eliminar esta materia?"
-                                                            formComponent={<DeleteForm data={selectedData} handleSubmitAction={deleteSubject} />}
+                                                            body={<DeleteForm data={selectedData} handleSubmitAction={deleteSubject} />}
                                                             button={
                                                                 <IconButton onClick={() => setSelectedData(subject)} >
                                                                     <Delete />
@@ -105,7 +105,7 @@ const Subject = (props) => {
                                                         />
                                                         <Modal
                                                             title="Editar Materia"
-                                                            formComponent={<SubjectForm data={selectedData} handleSubmitAction={editSubject} showTable={true}/>}
+                                                            body={<SubjectForm data={selectedData} handleSubmitAction={editSubject} showTable={true}/>}
                                                             button={
                                                                 <IconButton onClick={() => setSelectedData(subject)} >
                                                                     <EditIcon />
@@ -127,7 +127,7 @@ const Subject = (props) => {
                             <Col lg={12} md={12} sm={12} xs={12} id={styles.add_new_structure}>
                                 <Modal
                                     title="Nueva Materia"
-                                    formComponent={<SubjectForm handleSubmitAction={addSubject} />}
+                                    body={<SubjectForm handleSubmitAction={addSubject} />}
                                     button={
                                         <button className="ontrack_btn add_btn">
                                             Nueva Materia
