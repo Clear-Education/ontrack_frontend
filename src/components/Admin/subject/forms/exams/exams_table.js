@@ -1,13 +1,13 @@
 import MaterialTable from "material-table";
 import { useState, useEffect } from "react";
 import styles from './styles.module.css'
-import { MTConfig } from "../../../../../utils/table_options/material_table/MT_config";
 import useSWR, { mutate } from "swr";
 import { useSelector } from "react-redux";
 import { getExamsService, editExamsService, deleteExamsService } from "../../../../../utils/exam/services/exam_services";
 import config from "../../../../../utils/config";
 import { Col } from "react-bootstrap";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import MTConfig from "../../../../../utils/table_options/material_table/MT_config";
 
 
 const ExamsTable = (props) => {
@@ -114,9 +114,9 @@ const ExamsTable = (props) => {
                         title={<span style={{ position: 'absolute', top: '25px', fontWeight: 600 }}>Exámenes</span>}
                         columns={columns}
                         data={selectedExams}
-                        components={MTConfig.components}
-                        options={MTConfig.options}
-                        localization={MTConfig.localization}
+                        options={MTConfig("Exámenes").options}
+                        components={MTConfig("Exámenes").components}
+                        localization={MTConfig("Exámenes").localization}
 
                         editable={{
                             onRowAdd: newData =>

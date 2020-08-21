@@ -5,7 +5,7 @@ import { useState } from "react";
 import useSWR, { mutate } from "swr";
 import config from "../../../src/utils/config";
 import BackgroundLoader from "../../../src/components/commons/background_loader/background_loader";
-import { getPruebaService, addPruebaService, editPruebaService, deletePruebaService } from "../../../src/utils/Prueba/services/Prueba_services";
+import { get${mayusName}Service, add${mayusName}Service, edit${mayusName}Service, delete${mayusName}Service } from "../../../src/utils/${name}/services/${name}_services";
 import Modal from "../../../src/components/commons/modals/generic_modal/modal";
 import { IconButton } from "@material-ui/core";
 import AddIcon from '@material-ui/icons/Add';
@@ -13,7 +13,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import Delete from '@material-ui/icons/Delete';
 
 
-const ${name} = () => {
+const ${mayusName} = () => {
 
     const url = `$${config.api_url}/`
     const [selectedData, setSelectedData] = useState()
@@ -106,5 +106,5 @@ const ${name} = () => {
 }
 
 
-export default ${name};
+export default ${mayusName};
 

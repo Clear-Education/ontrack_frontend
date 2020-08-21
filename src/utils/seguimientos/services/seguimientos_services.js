@@ -1,9 +1,9 @@
-import { get${mayusName}Crud, add${mayusName}Crud,edit${mayusName}Crud, delete${mayusName}Crud } from "../cruds/${name}_cruds";
+import { getSeguimientosCrud, addSeguimientosCrud,editSeguimientosCrud, deleteSeguimientosCrud } from "../cruds/Seguimientos_cruds";
 import Alert from "react-s-alert";
 
 
-export async function get${mayusName}Service(token) {
-    return await get${mayusName}Crud(token).then((result) => {
+export async function getSeguimientosService(token) {
+    return await getSeguimientosCrud(token).then((result) => {
         if (result.success) {
 
         } else {
@@ -18,10 +18,10 @@ export async function get${mayusName}Service(token) {
     })
 }
 
-export async function add${mayusName}Service(data, token) {
-    return await add${mayusName}Crud(data, token).then((result) => {
+export async function addSeguimientosService(data, token) {
+    return await addSeguimientosCrud(data, token).then((result) => {
         if (result.success) {
-            Alert.success("${mayusName} creado correctamente", {
+            Alert.success("Seguimientos creado correctamente", {
                 position: "bottom",
                 effect: "stackslide",
             });
@@ -37,10 +37,10 @@ export async function add${mayusName}Service(data, token) {
     })
 }
 
-export async function edit${mayusName}Service(data, token) {
-    return await edit${mayusName}Crud(data, token).then((result) => {
+export async function editSeguimientosService(data, token) {
+    return await editSeguimientosCrud(data, token).then((result) => {
         if (result.success) {
-            Alert.success("${mayusName} editado correctamente", {
+            Alert.success("Seguimientos editado correctamente", {
                 position: "bottom",
                 effect: "stackslide",
             });
@@ -57,8 +57,8 @@ export async function edit${mayusName}Service(data, token) {
 }
 
 
-export async function delete${mayusName}Service(token,data){
-  return await delete${mayusName}Crud(token,data).then((result)=>{
+export async function deleteSeguimientosService(token,data){
+  return await deleteSeguimientosCrud(token,data).then((result)=>{
       if (result.success) {
         Alert.success("Materia eliminada correctamente", {
           position: "bottom",

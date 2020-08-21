@@ -43,7 +43,6 @@ const Students = () => {
         delete parsedData[key];
       }
     })
-    console.log(parsedData)
     e.preventDefault();
     setIsLoading(true);
     return await addStudentService(user.user.token, parsedData).then((result) => {

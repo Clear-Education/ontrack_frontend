@@ -1,9 +1,9 @@
-import { get${mayusName}Crud, add${mayusName}Crud,edit${mayusName}Crud, delete${mayusName}Crud } from "../cruds/${name}_cruds";
+import { getSolicitudesCrud, addSolicitudesCrud,editSolicitudesCrud, deleteSolicitudesCrud } from "../cruds/Solicitudes_cruds";
 import Alert from "react-s-alert";
 
 
-export async function get${mayusName}Service(token) {
-    return await get${mayusName}Crud(token).then((result) => {
+export async function getSolicitudesService(token) {
+    return await getSolicitudesCrud(token).then((result) => {
         if (result.success) {
 
         } else {
@@ -18,10 +18,10 @@ export async function get${mayusName}Service(token) {
     })
 }
 
-export async function add${mayusName}Service(data, token) {
-    return await add${mayusName}Crud(data, token).then((result) => {
+export async function addSolicitudesService(data, token) {
+    return await addSolicitudesCrud(data, token).then((result) => {
         if (result.success) {
-            Alert.success("${mayusName} creado correctamente", {
+            Alert.success("Solicitudes creado correctamente", {
                 position: "bottom",
                 effect: "stackslide",
             });
@@ -37,10 +37,10 @@ export async function add${mayusName}Service(data, token) {
     })
 }
 
-export async function edit${mayusName}Service(data, token) {
-    return await edit${mayusName}Crud(data, token).then((result) => {
+export async function editSolicitudesService(data, token) {
+    return await editSolicitudesCrud(data, token).then((result) => {
         if (result.success) {
-            Alert.success("${mayusName} editado correctamente", {
+            Alert.success("Solicitudes editado correctamente", {
                 position: "bottom",
                 effect: "stackslide",
             });
@@ -57,8 +57,8 @@ export async function edit${mayusName}Service(data, token) {
 }
 
 
-export async function delete${mayusName}Service(token,data){
-  return await delete${mayusName}Crud(token,data).then((result)=>{
+export async function deleteSolicitudesService(token,data){
+  return await deleteSolicitudesCrud(token,data).then((result)=>{
       if (result.success) {
         Alert.success("Materia eliminada correctamente", {
           position: "bottom",

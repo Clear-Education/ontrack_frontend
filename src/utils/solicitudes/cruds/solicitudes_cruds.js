@@ -2,10 +2,10 @@ import config from '../../config';
 import axios from 'axios';
 import errorHandler from "../../error_handler";
 
-export async function add${mayusName}Crud(data, auth_token) {
-    return axios.post(`$${config.api_url}/`, data, {
+export async function addSolicitudesCrud(data, auth_token) {
+    return axios.post(`${config.api_url}/`, data, {
         headers: {
-            Authorization: `Token $${auth_token}`,
+            Authorization: `Token ${auth_token}`,
         },
     })
         .then((json) => {
@@ -22,11 +22,11 @@ export async function add${mayusName}Crud(data, auth_token) {
         });
 }
 
-export async function get${mayusName}Crud(auth_token) {
+export async function getSolicitudesCrud(auth_token) {
     return axios
-        .get(`$${config.api_url}/`, {
+        .get(`${config.api_url}/`, {
             headers: {
-                Authorization: `Token $${auth_token}`,
+                Authorization: `Token ${auth_token}`,
             },
         })
         .then(json => {
@@ -40,12 +40,12 @@ export async function get${mayusName}Crud(auth_token) {
         .catch(error => errorHandler(error));
 }
 
-export async function edit${mayusName}Crud(data, auth_token) {
+export async function editSolicitudesCrud(data, auth_token) {
 
     return axios
-        .patch(`$${config.api_url}/`, data, {
+        .patch(`${config.api_url}/`, data, {
             headers: {
-                Authorization: `Token $${auth_token}`,
+                Authorization: `Token ${auth_token}`,
             },
         })
         .then((json) => {
@@ -63,10 +63,10 @@ export async function edit${mayusName}Crud(data, auth_token) {
 }
 
 
-export async function delete${mayusName}Crud(data, auth_token) {
-    return axios.delete(`$${config.api_url}/$${data.id}/`, {
+export async function deleteSolicitudesCrud(data, auth_token) {
+    return axios.delete(`${config.api_url}/${data.id}/`, {
         headers: {
-            Authorization: `Token $${auth_token}`,
+            Authorization: `Token ${auth_token}`,
         },
     })
         .then((result) => {

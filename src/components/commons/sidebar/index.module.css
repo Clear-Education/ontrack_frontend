@@ -32,6 +32,11 @@
     font-weight: 700;
     color: white;
   }
+  .logout_container{
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+}
 
   @media (max-width: 767px) {
     .sidebar_container {

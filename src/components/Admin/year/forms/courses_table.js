@@ -3,7 +3,8 @@ import MaterialTable from 'material-table';
 import { useState } from 'react';
 import { useSelector } from "react-redux";
 import { addCoursesService, editCoursesService, deleteCoursesService } from '../../../../utils/course/services/course_services';
-import { MTConfig } from '../../../../utils/table_options/material_table/MT_config';
+import MTConfig from '../../../../utils/table_options/material_table/MT_config';
+
 
 
 export default function CoursesTable(props) {
@@ -47,9 +48,9 @@ export default function CoursesTable(props) {
                     fontWeight: 600
                 }}
             >Cursos</span>}
-            components={MTConfig.components}
-            options={MTConfig.options}
-            localization={MTConfig.localization}
+            options={MTConfig("Cursos").options}
+            components={MTConfig().components}
+            localization={MTConfig().localization}
 
             columns={state.columns}
             data={state.data}
