@@ -27,10 +27,10 @@ const UserSidebar = () => {
     setSelected(window.location.href.match(/\/([^\/]+)\/?$/)[1]);
   }, [router.route]);
 
-  const logout = () => { 
+  const logout = () => {
     setLoading(true);
     dispatch(logoutAction(user.user.token)).then((result) => {
-    if (result) {
+      if (result) {
         router.push("/");
         Alert.success("¡Sesión finalizada correctamente!", {
           position: "bottom",
@@ -88,7 +88,7 @@ const UserSidebar = () => {
                 <div style={getSelected("seguimientos")} />
                 <img src="/icons/seguimiento.svg" style={{ width: '30%', display: 'inline' }} />
                 <p style={{ marginTop: '10px' }} className={styles.nav_text}>
-                    Seguimientos
+                  Seguimientos
               </p>
 
               </Col>
@@ -119,37 +119,14 @@ const UserSidebar = () => {
                   {
                     user.user.groups === 2 ? "Mis Solicitudes" : "Solicitudes pendientes"
                   }
-              </p>
+                </p>
               </Col>
             </Link>
           </Col>
-
-          
-          <Col
-            className={styles.logout_container}
-            style={{ padding: '0px' }}
-            onClick={logout}
-            lg={12}
-            md={12}
-            sm={12}
-            xs={12}
-          >
-            <Col
-              lg={7}
-              md={7}
-              sm={7}
-              xs={7}
-              className={styles.navigations_container}
-              title="Cerrar sesión"
-            >
-              <img src="/icons/logout_icon.svg" style={{ width: '30%', display: 'inline' }} />
-              <p style={{ marginTop: 10 }} className={styles.nav_text}>
-                Cerrar Sesión
-              </p>
-            </Col>
-          </Col>
-
         </Row>
+        <div className={styles.logout_container} onClick={logout}>
+          <img src="/icons/logout_icon.svg" style={{ width: '40px', display: 'inline' }} />
+        </div>
       </div>
     </>
   );

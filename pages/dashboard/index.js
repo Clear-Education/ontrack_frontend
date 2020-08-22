@@ -14,7 +14,7 @@ const Dashboard = () => {
   const router = useRouter();
 
   useEffect(()=>{
-    if(user.user.groups !== 1){
+    if(user.user.groups && user.user.groups !== 1){
       router.push('/dashboard/seguimientos');
     }
   },[user])

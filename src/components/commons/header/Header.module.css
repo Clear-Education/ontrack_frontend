@@ -21,6 +21,10 @@
   height: 60px;
   width: 170px;
 }
+.collapse_item{
+  display: flex;
+  flex-direction: column;
+}
 #logo {
   width: 120px;
   position: relative;

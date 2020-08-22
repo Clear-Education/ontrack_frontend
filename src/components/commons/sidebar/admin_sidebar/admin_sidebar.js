@@ -32,10 +32,6 @@ const AdminSideBar = () => {
     dispatch(logoutAction(user.user.token)).then((result) => {
       if (result) {
         router.push("/");
-        Alert.success("¡Sesión finalizada correctamente!", {
-          position: "bottom",
-          effect: "stackslide",
-        });
       }
     });
   };
@@ -196,19 +192,24 @@ const AdminSideBar = () => {
               >
                 <div style={getSelected("accounts")} />
                 <img src="/icons/accounts.svg" style={{ width: '30%', display: 'inline' }} />
-                <p style={{ marginTop: 10 }} className={styles.nav_text}>
-                  Cuentas
-              </p>
+                <p style={{ marginTop: 10 }} className={styles.nav_text}> Cuentas </p>
               </Col>
             </Link>
           </Col>
+
+          <Col
+            className={styles.logout_admin_container}
+            onClick={logout}
+            lg={12}
+            md={12}
+            sm={12}
+            xs={12}
+          >
+            <img src="/icons/logout_icon.svg" style={{ width: '30px', display: 'inline' }} />
+            <p style={{ marginTop: 10 }} className={styles.nav_text}> Cerrar Sesión </p>
+          </Col>
+
         </Row>
-        <div className={styles.logout_container}>
-          <img src="/icons/logout_icon.svg" style={{ width: '30%', display: 'inline' }} />
-          <p style={{ marginTop: 10 }} className={styles.nav_text}>
-            Cerrar Sesión
-          </p>
-        </div>
       </div>
     </>
   );

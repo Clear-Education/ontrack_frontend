@@ -52,6 +52,10 @@ export const logoutAction = (auth_token) => async (dispatch) => {
   dispatch({ type: types.LOADING_USER });
   return logout(auth_token).then((result) => {
     if (result.success) {
+      Alert.success("¡Sesión finalizada correctamente!", {
+        position: "bottom",
+        effect: "stackslide",
+      });
       return dispatch({ type: types.LOGOUT });
     } else {
         result.result.forEach((element) => {

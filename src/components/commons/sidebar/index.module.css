@@ -21,21 +21,29 @@
     transform: scale(1.05);
   }
   .responsive_col {
-    margin-top: 40px;
+    margin-top: 20px;
   }
-  .logout_container {
-    margin-top: 40px;
-    margin-bottom: 60px;
+  .logout_admin_container{
+    margin-bottom: 80px;
+    margin-top: 20px;
+    padding: 10px;
+    cursor: pointer;
   }
+
   .nav_text {
     font-size: 14px;
     font-weight: 700;
     color: white;
   }
   .logout_container{
+    margin: 0 auto;
+    text-align: center;
     position: absolute;
-    bottom: 0px;
-    left: 0px;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    cursor: pointer;
 }
 
   @media (max-width: 767px) {
