@@ -1,0 +1,37 @@
+.structure_container{
+    height: 600px;
+    background-color:var(--light-gray);
+    border-radius: 10px;
+    margin: auto;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.item_area_container{
+    background: var(--medium-gray);
+    height: 250px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all .2s;
+}
+.item_area_container:hover{
+    transform: scale(1.01);
+    background-color: var(--orange);
+}
+.items_container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.item_area_text{
+    color: var(--gray);
+    font-weight: 600;
+    position: absolute;
+    bottom: 60px;
+}

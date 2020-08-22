@@ -99,7 +99,6 @@ const AddEditStudentForm = (props) => {
                 if (!result.success) {
                     props.handleClose();
                 } else {
-                    console.log(result);
                     const studentData = result.result.results[0].alumno;
                     const schoolYearData = result.result.results[0].anio_lectivo;
                     const courseData = result.result.results[0].curso;

@@ -61,8 +61,6 @@ const EditUserForm = (props) => {
     const [date, setDate] = useState(props.user.date_of_birth);
     const user = useSelector((store) => store.user);
 
-    console.log(state)
-
     useSWR(url, () =>
         getGroupsService(user.user.token).then((result) => {
             setGroupsData(result.result);

@@ -5,6 +5,9 @@ import sys
 def generate(name):
 
 
+    #Cambio el nombre a mayus
+    mayusName = name.capitalize()
+
     #busco ruta base
     base_path = os.getcwd()
 
@@ -44,13 +47,10 @@ def generate(name):
 
     """ TEMPLATE GENERATOR """
 
-    #Cambio el nombre a mayus
-    name = name.capitalize()
-
     #creo el crud desde plantilla
     crud_template_file = open('automation/crud_template.txt')
     crud_template_file = Template(crud_template_file.read())
-    crud_result = crud_template_file.substitute({"name": name})
+    crud_result = crud_template_file.substitute({"name": name,"mayusName":mayusName})
     generated_crud = open(crud_file_path, 'w')
     generated_crud.write(crud_result)
     generated_crud.close()
@@ -58,7 +58,7 @@ def generate(name):
     #creo el servicio desde plantilla
     service_template_file = open('automation/service_template.txt')
     service_template_file = Template(service_template_file.read())
-    service_result = service_template_file.substitute({"name": name})
+    service_result = service_template_file.substitute({"name": name,"mayusName":mayusName})
     service = open(service_file_path, 'w')
     service.write(service_result)
     service.close()
@@ -66,7 +66,7 @@ def generate(name):
     #creo la página desde plantilla
     page_template_file = open('automation/page_template.txt')
     page_template_file = Template(page_template_file.read())
-    page_result = page_template_file.substitute({"name": name})
+    page_result = page_template_file.substitute({"name": name,"mayusName":mayusName})
     page = open(page_file_path, 'w')
     page.write(page_result)
     page.close()

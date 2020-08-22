@@ -2,7 +2,7 @@ import config from '../../config';
 import axios from 'axios';
 import errorHandler from "../../error_handler";
 
-export async function add${name}Crud(data, auth_token) {
+export async function add${mayusName}Crud(data, auth_token) {
     return axios.post(`$${config.api_url}/`, data, {
         headers: {
             Authorization: `Token $${auth_token}`,
@@ -22,7 +22,7 @@ export async function add${name}Crud(data, auth_token) {
         });
 }
 
-export async function get${name}Crud(auth_token) {
+export async function get${mayusName}Crud(auth_token) {
     return axios
         .get(`$${config.api_url}/`, {
             headers: {
@@ -40,7 +40,7 @@ export async function get${name}Crud(auth_token) {
         .catch(error => errorHandler(error));
 }
 
-export async function edit${name}Crud(data, auth_token) {
+export async function edit${mayusName}Crud(data, auth_token) {
 
     return axios
         .patch(`$${config.api_url}/`, data, {
@@ -63,7 +63,7 @@ export async function edit${name}Crud(data, auth_token) {
 }
 
 
-export async function delete${name}Crud(data, auth_token) {
+export async function delete${mayusName}Crud(data, auth_token) {
     return axios.delete(`$${config.api_url}/$${data.id}/`, {
         headers: {
             Authorization: `Token $${auth_token}`,

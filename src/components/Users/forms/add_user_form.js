@@ -98,8 +98,6 @@ const AddUserForm = (props) => {
         }
 
         setState({ ...state, [prop]: event.target.value });
-        console.log(state);
-
     };
 
     const convertDate = (inputFormat) => {

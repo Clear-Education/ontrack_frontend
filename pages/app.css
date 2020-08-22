@@ -4,6 +4,7 @@
   --black: #303030;
   --white: #f7f7f7;
   --gray: #868686;
+  --medium-gray: #79797933;
   --light-gray: #f7f7f7;
   --orange: #ff8d00;
   --red: #c24d4d;
@@ -167,6 +168,11 @@ button:focus {
 
 .delete_btn {
   background-color: var(--red);
+}
+
+
+.MuiTableCell-root:focus{
+outline: none !important;
 }
 @media (max-width: 600px) {
   .ontrack_btn_modal {
