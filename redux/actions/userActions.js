@@ -51,6 +51,7 @@ export const loginAction = (username, password) => {
 export const logoutAction = (auth_token) => async (dispatch) => {
   dispatch({ type: types.LOADING_USER });
   return logout(auth_token).then((result) => {
+    dispatch({ type: types.NO_LOADING_USER });
     if (result.success) {
       Alert.success("¡Sesión finalizada correctamente!", {
         position: "bottom",
