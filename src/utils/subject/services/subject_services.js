@@ -9,8 +9,7 @@ export async function getSubjectsService(token,year_id){
           } else {
             result.result.forEach((element) => {
               Alert.error(element.message, {
-                position: "bottom",
-                effect: "stackslide",
+                  effect: "stackslide",
               });
             });
           }
@@ -25,7 +24,6 @@ export async function addSubjectsService(token,data){
         } else {
           result.result.forEach((element) => {
             Alert.error(element.message, {
-              position: "bottom",
               effect: "stackslide",
             });
           });
@@ -39,13 +37,11 @@ export async function editSubjectsService(token,data){
   return await editSubjectsCrud(token,data).then((result)=>{
       if (result.success) {
         Alert.success("Materia editada correctamente", {
-          position: "bottom",
           effect: "stackslide",
         });
         } else {
           result.result.forEach((element) => {
             Alert.error(element.message, {
-              position: "bottom",
               effect: "stackslide",
             });
           });
@@ -58,13 +54,11 @@ export async function deleteSubjectsService(token,data){
   return await deleteSubjectsCrud(token,data).then((result)=>{
       if (result.success) {
         Alert.success("Materia eliminada correctamente", {
-          position: "bottom",
           effect: "stackslide",
         });
         } else {
           result.result.forEach((element) => {
             Alert.error(element.message, {
-              position: "bottom",
               effect: "stackslide",
             });
           });

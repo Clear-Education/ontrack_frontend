@@ -9,7 +9,6 @@ export async function getSeguimientosService(token) {
         } else {
             result.result.forEach((element) => {
                 Alert.error(element.message, {
-                    position: "bottom",
                     effect: "stackslide",
                 });
             });
@@ -22,13 +21,11 @@ export async function addSeguimientosService(data, token) {
     return await addSeguimientosCrud(data, token).then((result) => {
         if (result.success) {
             Alert.success("Seguimientos creado correctamente", {
-                position: "bottom",
-                effect: "stackslide",
+             effect: "stackslide",
             });
         } else {
             result.result.forEach((element) => {
                 Alert.error(element.message, {
-                    position: "bottom",
                     effect: "stackslide",
                 });
             });
@@ -41,13 +38,11 @@ export async function editSeguimientosService(data, token) {
     return await editSeguimientosCrud(data, token).then((result) => {
         if (result.success) {
             Alert.success("Seguimientos editado correctamente", {
-                position: "bottom",
-                effect: "stackslide",
+            effect: "stackslide",
             });
         } else {
             result.result.forEach((element) => {
                 Alert.error(element.message, {
-                    position: "bottom",
                     effect: "stackslide",
                 });
             });
@@ -61,13 +56,11 @@ export async function deleteSeguimientosService(token,data){
   return await deleteSeguimientosCrud(token,data).then((result)=>{
       if (result.success) {
         Alert.success("Materia eliminada correctamente", {
-          position: "bottom",
           effect: "stackslide",
         });
         } else {
           result.result.forEach((element) => {
             Alert.error(element.message, {
-              position: "bottom",
               effect: "stackslide",
             });
           });

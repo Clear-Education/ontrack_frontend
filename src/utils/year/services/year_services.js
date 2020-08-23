@@ -11,8 +11,7 @@ export async function getYearService(token,subject_id){
           } else {
             result.result.forEach((element) => {
               Alert.error(element.message, {
-                position: "bottom",
-                effect: "stackslide",
+                  effect: "stackslide",
               });
             });
           }
@@ -25,13 +24,11 @@ export async function addYearsService(token, data, idCarrera) {
     return await addYearsCrud(token, data, idCarrera).then((result) => {
         if (result.success) {
             Alert.success("Año creado correctamente", {
-                position: "bottom",
-                effect: "stackslide",
+              effect: "stackslide",
             });
         } else {
             result.result.forEach((element) => {
                 Alert.error(element.message, {
-                    position: "bottom",
                     effect: "stackslide",
                 });
             });
@@ -44,13 +41,11 @@ export async function editYearsService(token, data) {
     return await editYearsCrud(token, data).then((result) => {
         if (result.success) {
             Alert.success("Año editado correctamente", {
-                position: "bottom",
-                effect: "stackslide",
+             effect: "stackslide",
             });
         } else {
             result.result.forEach((element) => {
                 Alert.error(element.message, {
-                    position: "bottom",
                     effect: "stackslide",
                 });
             });
@@ -63,13 +58,11 @@ export async function deleteYearsService(token, data) {
     return await deleteYearsCrud(token, data).then((result) => {
         if (result.success) {
             Alert.success("Año eliminado correctamente", {
-                position: "bottom",
-                effect: "stackslide",
+             effect: "stackslide",
             });
         } else {
             result.result.forEach((element) => {
                 Alert.error(element.message, {
-                    position: "bottom",
                     effect: "stackslide",
                 });
             });

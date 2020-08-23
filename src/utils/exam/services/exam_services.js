@@ -9,8 +9,7 @@ export async function getExamsService(token,subject_id){
           } else {
             result.result.forEach((element) => {
               Alert.error(element.message, {
-                position: "bottom",
-                effect: "stackslide",
+                  effect: "stackslide",
               });
             });
           }
@@ -25,7 +24,6 @@ export async function addExamsService(token,data){
         } else {
           result.result.forEach((element) => {
             Alert.error(element.message, {
-              position: "bottom",
               effect: "stackslide",
             });
           });
@@ -39,13 +37,11 @@ export async function editExamsService(token,data){
     return await editExamsCrud(token,data).then((result)=>{
       if (result.success) {
         Alert.success("Exámen editado correctamente", {
-          position: "bottom",
           effect: "stackslide",
         });
         } else {
           result.result.forEach((element) => {
             Alert.error(element.message, {
-              position: "bottom",
               effect: "stackslide",
             });
           });
@@ -62,13 +58,11 @@ export async function deleteExamsService(token,data){
   return await deleteExamsCrud(token,parsedData).then((result)=>{
       if (result.success) {
         Alert.success("Exámen eliminado correctamente", {
-          position: "bottom",
           effect: "stackslide",
         });
         } else {
           result.result.forEach((element) => {
             Alert.error(element.message, {
-              position: "bottom",
               effect: "stackslide",
             });
           });

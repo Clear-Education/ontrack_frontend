@@ -3,7 +3,7 @@ import MaterialTable from 'material-table';
 import { useState } from 'react';
 import { useSelector } from "react-redux";
 import { addCoursesService, editCoursesService, deleteCoursesService } from '../../../../utils/course/services/course_services';
-import MTConfig from '../../../../utils/table_options/material_table/MT_config';
+import MTConfig from '../../../../utils/table_options/MT_config';
 
 
 

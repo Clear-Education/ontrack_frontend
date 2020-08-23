@@ -174,16 +174,13 @@ const Accounts = () => {
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 0.3 }}
       >
-        <Row lg={12} md={12} sm={12} xs={12} style={{ margin: 0 }}>
-          <Col lg={12} md={12} sm={12} xs={12} style={{ padding: 0 }}>
-            <TitlePage title="Cuentas de Usuario"></TitlePage>
-          </Col>
-        </Row>
-        <Row lg={12} md={12} sm={12} xs={12} style={{ margin: '5%' }}>
+        <Row lg={12} md={12} sm={12} xs={12} style={{ margin: '0 5% 0 5%' }}>
+        <TitlePage title="Cuentas de Usuario"></TitlePage>
           <Col
             md={12}
             sm={12}
             xs={12}
+            style={{marginTop:20}}
           >
             <MUIDataTable
               title={"Lista de Usuarios"}

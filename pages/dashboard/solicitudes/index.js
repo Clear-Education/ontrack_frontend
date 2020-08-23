@@ -12,7 +12,7 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import { motion } from "framer-motion";
 import { Row, Col } from "react-bootstrap";
 import MUIDataTable from "mui-datatables";
-import MTConfig from "../../../src/utils/table_options/material_table/MT_config";
+import MTConfig from "../../../src/utils/table_options/MT_config";
 
 
 const Solicitudes = () => {

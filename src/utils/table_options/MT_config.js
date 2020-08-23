@@ -1,6 +1,7 @@
 import { MTableToolbar } from "material-table";
 
 const MTConfig = ( _name ) => {
+
     return (
         {
             localization: {

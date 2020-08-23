@@ -50,13 +50,11 @@ const Department = (props) => {
       mutate(url);
       if (result.success) {
         Alert.success("Carrera agregada correctamente", {
-          position: "bottom",
           effect: "stackslide",
         });
       } else {
         result.result.forEach((element) => {
           Alert.error(element.message, {
-            position: "bottom",
             effect: "stackslide",
           });
         });
@@ -71,13 +69,11 @@ const Department = (props) => {
       mutate(url);
       if (result.success) {
         Alert.success("Carrera editada correctamente", {
-          position: "bottom",
           effect: "stackslide",
         });
       } else {
         result.result.forEach((element) => {
           Alert.error(element.message, {
-            position: "bottom",
             effect: "stackslide",
           });
         });
@@ -95,13 +91,11 @@ const Department = (props) => {
       if (result.success) {
         handleDeleteDepartmentModal(false)
         Alert.success("Carrera eliminada correctamente", {
-          position: "bottom",
           effect: "stackslide",
         });
       } else {
         result.result.forEach((element) => {
           Alert.error(element.message, {
-            position: "bottom",
             effect: "stackslide",
           });
         });
@@ -119,7 +113,6 @@ const Department = (props) => {
       } else {
         result.result.forEach((element) => {
           Alert.error(element.message, {
-            position: "bottom",
             effect: "stackslide",
           });
         });

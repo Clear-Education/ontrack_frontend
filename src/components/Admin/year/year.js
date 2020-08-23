@@ -75,7 +75,6 @@ const Year = (props) => {
             } else {
                 result.result.forEach((element) => {
                     Alert.error(element.message, {
-                        position: "bottom",
                         effect: "stackslide",
                     });
                 });

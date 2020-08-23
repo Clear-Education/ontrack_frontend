@@ -16,7 +16,7 @@ import Alert from "react-s-alert";
 //       dispatch({ type: types.NO_LOADING_USER });
 //       result.result.forEach((element) => {
 //         Alert.error(element.message, {
-//           position: "bottom",
+//    
 //           effect: "stackslide",
 //         });
 //       });
@@ -36,7 +36,6 @@ export const loginAction = (username, password) => {
         result.result.forEach((element) => {
           Alert.error(element.message,
             {
-              position: "bottom", 
               effect: "stackslide",
               html: true,
             } 
@@ -54,14 +53,12 @@ export const logoutAction = (auth_token) => async (dispatch) => {
     dispatch({ type: types.NO_LOADING_USER });
     if (result.success) {
       Alert.success("¡Sesión finalizada correctamente!", {
-        position: "bottom",
         effect: "stackslide",
       });
       return dispatch({ type: types.LOGOUT });
     } else {
         result.result.forEach((element) => {
           Alert.error(element.message, {
-            position: "bottom",
             effect: "stackslide",
           });
         });
@@ -83,7 +80,7 @@ export const logoutAction = (auth_token) => async (dispatch) => {
 //       } else {
 //         result.result.forEach((element) => {
 //           Alert.error(element.message, {
-//             position: "bottom",
+//
 //             effect: "stackslide",
 //           });
 //         });
@@ -106,7 +103,7 @@ export const logoutAction = (auth_token) => async (dispatch) => {
 //       } else {
 //         result.result.forEach((element) => {
 //           Alert.error(element.message, {
-//             position: "bottom",
+//  
 //             effect: "stackslide",
 //           });
 //         });
@@ -127,7 +124,7 @@ export const logoutAction = (auth_token) => async (dispatch) => {
 //       } else {
 //         result.result.forEach((element) => {
 //           Alert.error(element.message, {
-//             position: "bottom",
+//       
 //             effect: "stackslide",
 //           });
 //         });

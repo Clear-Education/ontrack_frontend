@@ -106,7 +106,6 @@ const Login = () => {
         password: !validation.password,
       });
       Alert.error("¡Debes completar todos los campos para continuar!", {
-        position: "bottom",
         effect: "stackslide",
       });
     } else {

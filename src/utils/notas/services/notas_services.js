@@ -9,7 +9,6 @@ export async function getNotasService(token) {
         } else {
             result.result.forEach((element) => {
                 Alert.error(element.message, {
-                    position: "bottom",
                     effect: "stackslide",
                 });
             });
@@ -22,14 +21,12 @@ export async function addNotasService(data, token) {
     return await addNotasCrud(data, token).then((result) => {
         if (result.success) {
             Alert.success("Notas creado correctamente", {
-                position: "bottom",
-                effect: "stackslide",
+            effect: "stackslide",
             });
         } else {
             result.result.forEach((element) => {
                 Alert.error(element.message, {
-                    position: "bottom",
-                    effect: "stackslide",
+                effect: "stackslide",
                 });
             });
         }
@@ -41,13 +38,11 @@ export async function editNotasService(data, token) {
     return await editNotasCrud(data, token).then((result) => {
         if (result.success) {
             Alert.success("Notas editado correctamente", {
-                position: "bottom",
-                effect: "stackslide",
+            effect: "stackslide",
             });
         } else {
             result.result.forEach((element) => {
                 Alert.error(element.message, {
-                    position: "bottom",
                     effect: "stackslide",
                 });
             });
@@ -61,13 +56,11 @@ export async function deleteNotasService(token,data){
   return await deleteNotasCrud(token,data).then((result)=>{
       if (result.success) {
         Alert.success("Materia eliminada correctamente", {
-          position: "bottom",
           effect: "stackslide",
         });
         } else {
           result.result.forEach((element) => {
             Alert.error(element.message, {
-              position: "bottom",
               effect: "stackslide",
             });
           });

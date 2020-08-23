@@ -9,7 +9,7 @@ export async function get${mayusName}Service(token) {
         } else {
             result.result.forEach((element) => {
                 Alert.error(element.message, {
-                    position: "bottom",
+                    ,
                     effect: "stackslide",
                 });
             });
@@ -22,13 +22,12 @@ export async function add${mayusName}Service(data, token) {
     return await add${mayusName}Crud(data, token).then((result) => {
         if (result.success) {
             Alert.success("${mayusName} creado correctamente", {
-                position: "bottom",
-                effect: "stackslide",
+                                effect: "stackslide",
             });
         } else {
             result.result.forEach((element) => {
                 Alert.error(element.message, {
-                    position: "bottom",
+                    ,
                     effect: "stackslide",
                 });
             });
@@ -41,13 +40,12 @@ export async function edit${mayusName}Service(data, token) {
     return await edit${mayusName}Crud(data, token).then((result) => {
         if (result.success) {
             Alert.success("${mayusName} editado correctamente", {
-                position: "bottom",
-                effect: "stackslide",
+                                effect: "stackslide",
             });
         } else {
             result.result.forEach((element) => {
                 Alert.error(element.message, {
-                    position: "bottom",
+                    ,
                     effect: "stackslide",
                 });
             });
@@ -61,13 +59,13 @@ export async function delete${mayusName}Service(token,data){
   return await delete${mayusName}Crud(token,data).then((result)=>{
       if (result.success) {
         Alert.success("Materia eliminada correctamente", {
-          position: "bottom",
+          ,
           effect: "stackslide",
         });
         } else {
           result.result.forEach((element) => {
             Alert.error(element.message, {
-              position: "bottom",
+              ,
               effect: "stackslide",
             });
           });

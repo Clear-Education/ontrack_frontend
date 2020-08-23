@@ -9,7 +9,6 @@ export async function getStudentCourseService(token,student_id){
       } else {
         result.result.forEach((element) => {
           Alert.error(element.message, {
-            position: "bottom",
             effect: "stackslide",
           });
         });
@@ -26,8 +25,7 @@ export async function getStudentService(token){
           } else {
             result.result.forEach((element) => {
               Alert.error(element.message, {
-                position: "bottom",
-                effect: "stackslide",
+                  effect: "stackslide",
               });
             });
           }
@@ -62,7 +60,6 @@ export async function addStudentService(token,data){
         } else {
           result.result.forEach((element) => {
             Alert.error(element.message, {
-              position: "bottom",
               effect: "stackslide",
             });
           });
@@ -78,13 +75,11 @@ export async function addStudentCourseService(token,data){
   return await addStudentCourseCrud(token,data).then((result)=>{
       if (result.success) {
         Alert.success("Alumno agregado correctamente", {
-            position: "bottom",
             effect: "stackslide",
           });
         } else {
           result.result.forEach((element) => {
             Alert.error(element.message, {
-              position: "bottom",
               effect: "stackslide",
             });
           });
@@ -111,13 +106,11 @@ export async function editStudentService(token,data){
   return await editStudentCrud(token,parseStudentData).then((result)=>{
       if (result.success) {
         Alert.success("Alumno editado correctamente", {
-          position: "bottom",
           effect: "stackslide",
         });
         } else {
           result.result.forEach((element) => {
             Alert.error(element.message, {
-              position: "bottom",
               effect: "stackslide",
             });
           });
@@ -130,13 +123,11 @@ export async function deleteStudentService(token,data){
   return await deleteStudentCrud(token,data).then((result)=>{
       if (result.success) {
         Alert.success("Alumno eliminado correctamente", {
-          position: "bottom",
           effect: "stackslide",
         });
         } else {
           result.result.forEach((element) => {
             Alert.error(element.message, {
-              position: "bottom",
               effect: "stackslide",
             });
           });

@@ -170,6 +170,16 @@ button:focus {
   background-color: var(--red);
 }
 
+/* STEPPER */
+
+.MuiStepIcon-root.MuiStepIcon-active,.MuiStepIcon-root.MuiStepIcon-completed{
+  color: var(--orange) !important;
+}
+.MuiStepConnector-lineVertical{
+  min-height: 10px !important;
+}
+
+
 
 .MuiTableCell-root:focus{
 outline: none !important;

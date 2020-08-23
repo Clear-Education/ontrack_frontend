@@ -33,7 +33,6 @@ const UserSidebar = () => {
       if (result) {
         router.push("/");
         Alert.success("¡Sesión finalizada correctamente!", {
-          position: "bottom",
           effect: "stackslide",
         });
       }
