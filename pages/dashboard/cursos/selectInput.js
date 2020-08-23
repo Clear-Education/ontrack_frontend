@@ -30,12 +30,12 @@ const SelectInput = ({ type, data ,changeAction}) => {
     const school_year_url = `${config.api_url}/anio/anio_lectivo/list/`;
     const department_url = `${config.api_url}/carrera/list/`;
 
-    useSWR(department_url, () => {
+/*     useSWR(department_url, () => {
         return getDepartmentService(user.user.token).then((result) => {
             setDepartmentData(result.result);
         })
     }
-    );
+    ); */
 
     const handleChange = (prop) => (event) => {
         changeAction(prop,event.target.value);

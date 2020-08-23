@@ -1,3 +1,6 @@
+import store from '../../redux/store'
+import { forcedLogout } from '../../redux/actions/userActions';
+
 const handleCrudErrors = (error) => {
     let response = {};
     if (error.response) {
@@ -12,12 +15,16 @@ const handleCrudErrors = (error) => {
           ],
         };
       } else if (error.response.status === 401) {
+        setTimeout(()=>{
+          store.dispatch(forcedLogout());
+          window.location = "/";
+        },1500)
         response = {
           success: false,
           unauthorized: true,
           result: [
             {
-              message: error.response.data.detail,
+              message: "Sesión expirada, vuelva a logearse",
             },
           ],
         };
