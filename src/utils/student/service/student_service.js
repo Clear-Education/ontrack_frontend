@@ -1,4 +1,4 @@
-import { getStudentCrud, addStudentCrud, deleteStudentCrud, editStudentCrud, addStudentCourseCrud,getStudentCourseCrud } from "../cruds/student_cruds";
+import { getStudentCrud, addStudentCrud, deleteStudentCrud, editStudentCrud, addStudentCourseCrud,getStudentCourseCrud, getStudentsCourseCrud, addMultipleStudentsCourseCrud } from "../cruds/student_cruds";
 import Alert from "react-s-alert";
 
 
@@ -32,6 +32,22 @@ export async function getStudentService(token){
           return result;
     })
 }
+
+export async function getStudentsCourseService(token,course_id){
+  return await getStudentsCourseCrud(token,course_id).then((result)=>{
+      if (result.success) {
+          
+        } else {
+          result.result.forEach((element) => {
+            Alert.error(element.message, {
+                effect: "stackslide",
+            });
+          });
+        }
+        return result;
+  })
+}
+
 
 export async function addStudentService(token,data){
     const parseStudentData = [{
@@ -76,7 +92,7 @@ export async function addStudentCourseService(token,data){
       if (result.success) {
         Alert.success("Alumno agregado correctamente", {
             effect: "stackslide",
-          });
+          }); 
         } else {
           result.result.forEach((element) => {
             Alert.error(element.message, {
@@ -87,6 +103,28 @@ export async function addStudentCourseService(token,data){
         return result;
   })
 }
+
+
+
+export async function addMultipleStudentsCourseService(token,data){
+
+  return await addMultipleStudentsCourseCrud(token,data).then((result)=>{
+      if (result.success) {
+        Alert.success("Alumnos agregados correctamente", {
+            effect: "stackslide",
+          }); 
+        } else {
+          result.result.forEach((element) => {
+            Alert.error(element.message, {
+              effect: "stackslide",
+            });
+          });
+        }
+        return result;
+  })
+}
+
+
 
 export async function editStudentService(token,data){
   const parseStudentData ={
@@ -125,6 +163,25 @@ export async function deleteStudentService(token,data){
         Alert.success("Alumno eliminado correctamente", {
           effect: "stackslide",
         });
+        } else {
+          result.result.forEach((element) => {
+            Alert.error(element.message, {
+              effect: "stackslide",
+            });
+          });
+        }
+        return result;
+  })
+}
+
+
+export async function deleteMultipleStudentsCourseService(token,data){
+
+  return await deleteMultipleStudentsCourseCrud(token,data).then((result)=>{
+      if (result.success) {
+        Alert.success("Alumnos agregados correctamente", {
+            effect: "stackslide",
+          }); 
         } else {
           result.result.forEach((element) => {
             Alert.error(element.message, {

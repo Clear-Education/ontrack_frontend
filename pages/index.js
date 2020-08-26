@@ -120,7 +120,7 @@ const Login = () => {
   };
 
   return !user.isLoggedIn ? (
-    <Row lg={12} md={12} sm={12} xs={12} style={{ margin: 0 }}>
+    <Row lg={12} md={12} sm={12} xs={12} style={{ margin: 0,display:'flex', justifyContent:'center',alignItems:'center', height:'100vh' }}>
       <div id={styles.login_container}>
         <Row lg={12} md={12} sm={12} xs={12} style={{ margin: 0 }}>
           <Col

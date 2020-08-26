@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import useSWR from "swr";
 import { getDepartmentService } from "../../../src/utils/department/services/department_services";
 import { getCourseService } from "../../../src/utils/course/services/course_services";
+import { getSchoolYearService } from "../../../src/utils/school_year/services/school_year_services";
 
 
 const INITIAL_STATE = {
@@ -26,17 +27,6 @@ const SelectInput = ({ type, data ,changeAction}) => {
     const [yearData, setYearData] = useState(null)
     const [courseData, setCourseData] = useState(null)
 
-
-    const school_year_url = `${config.api_url}/anio/anio_lectivo/list/`;
-    const department_url = `${config.api_url}/carrera/list/`;
-
-/*     useSWR(department_url, () => {
-        return getDepartmentService(user.user.token).then((result) => {
-            setDepartmentData(result.result);
-        })
-    }
-    ); */
-
     const handleChange = (prop) => (event) => {
         changeAction(prop,event.target.value);
     };
@@ -50,16 +40,25 @@ const SelectInput = ({ type, data ,changeAction}) => {
         }
     },[data])
 
+    useEffect(()=>{
+        if(type === 'anio_lectivo'){
+            getSchoolYearService(user.user.token).then((result) => {
+                setSchoolYearData(result.result);
+            })
+        }
+    },[state.department])
+
+
     useEffect(() => {
-        if (state.department !== '') {
+        if (state.department !== '' && state.school_year !== '' && type==='year') {
             getYearService(user.user.token, state.department).then((result) => {
                 setYearData(result.result);
             })
         }
-    }, [state.department])
+    }, [state.school_year])
 
     useEffect(() => {
-        if (state.year !== '') {
+        if (state.year !== '' && type==='curso') {
             getCourseService(user.user.token, state.year).then((result) => {
                 setCourseData(result.result);
             })
@@ -85,6 +84,25 @@ const SelectInput = ({ type, data ,changeAction}) => {
                             <em>Seleccionar</em>
                         </MenuItem>
                         {departmentData && departmentData.map((department) => {
+                            return (
+                                <MenuItem value={department.id} key={department.id}>{department.nombre}</MenuItem>
+                            )
+                        })}
+                    </Select>
+                </FormControl>
+                :renderType === 'anio_lectivo' ?
+                <FormControl variant="outlined">
+                    <InputLabel id="anio_lectivo">Año Lectivo</InputLabel>
+                    <Select
+                        labelId="anio_lectivo"
+                        id="anio_lectivo"
+                        value={state.school_year}
+                        onChange={handleChange("school_year")}
+                    >
+                        <MenuItem value="">
+                            <em>Seleccionar</em>
+                        </MenuItem>
+                        {schoolYearData && schoolYearData.map((department) => {
                             return (
                                 <MenuItem value={department.id} key={department.id}>{department.nombre}</MenuItem>
                             )

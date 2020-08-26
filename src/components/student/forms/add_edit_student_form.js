@@ -205,13 +205,13 @@ const AddEditStudentForm = (props) => {
         e.preventDefault();
         setIsLoading(true);
         let parseData = { ...state };
-        if(parseData['fecha_nacimiento'] !== ""){
+        if (parseData['fecha_nacimiento'] !== "") {
             parseData['fecha_nacimiento'] = convertDate(parseData['fecha_nacimiento']);
         }
-        if(parseData['fecha_inscripcion'] !== ""){
+        if (parseData['fecha_inscripcion'] !== "") {
             parseData['fecha_inscripcion'] = convertDate(parseData['fecha_inscripcion']);
         }
-        
+
         props.handleSubmitAction(e, parseData).then((result) => {
             setIsLoading(false)
             if (result.success) {
@@ -231,16 +231,9 @@ const AddEditStudentForm = (props) => {
             <Row>
                 <Col>
                     <form onSubmit={handleSubmit}>
-                        <div className={styles.decorator} />{" "}
-                        <span id={styles.title_decorator}>
-                            {" "}
-                      Datos personales
-                      {" "}
-                        </span>
-                        <div className={styles.decorator} />
 
                         <Row lg={12} md={12} sm={12} xs={12} className={styles.row_input_container}>
-                            <Col lg={4} md={4} sm={12} xs={12} className={fullscreen && styles.input_container}>
+                            <Col lg={6} md={6} sm={12} xs={12} className={fullscreen && styles.input_container}>
                                 <motion.li variants={item}>
                                     <FormControl variant="outlined">
                                         <TextField
@@ -264,7 +257,7 @@ const AddEditStudentForm = (props) => {
                                 </motion.li>
                             </Col>
 
-                            <Col lg={4} md={4} sm={12} xs={12} className={fullscreen && styles.input_container}>
+                            <Col lg={6} md={6} sm={12} xs={12} className={fullscreen && styles.input_container}>
                                 <motion.li variants={item}>
                                     <FormControl variant="outlined">
                                         <TextField
@@ -287,8 +280,11 @@ const AddEditStudentForm = (props) => {
                                     )}
                                 </motion.li>
                             </Col>
+                        </Row>
 
-                            <Col lg={4} md={4} sm={12} xs={12} className={fullscreen && styles.input_container}>
+
+                        <Row lg={12} md={12} sm={12} xs={12} className={styles.row_input_container}>
+                            <Col lg={6} md={6} sm={12} xs={12} className={fullscreen && styles.input_container}>
                                 <motion.li variants={item}>
                                     <FormControl variant="outlined">
                                         <TextField
@@ -312,11 +308,7 @@ const AddEditStudentForm = (props) => {
                                     )}
                                 </motion.li>
                             </Col>
-                        </Row>
-
-
-                        <Row lg={12} md={12} sm={12} xs={12} className={styles.row_input_container}>
-                            <Col lg={4} md={4} sm={12} xs={12} className={fullscreen && styles.input_container}>
+                            <Col lg={6} md={6} sm={12} xs={12} className={fullscreen && styles.input_container}>
                                 <motion.li variants={item}>
                                     <FormControl variant="outlined">
                                         <TextField
@@ -340,7 +332,10 @@ const AddEditStudentForm = (props) => {
                                 </motion.li>
                             </Col>
 
-                            <Col lg={4} md={4} sm={12} xs={12} className={fullscreen && styles.input_container}>
+                        </Row>
+
+                        <Row lg={12} md={12} sm={12} xs={12} className={styles.row_input_container}>
+                            <Col lg={6} md={6} sm={12} xs={12} className={fullscreen && styles.input_container}>
                                 <motion.li variants={item}>
                                     <FormControl variant="outlined">
                                         <TextField
@@ -364,7 +359,7 @@ const AddEditStudentForm = (props) => {
                                 </motion.li>
                             </Col>
 
-                            <Col lg={4} md={4} sm={12} xs={12} className={fullscreen && styles.input_container}>
+                            <Col lg={6} md={6} sm={12} xs={12} className={fullscreen && styles.input_container}>
                                 <motion.li variants={item}>
                                     <FormControl variant="outlined">
                                         <KeyboardDatePicker
@@ -384,11 +379,12 @@ const AddEditStudentForm = (props) => {
                                     </FormControl>
                                 </motion.li>
                             </Col>
+
                         </Row>
 
 
                         <Row lg={12} md={12} sm={12} xs={12} className={styles.row_input_container}>
-                            <Col lg={4} md={4} sm={12} xs={12} className={fullscreen && styles.input_container}>
+                            <Col lg={6} md={6} sm={12} xs={12} className={fullscreen && styles.input_container}>
                                 <motion.li variants={item}>
                                     <FormControl variant="outlined">
                                         <TextField
@@ -412,31 +408,8 @@ const AddEditStudentForm = (props) => {
                                 </motion.li>
                             </Col>
 
-                            <Col lg={4} md={4} sm={12} xs={12} className={fullscreen && styles.input_container}>
-                                <motion.li variants={item}>
-                                    <FormControl variant="outlined">
-                                        <TextField
-                                            id="localidad"
-                                            name="localidad"
-                                            label="Localidad"
-                                            variant="outlined"
-                                            value={state.localidad}
-                                            onChange={handleChange("localidad")}
-                                        />
-                                    </FormControl>
-                                    {validation.localidad && (
-                                        <FormHelperText
-                                            className="helper-text"
-                                            style={{ color: "rgb(182, 60, 47)" }}
-                                        >
-                                            Esta campo no puede estar vacio
-                                        </FormHelperText>
-                                    )}
-                                </motion.li>
-                            </Col>
-
-                            <Col lg={4} md={4} sm={12} xs={12} className={fullscreen && styles.input_container}>
-                                <motion.li variants={item}>
+                            <Col lg={6} md={6} sm={12} xs={12} className={fullscreen && styles.input_container}>
+                            <motion.li variants={item}>
                                     <FormControl variant="outlined">
                                         <TextField
                                             id="provincia"
@@ -457,17 +430,33 @@ const AddEditStudentForm = (props) => {
                                     )}
                                 </motion.li>
                             </Col>
+
                         </Row>
 
-                        <div className={styles.decorator} />{" "}
-                        <span id={styles.title_decorator}>
-                            {" "}
-                            Datos referentes a la institución
-                            {" "}
-                        </span>
-                        <div className={styles.decorator} />
 
                         <Row lg={12} md={12} sm={12} xs={12} className={styles.row_input_container}>
+                            <Col lg={6} md={6} sm={12} xs={12} className={fullscreen && styles.input_container}>
+                            <motion.li variants={item}>
+                                    <FormControl variant="outlined">
+                                        <TextField
+                                            id="localidad"
+                                            name="localidad"
+                                            label="Localidad"
+                                            variant="outlined"
+                                            value={state.localidad}
+                                            onChange={handleChange("localidad")}
+                                        />
+                                    </FormControl>
+                                    {validation.localidad && (
+                                        <FormHelperText
+                                            className="helper-text"
+                                            style={{ color: "rgb(182, 60, 47)" }}
+                                        >
+                                            Esta campo no puede estar vacio
+                                        </FormHelperText>
+                                    )}
+                                </motion.li>
+                            </Col>
                             <Col lg={6} md={6} sm={12} xs={12} className={fullscreen && styles.input_container}>
                                 <motion.li variants={item}>
                                     <FormControl variant="outlined">
@@ -484,109 +473,6 @@ const AddEditStudentForm = (props) => {
                                             minDateMessage="La fecha no puede ser menor al día de hoy"
                                             maxDateMessage="La fecha no puede ser mayor al máximo permitido"
                                         />
-                                    </FormControl>
-                                </motion.li>
-                            </Col>
-
-                            <Col lg={6} md={6} sm={12} xs={12} className={fullscreen && styles.input_container}>
-                                <motion.li variants={item}>
-                                    <FormControl variant="outlined">
-                                        <InputLabel id="school_year">Año lectivo</InputLabel>
-                                        <Select
-                                            labelId="school_year"
-                                            id="school_year"
-                                            value={state.school_year}
-                                            onChange={handleChange("school_year")}
-                                            disabled={showInstitutionOptions}
-                                            required
-                                        >
-                                            <MenuItem value="">
-                                                <em>Seleccionar</em>
-                                            </MenuItem>
-                                            {schoolYearData && schoolYearData.map((schoolYear) => {
-                                                return (
-                                                    <MenuItem value={schoolYear.id} key={schoolYear.id}>{schoolYear.nombre}</MenuItem>
-                                                )
-                                            })}
-                                        </Select>
-                                    </FormControl>
-                                </motion.li>
-                            </Col>
-
-                        </Row>
-
-                        <Row lg={12} md={12} sm={12} xs={12} className={styles.row_input_container}>
-
-                            <Col lg={4} md={4} sm={12} xs={12} className={fullscreen && styles.input_container}>
-                                <motion.li variants={item}>
-                                    <FormControl variant="outlined">
-                                        <InputLabel id="department">Carrera</InputLabel>
-                                        <Select
-                                            labelId="department"
-                                            id="department"
-                                            value={state.department}
-                                            onChange={handleChange("department")}
-                                            disabled={showInstitutionOptions}
-                                            /* required */
-                                        >
-                                            <MenuItem value="">
-                                                <em>Seleccionar</em>
-                                            </MenuItem>
-                                            {departmentData && departmentData.map((department) => {
-                                                return (
-                                                    <MenuItem value={department.id} key={department.id}>{department.nombre}</MenuItem>
-                                                )
-                                            })}
-                                        </Select>
-                                    </FormControl>
-                                </motion.li>
-                            </Col>
-                            <Col lg={4} md={4} sm={12} xs={12} className={fullscreen && styles.input_container}>
-                                <motion.li variants={item}>
-                                    <FormControl variant="outlined">
-                                        <InputLabel id="year">Año</InputLabel>
-                                        <Select
-                                            labelId="year"
-                                            id="year"
-                                            value={state.year}
-                                            disabled={state.department === '' || showInstitutionOptions}
-                                            onChange={handleChange("year")}
-                                            required
-                                        >
-                                            <MenuItem value="">
-                                                <em>Seleccionar</em>
-                                            </MenuItem>
-                                            {yearData && yearData.map((year) => {
-                                                return (
-                                                    <MenuItem value={year.id} key={year.id}>{year.nombre}</MenuItem>
-                                                )
-                                            })}
-                                        </Select>
-                                    </FormControl>
-                                </motion.li>
-                            </Col>
-
-                            <Col lg={4} md={4} sm={12} xs={12} className={fullscreen && styles.input_container}>
-                                <motion.li variants={item}>
-                                    <FormControl variant="outlined">
-                                        <InputLabel id="curso">Curso</InputLabel>
-                                        <Select
-                                            labelId="curso"
-                                            id="curso"
-                                            value={state.curso}
-                                            onChange={handleChange("curso")}
-                                            disabled={state.year === '' || showInstitutionOptions}
-                                            required
-                                        >
-                                            <MenuItem value="">
-                                                <em>Seleccionar</em>
-                                            </MenuItem>
-                                            {courseData && courseData.map((course) => {
-                                                return (
-                                                    <MenuItem value={course.id} key={course.id}>{course.nombre}</MenuItem>
-                                                )
-                                            })}
-                                        </Select>
                                     </FormControl>
                                 </motion.li>
                             </Col>

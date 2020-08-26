@@ -2,6 +2,7 @@ import store from '../../redux/store'
 import { forcedLogout } from '../../redux/actions/userActions';
 
 const handleCrudErrors = (error) => {
+  console.log(error.response);
     let response = {};
     if (error.response) {
       if (error.response.status === 400) {

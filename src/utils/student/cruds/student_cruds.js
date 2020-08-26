@@ -23,6 +23,28 @@ export async function getStudentCrud(token){
 }
 
 
+export async function getStudentsCourseCrud(token,course_id){ //trae los alumnos de un curso
+  return await axios
+  .get(`${config.api_url}/alumnos/curso/list/`,{ 
+      headers:{
+          Authorization: `Token ${token}`
+      },
+      params:{
+        curso: course_id
+      }
+  })
+  .then((json) => {
+    let response = {
+      success: true,
+      result: json.data,
+    };
+    return response;
+  })
+  .catch((error) => {
+    return errorHandler(error);
+  });
+}
+
 export async function getStudentCourseCrud(token,student_id){
   return await axios
   .get(`${config.api_url}/alumnos/curso/list/`,{ 
@@ -87,6 +109,28 @@ export async function addStudentCourseCrud(token,data){
 
 
 
+export async function addMultipleStudentsCourseCrud(token,data){
+  debugger;
+  return await axios
+  .post(`${config.api_url}/alumnos/curso/multiple/`,data,{
+      headers:{
+          Authorization: `Token ${token}`
+      }
+  })
+  .then((json) => {
+    let response = {
+      success: true,
+      result: json.data,
+    };
+    return response;
+  })
+  .catch((error) => {
+    return errorHandler(error);
+  });
+}
+
+
+
 export async function editStudentCrud(token,data){
   return await axios
   .patch(`${config.api_url}/alumnos/${data.id}/`,data,{
@@ -114,6 +158,27 @@ export async function deleteStudentCrud(token,data){
       headers:{
           Authorization: `Token ${token}`
       }
+  })
+  .then((json) => {
+    let response = {
+      success: true,
+      result: json.data,
+    };
+    return response;
+  })
+  .catch((error) => {
+    return errorHandler(error);
+  });
+}
+
+export async function deleteMultipleStudentsCourseCrud(token,data){
+  debugger;
+  return await axios
+  .delete(`${config.api_url}/alumnos/curso/multiple/`,{
+      headers:{
+          Authorization: `Token ${token}`
+      },
+      data:data
   })
   .then((json) => {
     let response = {

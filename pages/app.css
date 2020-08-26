@@ -178,6 +178,9 @@ button:focus {
 .MuiStepConnector-lineVertical{
   min-height: 10px !important;
 }
+.MuiStepLabel-label{
+text-align: left !important;
+}
 
 
 

@@ -72,7 +72,7 @@ export async function deleteExamsCrud(token,data){
   return await axios
   .delete(`${config.api_url}/evaluacion/`,{ 
       headers:{
-          Authorization: `Token 984b229bf46e444407c3ca65a9be87b8d3bc37eb`
+          Authorization: `Token ${token}`
       },
       data: parseData
   })

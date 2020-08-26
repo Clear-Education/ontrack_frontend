@@ -210,7 +210,7 @@ const Accounts = () => {
 
         {addUserModal &&
           <ModalAdd
-            title="Agregar Usuario"
+            title="Agregar Cuenta"
             handleClose={handleAddUserModal}
             formComponent={
               <AddUserForm
@@ -222,7 +222,7 @@ const Accounts = () => {
 
         {editUserModal &&
           <ModalAdd
-            title="Editar Usuario"
+            title="Editar Cuenta"
             handleClose={handleEditUserModal}
             formComponent={
               <EditUserForm
@@ -234,16 +234,6 @@ const Accounts = () => {
           />
         }
 
-        {/*         {
-          showAlertDialog ?
-            <AlertDialog
-              open={showAlertDialog}
-              handleClose={handleCloseAlertDialog}
-              user={selectedUser}
-              handleDeleteConfirmation={handleDeleteConfirmation}
-            />
-            : null
-        } */}
       </motion.div>
     </>
   )
