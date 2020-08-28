@@ -14,6 +14,7 @@ import { useState } from "react";
 import { logoutAction } from "../../../../redux/actions/userActions";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 const Header = () => {
 
@@ -39,11 +40,14 @@ const Header = () => {
   return (
     <div id={styles.header_container}>
       <Row lg={12} md={12} sm={12} xs={12}>
-        <Col className="left" lg={2} md={2} sm={2} xs={2}>
-          <div className={styles.logo_container}>
-            <img src={fullScreen ? `/OnTrack.svg` : `/OnTrack_mini.svg`} id={fullScreen ? styles.logo : styles.mini_logo} />
-          </div>
-        </Col>
+        <Link href="/dashboard">
+          <Col className="left" lg={2} md={2} sm={2} xs={2} style={{cursor:'pointer'}}>
+            <div className={styles.logo_container}>
+              <img src={fullScreen ? `/OnTrack.svg` : `/OnTrack_mini.svg`} id={fullScreen ? styles.logo : styles.mini_logo} />
+            </div>
+          </Col>
+        </Link>
+
         <Col className="right" lg={10} md={10} sm={10} xs={10}>
           <div className={styles.icons_container}>
             <Row>
@@ -59,14 +63,14 @@ const Header = () => {
                 </IconButton>
                 <Collapse in={open} timeout="auto" unmountOnExit>
                   <div className={styles.collapse_container}>
-                    <span className={styles.collapse_item}  title="Ver Perfil" >
+                    <span className={styles.collapse_item} title="Ver Perfil" >
                       <IconButton>
                         <PersonIcon />
                       </IconButton>
                     </span>
-                    <span className={styles.collapse_item}  title="Cerrar sesión" onClick={logout}>
+                    <span className={styles.collapse_item} title="Cerrar sesión" onClick={logout}>
                       <IconButton>
-                      <img src="/icons/logout_icon2.svg" style={{ width: '20px', display: 'inline' }} />
+                        <img src="/icons/logout_icon2.svg" style={{ width: '20px', display: 'inline' }} />
                       </IconButton>
                     </span>
                   </div>

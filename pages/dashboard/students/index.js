@@ -4,7 +4,7 @@ import TitlePage from '../../../src/components/commons/title_page/title_page';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import MUIDataTable from 'mui-datatables';
-import { getStudentService, deleteStudentService, addStudentService, editStudentService } from '../../../src/utils/student/service/student_service';
+import { getStudentsService, deleteStudentService, addStudentService, editStudentService } from '../../../src/utils/student/service/student_service';
 import BackgroundLoader from '../../../src/components/commons/background_loader/background_loader';
 import config from '../../../src/utils/config';
 import { motion } from "framer-motion";
@@ -13,7 +13,7 @@ import AddEditStudentForm from '../../../src/components/student/forms/add_edit_s
 import EditIcon from '@material-ui/icons/Edit';
 import { IconButton } from '@material-ui/core';
 import Delete from '@material-ui/icons/Delete';
-import Modal from '../../../src/components/commons/modals/generic_modal/modal';
+import Modal from '../../../src/components/commons/modals/modal';
 import DeleteForm from '../../../src/components/commons/delete_form/deleteForm';
 import MTConfig from '../../../src/utils/table_options/MT_config';
 
@@ -27,7 +27,7 @@ const Students = () => {
   const url = `${config.api_url}/alumnos/list`;
   useSWR(url, () => {
     setIsLoading(true);
-    getStudentService(user.user.token).then((result) => {
+    getStudentsService(user.user.token).then((result) => {
       setIsLoading(false);
       setAllData(result.result.results)
     })
@@ -52,6 +52,7 @@ const Students = () => {
   }
 
   async function editStudent(e, data) {
+    debugger;
     e.preventDefault();
     setIsLoading(true);
     return await editStudentService(user.user.token, data).then((result) => {
@@ -73,6 +74,7 @@ const Students = () => {
   return (
     <>
       {isLoading && <BackgroundLoader show={isLoading} />}
+
       <motion.div
         initial={{ scale: 0.95, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}

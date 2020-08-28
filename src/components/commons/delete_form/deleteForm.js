@@ -26,7 +26,7 @@ const DeleteForm = (props) => {
                         size={18}
                         color="primary"
                     />
-                Eliminando...
+                {" "}Eliminando...
                 </>
             }
         </button>

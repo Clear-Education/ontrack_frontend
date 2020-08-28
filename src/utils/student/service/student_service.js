@@ -1,25 +1,17 @@
-import { getStudentCrud, addStudentCrud, deleteStudentCrud, editStudentCrud, addStudentCourseCrud,getStudentCourseCrud, getStudentsCourseCrud, addMultipleStudentsCourseCrud } from "../cruds/student_cruds";
+import { getStudentsCrud, 
+         addStudentCrud, 
+         deleteStudentCrud, 
+         editStudentCrud, 
+         getStudentsCourseCrud, 
+         addMultipleStudentsCourseCrud, 
+         deleteMultipleStudentsCourseCrud, 
+         getStudentCrud } from "../cruds/student_cruds";
+         
 import Alert from "react-s-alert";
 
 
-export async function getStudentCourseService(token,student_id){
-    return await getStudentCourseCrud(token,student_id).then((result)=>{
-      if (result.success) {
-            
-      } else {
-        result.result.forEach((element) => {
-          Alert.error(element.message, {
-            effect: "stackslide",
-          });
-        });
-      }
-      return result;
-    })
-
-    }
-
-export async function getStudentService(token){
-    return await getStudentCrud(token).then((result)=>{
+export async function getStudentsService(token,_schoolYearId){
+    return await getStudentsCrud(token,_schoolYearId).then((result)=>{
         if (result.success) {
             
           } else {
@@ -33,8 +25,24 @@ export async function getStudentService(token){
     })
 }
 
-export async function getStudentsCourseService(token,course_id){
-  return await getStudentsCourseCrud(token,course_id).then((result)=>{
+
+export async function getStudentService(token,student_id){
+  return await getStudentCrud(token,student_id).then((result)=>{
+      if (result.success) {
+          
+        } else {
+          result.result.forEach((element) => {
+            Alert.error(element.message, {
+                effect: "stackslide",
+            });
+          });
+        }
+        return result;
+  })
+}
+
+export async function getStudentsCourseService(token,course_id,schoolYearId){
+  return await getStudentsCourseCrud(token,course_id,schoolYearId).then((result)=>{
       if (result.success) {
           
         } else {
@@ -65,34 +73,9 @@ export async function addStudentService(token,data){
        }]
   return await addStudentCrud(token,parseStudentData).then((result)=>{
       if (result.success) {
-          const parseStudentCourseData = {
-            alumno: result.result[parseStudentData[0].dni],
-            curso: data.curso,
-            anio_lectivo: data.school_year
-           }
-          return addStudentCourseService(token,parseStudentCourseData).then((result)=>{
-            return result;
-          });
-        } else {
-          result.result.forEach((element) => {
-            Alert.error(element.message, {
-              effect: "stackslide",
-            });
-          });
-          return result;
-        }
-  })
-}
-
-
-
-export async function addStudentCourseService(token,data){
-
-  return await addStudentCourseCrud(token,data).then((result)=>{
-      if (result.success) {
         Alert.success("Alumno agregado correctamente", {
-            effect: "stackslide",
-          }); 
+          effect: "stackslide",
+        }); 
         } else {
           result.result.forEach((element) => {
             Alert.error(element.message, {
@@ -123,8 +106,6 @@ export async function addMultipleStudentsCourseService(token,data){
         return result;
   })
 }
-
-
 
 export async function editStudentService(token,data){
   const parseStudentData ={
@@ -179,7 +160,7 @@ export async function deleteMultipleStudentsCourseService(token,data){
 
   return await deleteMultipleStudentsCourseCrud(token,data).then((result)=>{
       if (result.success) {
-        Alert.success("Alumnos agregados correctamente", {
+        Alert.success("Alumnos eliminados correctamente", {
             effect: "stackslide",
           }); 
         } else {

@@ -5,7 +5,7 @@ import { useState } from "react";
 import useSWR, { mutate } from "swr";
 import config from "../../../src/utils/config";
 import BackgroundLoader from "../../../src/components/commons/background_loader/background_loader";
-import { get${mayusName}Service, add${mayusName}Service, edit${mayusName}Service, delete${mayusName}Service } from "../../../src/utils/${name}/services/${name}_services";
+import { getDepartmentService, addDepartmentService, editDepartmentService, deleteDepartmentService } from "../../../src/utils/department/services/department_services";
 import Modal from "../../../src/components/commons/modals/modal";
 import { IconButton } from "@material-ui/core";
 import AddIcon from '@material-ui/icons/Add';
@@ -13,9 +13,9 @@ import EditIcon from '@material-ui/icons/Edit';
 import Delete from '@material-ui/icons/Delete';
 
 
-const ${mayusName} = () => {
+const Department = () => {
 
-    const url = `$${config.api_url}/`
+    const url = `${config.api_url}/`
     const [selectedData, setSelectedData] = useState()
     const user = useSelector((store) => store.user);
     const [isLoading, setIsLoading] = useState(false)
@@ -25,7 +25,7 @@ const ${mayusName} = () => {
 /* 
     let { data } = useSWR(url, () => {
         setIsLoading(true);
-        return get${name}Service(user.user.token).then((result) => {
+        return getdepartmentService(user.user.token).then((result) => {
             setIsLoading(false)
             return result.result
         })
@@ -34,30 +34,30 @@ const ${mayusName} = () => {
  */
 
 
-    async function add${name}(e, data) {
+    async function adddepartment(e, data) {
         e.preventDefault();
         setIsLoading(true);
-        return await add${name}Service(user.user.token, data).then((result) => {
+        return await adddepartmentService(user.user.token, data).then((result) => {
             setIsLoading(false);
             mutate(url);
             return result;
         })
     }
 
-    async function edit${name}(e, data) {
+    async function editdepartment(e, data) {
         e.preventDefault();
         setIsLoading(true);
-        return await edit${name}Service(user.user.token, data).then((result) => {
+        return await editdepartmentService(user.user.token, data).then((result) => {
             setIsLoading(false);
             mutate(url);
             return result;
         })
     }
 
-    async function delete${name}(e, data) {
+    async function deletedepartment(e, data) {
         e.preventDefault();
         setIsLoading(true);
-        return await delete${name}Service(user.user.token, data).then((result) => {
+        return await deletedepartmentService(user.user.token, data).then((result) => {
             setIsLoading(false);
             mutate(url);
             return result;
@@ -68,12 +68,12 @@ const ${mayusName} = () => {
     return (
         <>
         {isLoading && <BackgroundLoader show={isLoading} />}
-             <TitlePage title="${name}" />  
+             <TitlePage title="department" />  
 
 
                 <Modal
-                title="Agregar ${name}"
-                body={ <AddIcon handleSubmitAction={add${name}}/>}
+                title="Agregar department"
+                body={ <AddIcon handleSubmitAction={adddepartment}/>}
                 button={
                     <IconButton>
                         <AddIcon />
@@ -82,8 +82,8 @@ const ${mayusName} = () => {
                 />
 
                 <Modal
-                    title="Editar ${name}"
-                    body={ <EditIcon handleSubmitAction={edit${name}}/>}
+                    title="Editar department"
+                    body={ <EditIcon handleSubmitAction={editdepartment}/>}
                     button={
                         <IconButton onClick={() => setSelectedData()} >
                             <EditIcon />
@@ -93,7 +93,7 @@ const ${mayusName} = () => {
 
                 <Modal
                 title="¿Seguro que deseas eliminar?"
-                body={ <Delete handleSubmitAction={delete${name}}/>}
+                body={ <Delete handleSubmitAction={deletedepartment}/>}
                 button={
                     <IconButton onClick={() => setSelectedData()} >
                         <Delete />
@@ -106,5 +106,5 @@ const ${mayusName} = () => {
 }
 
 
-export default ${mayusName};
+export default Department;
 

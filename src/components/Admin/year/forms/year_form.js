@@ -129,7 +129,7 @@ const YearForm = (props) => {
                                             name='color'
                                             variant="outlined"
                                             value={state.color}
-                                            label={state.color}
+                                            label={"Color"}
                                             defaultValue={state.color}
                                             inputProps={{ value: state.color }}
                                             onChange={(color) => handleChangeColor(color)}

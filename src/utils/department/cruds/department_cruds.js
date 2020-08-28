@@ -4,7 +4,7 @@ import errorHandler from "../../error_handler";
 import config from '../../config';
 
 
-export async function getDepartments(token){
+export async function getDepartmentCrud(token){
     return await axios
     .get(`${config.api_url}/carrera/list`,{
         headers:{
@@ -24,7 +24,7 @@ export async function getDepartments(token){
 }
 
 
-export async function newDepartment(token,data){
+export async function addDepartmentCrud(token,data){
   return await axios
   .post(`${config.api_url}/carrera/`,data,{
       headers:{
@@ -45,7 +45,7 @@ export async function newDepartment(token,data){
 
 
 
-export async function editDepartment(token,data){
+export async function editDepartmentCrud(token,data){
   const parsedData = {
     nombre: data.nombre,
     descripcion: data.descripcion,
@@ -70,7 +70,7 @@ export async function editDepartment(token,data){
 }
 
 
-export async function deleteDepartment(token,data){
+export async function deleteDepartmentCrud(token,data){
   return await axios
   .delete(`${config.api_url}/carrera/${data.id}/`,{
       headers:{
