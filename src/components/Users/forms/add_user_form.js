@@ -149,13 +149,6 @@ const AddUserForm = (props) => {
             <Row>
                 <Col>
                     <form onSubmit={(e) => handleSubmit(e)}>
-                        <div className={styles.decorator} />{" "}
-                        <span id={styles.title_decorator}>
-                            {" "}
-                      Datos personales
-                      {" "}
-                        </span>
-                        <div className={styles.decorator} />
 
                         <Row lg={12} md={12} sm={12} xs={12} className={styles.row_input_container}>
                             <Col lg={4} md={4} sm={12} xs={12} className={fullscreen && styles.input_container}>
@@ -465,12 +458,12 @@ const AddUserForm = (props) => {
                                 <motion.li variants={item}>
                                     <FormControl variant="outlined">
                                         <TextField
-                                            id="localidad"
-                                            name="localidad"
-                                            label="Localidad"
+                                            id="provincia"
+                                            name="provincia"
+                                            label="Provincia"
                                             variant="outlined"
-                                            value={state.localidad}
-                                            onChange={handleChange("localidad")}
+                                            value={state.provincia}
+                                            onChange={handleChange("provincia")}
 
                                         />
                                     </FormControl>
@@ -488,13 +481,13 @@ const AddUserForm = (props) => {
                             <Col lg={4} md={4} sm={12} xs={12} className={fullscreen && styles.input_container}>
                                 <motion.li variants={item}>
                                     <FormControl variant="outlined">
-                                        <TextField
-                                            id="provincia"
-                                            name="provincia"
-                                            label="Provincia"
+                                    <TextField
+                                            id="localidad"
+                                            name="localidad"
+                                            label="Localidad"
                                             variant="outlined"
-                                            value={state.provincia}
-                                            onChange={handleChange("provincia")}
+                                            value={state.localidad}
+                                            onChange={handleChange("localidad")}
 
                                         />
                                     </FormControl>

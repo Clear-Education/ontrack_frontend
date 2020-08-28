@@ -78,7 +78,7 @@ const AdminSideBar = () => {
                 sm={7}
                 xs={7}
                 className={styles.navigations_container}
-                title="Cuentas de usuario"
+                title="Estructura Curricular"
                 onClick={changeSelected.bind(this, "dashboard")}
               >
                 <div style={getSelected("dashboard")} />
@@ -106,7 +106,7 @@ const AdminSideBar = () => {
                 sm={7}
                 xs={7}
                 className={styles.navigations_container}
-                title="Cuentas de usuario"
+                title="Alumnos"
                 onClick={changeSelected.bind(this, "students")}
               >
                 <div style={getSelected("students")} />
@@ -133,7 +133,7 @@ const AdminSideBar = () => {
                 sm={7}
                 xs={7}
                 className={styles.navigations_container}
-                title="Cuentas de usuario"
+                title="Calendario"
                 onClick={changeSelected.bind(this, "calendar")}
               >
                 <div style={getSelected("calendar")} />
@@ -160,7 +160,7 @@ const AdminSideBar = () => {
                 sm={7}
                 xs={7}
                 className={styles.navigations_container}
-                title="Cuentas de usuario"
+                title="Carga de datos"
                 onClick={changeSelected.bind(this, "data")}
               >
                 <div style={getSelected("data")} />

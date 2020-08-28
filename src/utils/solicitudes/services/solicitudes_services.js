@@ -9,7 +9,6 @@ export async function getSolicitudesService(token) {
         } else {
             result.result.forEach((element) => {
                 Alert.error(element.message, {
-                    position: "bottom",
                     effect: "stackslide",
                 });
             });
@@ -22,13 +21,11 @@ export async function addSolicitudesService(data, token) {
     return await addSolicitudesCrud(data, token).then((result) => {
         if (result.success) {
             Alert.success("Solicitudes creado correctamente", {
-                position: "bottom",
-                effect: "stackslide",
+             effect: "stackslide",
             });
         } else {
             result.result.forEach((element) => {
                 Alert.error(element.message, {
-                    position: "bottom",
                     effect: "stackslide",
                 });
             });
@@ -41,13 +38,11 @@ export async function editSolicitudesService(data, token) {
     return await editSolicitudesCrud(data, token).then((result) => {
         if (result.success) {
             Alert.success("Solicitudes editado correctamente", {
-                position: "bottom",
-                effect: "stackslide",
+             effect: "stackslide",
             });
         } else {
             result.result.forEach((element) => {
                 Alert.error(element.message, {
-                    position: "bottom",
                     effect: "stackslide",
                 });
             });
@@ -61,13 +56,11 @@ export async function deleteSolicitudesService(token,data){
   return await deleteSolicitudesCrud(token,data).then((result)=>{
       if (result.success) {
         Alert.success("Materia eliminada correctamente", {
-          position: "bottom",
           effect: "stackslide",
         });
         } else {
           result.result.forEach((element) => {
             Alert.error(element.message, {
-              position: "bottom",
               effect: "stackslide",
             });
           });

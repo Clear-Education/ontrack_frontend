@@ -19,3 +19,4 @@ const makeStore = context => store;
 // export an assembled wrapper
 export const wrapper = createWrapper(makeStore); /*  {debug: true} otro parámetro que puede ponerse para ver la creación del store*/
 
+export default store;

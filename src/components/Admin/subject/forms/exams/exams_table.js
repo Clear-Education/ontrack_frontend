@@ -7,7 +7,7 @@ import { getExamsService, editExamsService, deleteExamsService } from "../../../
 import config from "../../../../../utils/config";
 import { Col } from "react-bootstrap";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import MTConfig from "../../../../../utils/table_options/material_table/MT_config";
+import MTConfig from "../../../../../utils/table_options/MT_config";
 
 
 const ExamsTable = (props) => {

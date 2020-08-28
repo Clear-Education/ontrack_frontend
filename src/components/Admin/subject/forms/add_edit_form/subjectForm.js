@@ -144,7 +144,7 @@ const SubjectForm = (props) => {
                                             name='color'
                                             variant="outlined"
                                             value={state.color}
-                                            label={state.color}
+                                            label={"Color"}
                                             inputProps={{ value: state.color }}
                                             onChange={(color) => handleChangeColor(color)}
                                         />

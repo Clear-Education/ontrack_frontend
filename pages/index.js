@@ -106,7 +106,6 @@ const Login = () => {
         password: !validation.password,
       });
       Alert.error("¡Debes completar todos los campos para continuar!", {
-        position: "bottom",
         effect: "stackslide",
       });
     } else {
@@ -121,7 +120,7 @@ const Login = () => {
   };
 
   return !user.isLoggedIn ? (
-    <Row lg={12} md={12} sm={12} xs={12} style={{ margin: 0 }}>
+    <Row lg={12} md={12} sm={12} xs={12} style={{ margin: 0,display:'flex', justifyContent:'center',alignItems:'center', height:'100vh' }}>
       <div id={styles.login_container}>
         <Row lg={12} md={12} sm={12} xs={12} style={{ margin: 0 }}>
           <Col
@@ -198,7 +197,6 @@ const Login = () => {
                     <motion.div variants={item} key={2}>
                       <FormControl variant="outlined">
                         <InputLabel
-                          error={validation.password}
                           className="password-label"
                           htmlFor="password"
                         >
@@ -208,7 +206,6 @@ const Login = () => {
                           id="password"
                           type={loginState.showPassword ? "text" : "password"}
                           value={loginState.password}
-                          error={validation.password}
                           onChange={handleChange("password")}
                           endAdornment={
                             <InputAdornment position="end">
@@ -228,14 +225,7 @@ const Login = () => {
                           }
                           labelWidth={90}
                         />
-                        {validation.password && (
-                          <FormHelperText
-                            className="helper-text"
-                            style={{ color: "rgb(182, 60, 47)" }}
-                          >
-                            Esta campo no puede estar vacio
-                          </FormHelperText>
-                        )}
+
                       </FormControl>
                     </motion.div>
                   </Col>

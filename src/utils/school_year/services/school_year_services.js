@@ -9,7 +9,6 @@ export async function getSchoolYearService(token) {
     } else {
       result.result.forEach((element) => {
         Alert.error(element.message, {
-          position: "bottom",
           effect: "stackslide",
         });
       });
@@ -22,13 +21,11 @@ export async function addSchoolYearService(token, data) {
   return await addSchoolYearCrud(token, data).then((result) => {
     if (result.success) {
       Alert.success("Año lectivo creado correctamente", {
-        position: "bottom",
         effect: "stackslide",
       });
     } else {
       result.result.forEach((element) => {
         Alert.error(element.message, {
-          position: "bottom",
           effect: "stackslide",
         });
       });
@@ -42,13 +39,11 @@ export async function editSchoolYearService(token, data) {
   return await editSchoolYearCrud(token, data).then((result) => {
     if (result.success) {
       Alert.success("Año lectivo editado correctamente", {
-        position: "bottom",
         effect: "stackslide",
       });
     } else {
       result.result.forEach((element) => {
         Alert.error(element.message, {
-          position: "bottom",
           effect: "stackslide",
         });
       });
@@ -61,13 +56,11 @@ export async function deleteSchoolYearService(token, data) {
   return await deleteSchoolYearCrud(token, data).then((result) => {
     if (result.success) {
       Alert.success("Año lectivo eliminado correctamente", {
-        position: "bottom",
         effect: "stackslide",
       });
     } else {
       result.result.forEach((element) => {
         Alert.error(element.message, {
-          position: "bottom",
           effect: "stackslide",
         });
       });

@@ -9,7 +9,6 @@ export async function getCursosService(token) {
         } else {
             result.result.forEach((element) => {
                 Alert.error(element.message, {
-                    position: "bottom",
                     effect: "stackslide",
                 });
             });
@@ -22,13 +21,11 @@ export async function addCursosService(data, token) {
     return await addCursosCrud(data, token).then((result) => {
         if (result.success) {
             Alert.success("Cursos creado correctamente", {
-                position: "bottom",
                 effect: "stackslide",
             });
         } else {
             result.result.forEach((element) => {
                 Alert.error(element.message, {
-                    position: "bottom",
                     effect: "stackslide",
                 });
             });
@@ -41,13 +38,11 @@ export async function editCursosService(data, token) {
     return await editCursosCrud(data, token).then((result) => {
         if (result.success) {
             Alert.success("Cursos editado correctamente", {
-                position: "bottom",
-                effect: "stackslide",
+            effect: "stackslide",
             });
         } else {
             result.result.forEach((element) => {
                 Alert.error(element.message, {
-                    position: "bottom",
                     effect: "stackslide",
                 });
             });
@@ -61,13 +56,11 @@ export async function deleteCursosService(token,data){
   return await deleteCursosCrud(token,data).then((result)=>{
       if (result.success) {
         Alert.success("Materia eliminada correctamente", {
-          position: "bottom",
           effect: "stackslide",
         });
         } else {
           result.result.forEach((element) => {
             Alert.error(element.message, {
-              position: "bottom",
               effect: "stackslide",
             });
           });

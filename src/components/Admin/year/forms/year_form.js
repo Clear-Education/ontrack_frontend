@@ -80,7 +80,6 @@ const YearForm = (props) => {
             } else {
                 result.result.forEach((element) => {
                     Alert.error(element.message, {
-                        position: "bottom",
                         effect: "stackslide",
                     });
                 });
@@ -130,7 +129,7 @@ const YearForm = (props) => {
                                             name='color'
                                             variant="outlined"
                                             value={state.color}
-                                            label={state.color}
+                                            label={"Color"}
                                             defaultValue={state.color}
                                             inputProps={{ value: state.color }}
                                             onChange={(color) => handleChangeColor(color)}

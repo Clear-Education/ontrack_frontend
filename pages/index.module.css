@@ -15,12 +15,6 @@
   #login_container {
     border-radius: 10px;
     border: 2px solid #e6e6e6;
-    height: 702px;
-    position: absolute;
-    top: 15%;
-    left: 50%;
-    transform: translate(-50%, 0);
-    padding: 0;
     width: 85%;
     max-width: 1500px !important;
   }

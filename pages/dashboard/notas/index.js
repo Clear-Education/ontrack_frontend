@@ -6,7 +6,7 @@ import useSWR, { mutate } from "swr";
 import config from "../../../src/utils/config";
 import BackgroundLoader from "../../../src/components/commons/background_loader/background_loader";
 import { getNotasService, addNotasService, editNotasService, deleteNotasService } from "../../../src/utils/notas/services/notas_services";
-import Modal from "../../../src/components/commons/modals/generic_modal/modal";
+import Modal from "../../../src/components/commons/modals/modal";
 import { IconButton } from "@material-ui/core";
 import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';

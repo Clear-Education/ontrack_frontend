@@ -78,7 +78,6 @@ const DepartmentForm = (props) => {
             }else {
                 result.result.forEach((element) => {
                   Alert.error(element.message, {
-                    position: "bottom",
                     effect: "stackslide",
                   });
                 });
@@ -153,7 +152,7 @@ const DepartmentForm = (props) => {
                                             name='color'
                                             variant="outlined"
                                             value={state.color}
-                                            label={state.color}
+                                            label={"Color"}
                                             inputProps={{ value: state.color }}
                                             onChange={(color) => handleChangeColor(color)}
                                         />

@@ -4,6 +4,7 @@
     border-radius: 10px;
     margin: auto;
     position: relative;
+    margin-top: 20px;
 }
 
 .no_data_msg{

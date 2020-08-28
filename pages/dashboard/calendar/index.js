@@ -10,7 +10,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import Delete from '@material-ui/icons/Delete';
 
 import BackgroundLoader from "../../../src/components/commons/background_loader/background_loader";
-import Modal from "../../../src/components/commons/modals/generic_modal/modal";
+import Modal from "../../../src/components/commons/modals/modal";
 import DeleteForm from "../../../src/components/commons/delete_form/deleteForm";
 import { addSchoolYearService, getSchoolYearService, editSchoolYearService, deleteSchoolYearService } from '../../../src/utils/school_year/services/school_year_services';
 import SchoolYearForm from '../../../src/components/calendar/forms/add_edit_form/school_year_form';

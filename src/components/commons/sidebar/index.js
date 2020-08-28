@@ -11,9 +11,9 @@ import { useSelector } from "react-redux";
 const SideBarContainer = () => {
   const user = useSelector((store) => store.user);
 
-  return user.user.groups === 1 ? (
+  return user.user.groups === "Administrador" ? (
     <AdminSidebar />
-  ) : user.user.groups === 2 ||  user.user.groups === 3 ? (
+  ) : user.user.groups === "Docente" ||  user.user.groups === "Pedagogía" ? (
     <UserSidebar />
   ) : <div className={styles.sidebar_container}></div>
 };

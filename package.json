@@ -27,6 +27,7 @@
     "nprogress": "^0.2.0",
     "react": "16.13.1",
     "react-bootstrap": "^1.2.2",
+    "react-country-region-selector": "^2.1.0",
     "react-dom": "16.13.1",
     "react-redux": "^7.2.0",
     "react-s-alert": "^1.4.1",

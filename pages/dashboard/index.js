@@ -14,12 +14,12 @@ const Dashboard = () => {
   const router = useRouter();
 
   useEffect(()=>{
-    if(user.user.groups && user.user.groups !== 1){
+    if(user.user.groups && user.user.groups !== "Administrador"){
       router.push('/dashboard/seguimientos');
     }
   },[user])
 
-  return user.user.groups === 1 ? (
+  return user.user.groups === "Administrador" ? (
     <StructureContainer />
   ) : <div></div>
 };

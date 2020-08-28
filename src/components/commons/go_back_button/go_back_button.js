@@ -8,7 +8,7 @@ const GoBackButton = (props) => {
     }
     return (
         <button className={`${styles.go_back_button} ontrack_btn`} onClick={(e) => handleClick(e)}>
-            Atrás
+            Volver
         </button>
     )
 }

@@ -15,7 +15,7 @@ import Delete from '@material-ui/icons/Delete';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import BackgroundLoader from "../../commons/background_loader/background_loader";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import Modal from "../../commons/modals/generic_modal/modal";
+import Modal from "../../commons/modals/modal";
 import { addYearsService, editYearsService, deleteYearsService } from "../../../utils/year/services/year_services";
 import DeleteForm from "../../commons/delete_form/deleteForm";
 import GoBackButton from "../../commons/go_back_button/go_back_button";
@@ -75,7 +75,6 @@ const Year = (props) => {
             } else {
                 result.result.forEach((element) => {
                     Alert.error(element.message, {
-                        position: "bottom",
                         effect: "stackslide",
                     });
                 });

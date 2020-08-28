@@ -1,13 +1,12 @@
 :root {
-  --main-color-dark: #0099cb;
-  --main-color-light: #10bddc;
+  --main-color-dark: #004d67;
   --black: #303030;
   --white: #f7f7f7;
   --gray: #868686;
   --medium-gray: #79797933;
   --light-gray: #f7f7f7;
-  --orange: #ff8d00;
-  --red: #c24d4d;
+  --orange: #e4710fba;
+  --red: #9c3838;
 }
 
 body {
@@ -42,20 +41,31 @@ body {
 
 .responsive_modal .MuiDialog-paperFullScreen {
   max-height: 95vh !important;
-  min-height: 500px;
+  min-height: 750px;
   border-radius: 20px 20px 0 0 !important;
   background-color: #f1f1f1;
 }
 
 /* Inputs form login y reset pass */
 
-.MuiInputLabel-outlined.MuiInputLabel-shrink {
-  background: #f1f1f1;
-  border-left: 5px solid #f1f1f1;
-  border-right: 5px solid #f1f1f1;
+.MuiInputLabel-animated{
+  color: var(--gray) !important;
 }
+
+.MuiInputLabel-outlined.MuiInputLabel-shrink {
+  background-color: #f1f1f1;
+  color: var(--gray);
+  font-weight: bold;
+}
+.MuiInputLabel-outlined:focus.MuiInputLabel-shrink:focus{
+  color: red !important;
+}
+
 .MuiFormControl-root {
   width: 100% !important;
+}
+.MuiOutlinedInput-root.Mui-focused.Mui-focused fieldset{
+  border-color: var(--main-color-dark);
 }
 #form_login .MuiFormControl-root,
 #form_reset .MuiFormControl-root {
@@ -169,6 +179,19 @@ button:focus {
 .delete_btn {
   background-color: var(--red);
 }
+
+/* STEPPER */
+
+.MuiStepIcon-root.MuiStepIcon-active,.MuiStepIcon-root.MuiStepIcon-completed{
+  color: var(--orange) !important;
+}
+.MuiStepConnector-lineVertical{
+  min-height: 10px !important;
+}
+.MuiStepLabel-label{
+text-align: left !important;
+}
+
 
 
 .MuiTableCell-root:focus{
