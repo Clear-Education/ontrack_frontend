@@ -9,7 +9,6 @@ import { useState } from 'react';
 import { useSelector } from "react-redux";
 
 /* COMPONENTS */
-import ModalAdd from '../../../src/components/commons/modals/modal_add/modal_add';
 import AddUserForm from '../../../src/components/users/forms/add_user_form';
 import EditUserForm from "../../../src/components/users/forms/edit_user_form";
 import BackgroundLoader from '../../../src/components/commons/background_loader/background_loader';
@@ -22,7 +21,8 @@ import { getUserService, addUserService, editUserService, editUserStateService }
 import useSWR, { mutate } from 'swr';
 import { Row, Col } from 'react-bootstrap';
 import { motion } from "framer-motion";
-
+import Modal from "../../../src/components/commons/modals/modal";
+import styles from './index.module.scss'
 
 const Accounts = () => {
   const url = `${config.api_url}/users/list`;
@@ -30,11 +30,6 @@ const Accounts = () => {
   const [allData, setAllData] = useState([]);
   const [isLoading, setIsLoading] = useState(false)
   const [selectedUser, setSelectedUser] = useState({});
-  const [addUserModal, setAddUserModal] = useState(false);
-  const [editUserModal, setEditUserModal] = useState(false);
-  /*   const [showAlertDialog, setShowAlertDialog] = useState(false); */
-
-
   const user = useSelector((store) => store.user);
 
   useSWR(url, () => {
@@ -44,10 +39,6 @@ const Accounts = () => {
       setAllData(result.result.results);
     })
   });
-
-  const handleAddUserModal = (value) => {
-    setAddUserModal(value);
-  }
 
   async function handleSubmitNewUser(e, data) {
     e.preventDefault();
@@ -78,6 +69,7 @@ const Accounts = () => {
 
   async function handleSubmitEditUserState(e, data) {
     e.preventDefault();
+    setIsLoading(false);
     return await editUserStateService(data, user.user.token).then((result) => {
       setIsLoading(false);
       mutate(url);
@@ -91,7 +83,8 @@ const Accounts = () => {
       label: "Id",
       options: {
         display: false,
-        filter: false
+        filter: false,
+        responsive: 'standard',
       },
 
     },
@@ -128,14 +121,21 @@ const Accounts = () => {
       label: "Acciones",
       options: {
         customBodyRenderLite: (dataIndex) => {
-          return (<>
-            <IconButton onClick={() => handleEditUserModal(true, allData[dataIndex])}>
-              <EditIcon />
-            </IconButton>
-            {/*             <IconButton onClick={() => handleDelete(data[dataIndex])}>
-              <Delete />
-            </IconButton> */}
-          </>)
+          return (
+            <Modal
+              title="Editar Cuenta"
+              body={<EditUserForm
+                handleSubmitEditUser={handleSubmitEditUser}
+                handleSubmitEditUserState={handleSubmitEditUserState}
+                user={selectedUser}
+                handleClose={handleEditUserModal} />}
+              button={
+                <IconButton onClick={() => handleEditUserModal(true, allData[dataIndex])}>
+                  <EditIcon />
+                </IconButton>
+              }
+            />
+          )
         },
       },
     }
@@ -175,12 +175,12 @@ const Accounts = () => {
         transition={{ duration: 0.3 }}
       >
         <Row lg={12} md={12} sm={12} xs={12} style={{ margin: '0 5% 0 5%' }}>
-        <TitlePage title="Cuentas de Usuario"></TitlePage>
+          <TitlePage title="Cuentas de Usuario"></TitlePage>
           <Col
             md={12}
             sm={12}
             xs={12}
-            style={{marginTop:20}}
+            style={{ marginTop: 20 }}
           >
             <MUIDataTable
               title={"Lista de Usuarios"}
@@ -201,38 +201,17 @@ const Accounts = () => {
               options={options}
             />
           </Col>
-          <Col>
-            <button
-              className="d-block mt-3 mb-3 ml-auto ontrack_btn add_btn"
-              onClick={() => handleAddUserModal(true)}>Crear Cuenta</button>
+          <Col className={styles.add_button_container}>
+            <Modal
+              title="Agregar Cuenta"
+              body={<AddUserForm handleSubmitNewUser={handleSubmitNewUser} />}
+              button={
+                <button className="ontrack_btn add_btn">Nueva Cuenta</button>
+              }
+            />
+
           </Col>
         </Row>
-
-        {addUserModal &&
-          <ModalAdd
-            title="Agregar Cuenta"
-            handleClose={handleAddUserModal}
-            formComponent={
-              <AddUserForm
-                handleSubmitNewUser={handleSubmitNewUser}
-                handleClose={handleAddUserModal} />
-            }
-          />
-        }
-
-        {editUserModal &&
-          <ModalAdd
-            title="Editar Cuenta"
-            handleClose={handleEditUserModal}
-            formComponent={
-              <EditUserForm
-                handleSubmitEditUser={handleSubmitEditUser}
-                handleSubmitEditUserState={handleSubmitEditUserState}
-                user={selectedUser}
-                handleClose={handleEditUserModal} />
-            }
-          />
-        }
 
       </motion.div>
     </>

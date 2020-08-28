@@ -6,7 +6,7 @@ import useSWR, { mutate } from "swr";
 import config from "../../../src/utils/config";
 import BackgroundLoader from "../../../src/components/commons/background_loader/background_loader";
 import { getSolicitudesService, addSolicitudesService } from "../../../src/utils/Solicitudes/services/Solicitudes_services";
-import Modal from "../../../src/components/commons/modals/generic_modal/modal";
+import Modal from "../../../src/components/commons/modals/modal";
 import { IconButton } from "@material-ui/core";
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import { motion } from "framer-motion";

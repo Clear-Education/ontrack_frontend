@@ -33,12 +33,15 @@ const SelectInput = ({ type, data ,changeAction}) => {
 
     useEffect(()=>{
         setState(data);
+    },[data]);
+    
+    useEffect(()=>{
         if(type === 'department'){
             getDepartmentService(user.user.token).then((result) => {
                 setDepartmentData(result.result);
             })
         }
-    },[data])
+    },[])
 
     useEffect(()=>{
         if(type === 'anio_lectivo'){

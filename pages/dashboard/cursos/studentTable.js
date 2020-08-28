@@ -2,9 +2,7 @@ import { Col, Row } from "react-bootstrap"
 import MUIDataTable from "mui-datatables"
 import { useState, useEffect } from "react";
 import MTConfig from "../../../src/utils/table_options/MT_config";
-import config from "../../../src/utils/config";
-import useSWR from "swr";
-import { getStudentService, deleteStudentService, addStudentService, editStudentService, getStudentsCourseService } from '../../../src/utils/student/service/student_service';
+import { getStudentsService, deleteStudentService, addStudentService, editStudentService, getStudentsCourseService } from '../../../src/utils/student/service/student_service';
 import { useSelector } from "react-redux";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core";
 import styles from './styles.module.scss'
@@ -29,20 +27,25 @@ const StudentTable = ({ changeAction, data, handleSelectedStudentTable }) => {
     const user = useSelector((store) => store.user);
     const [isLoading, setIsLoading] = useState(false);
 
-    useEffect(() => {
+    useEffect(() => { 
         setIsLoading(true);
-        getStudentService(user.user.token).then((result) => {
+        getStudentsService(user.user.token,data.school_year).then((result) => {
             setIsLoading(false);
             setAddStudentData(result.result.results)
         })
-    }, []);
+    }, [tableToShow]);
+
     useEffect(() => {
         setIsLoading(true);
-        getStudentsCourseService(user.user.token, data.curso).then((result) => {
+        getStudentsCourseService(user.user.token, data.curso,data.school_year).then((result) => {
             setIsLoading(false);
-            setDeleteStudentData(result.result.results)
+            let students = [];
+            result.result.results.forEach((element)=>{
+                students.push(element.alumno);
+            })
+            setDeleteStudentData(students);
         })
-    }, []);
+    }, [tableToShow]); 
 
     const handleTableToShow = (table) => {
         setTableToShow(table);
@@ -52,12 +55,15 @@ const StudentTable = ({ changeAction, data, handleSelectedStudentTable }) => {
 
     const handleSelectStudents = (students) => {
         const filterList = tableToShow === 'add' ? [...addStudentData] : [...deleteStudentData];
+        let students_id = []
         students.forEach(student => {
             let student_position = student.dataIndex;
             let selected_student = filterList.find((s, index) => index === student_position);
-            let student_id = selected_student.id;
-            changeAction("students", student_id);
+            let student_id = selected_student && selected_student.id;
+            students_id.push(student_id);
         });
+
+        changeAction("students", students_id);
     }
 
     return (
@@ -77,6 +83,8 @@ const StudentTable = ({ changeAction, data, handleSelectedStudentTable }) => {
                     </Col>
                 </Row>
                 {
+                    isLoading && tableToShow !== undefined? 
+                    "Cargando..." :
                     tableToShow === 'add' ?
 
                         <MuiThemeProvider theme={theme}>
@@ -97,7 +105,7 @@ const StudentTable = ({ changeAction, data, handleSelectedStudentTable }) => {
                                         responsive: 'standard',
                                         textLabels: {
                                             body: {
-                                                noMatch: isLoading ? 'Cargando...' : "No se encontraron registros.",
+                                                noMatch: "No se encontraron registros",
                                             },
                                             pagination: {
                                                 next: "Siguiente Página",
@@ -164,7 +172,7 @@ const StudentTable = ({ changeAction, data, handleSelectedStudentTable }) => {
                                             responsive: 'standard',
                                             textLabels: {
                                                 body: {
-                                                    noMatch: isLoading ? 'Cargando...' : "Este curso no tiene alumnos, agrega alguno!.",
+                                                    noMatch: "No se encontraron registros",
                                                 },
                                                 pagination: {
                                                     next: "Siguiente Página",

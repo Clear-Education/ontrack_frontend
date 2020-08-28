@@ -197,7 +197,6 @@ const Login = () => {
                     <motion.div variants={item} key={2}>
                       <FormControl variant="outlined">
                         <InputLabel
-                          error={validation.password}
                           className="password-label"
                           htmlFor="password"
                         >
@@ -207,7 +206,6 @@ const Login = () => {
                           id="password"
                           type={loginState.showPassword ? "text" : "password"}
                           value={loginState.password}
-                          error={validation.password}
                           onChange={handleChange("password")}
                           endAdornment={
                             <InputAdornment position="end">
@@ -227,14 +225,7 @@ const Login = () => {
                           }
                           labelWidth={90}
                         />
-                        {validation.password && (
-                          <FormHelperText
-                            className="helper-text"
-                            style={{ color: "rgb(182, 60, 47)" }}
-                          >
-                            Esta campo no puede estar vacio
-                          </FormHelperText>
-                        )}
+
                       </FormControl>
                     </motion.div>
                   </Col>
