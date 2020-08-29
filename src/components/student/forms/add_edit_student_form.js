@@ -9,12 +9,6 @@ import { useTheme, useMediaQuery } from "@material-ui/core";
 import styles from './styles.module.css'
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import config from "../../../utils/config";
-import useSWR from "swr";
-import { getSchoolYearService } from "../../../utils/school_year/services/school_year_services";
-import { getDepartmentService } from "../../../utils/department/services/department_services";
-import { getYearService } from "../../../utils/year/services/year_services";
-import { getCourseService } from "../../../utils/course/services/course_services";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { getStudentService } from "../../../utils/student/service/student_service";
 import CountrySelector from "../../commons/country_selector/country_selector";
@@ -43,8 +37,8 @@ const item = {
 
 
 const INITIAL_STATE = {
-    name: '',
-    last_name: '',
+    nombre: '',
+    apellido: '',
     dni: '',
     legajo: '',
     email: '',
@@ -56,8 +50,8 @@ const INITIAL_STATE = {
 }
 
 const VALIDATE_INITIAL_STATE = {
-    name: false,
-    last_name: false,
+    nombre: false,
+    apellido: false,
     dni: false,
     legajo: false,
     email: false,
@@ -82,20 +76,7 @@ const AddEditStudentForm = (props) => {
         if (props.data) {
             getStudentService(user.user.token, props.data).then((result) => {
                 if (result.success) {
-                    let parsedData = {
-                        id: result.result.id,
-                        name: result.result.nombre,
-                        last_name: result.result.apellido,
-                        dni: result.result.dni,
-                        legajo: result.result.legajo,
-                        email: result.result.email,
-                        fecha_nacimiento: result.result.fecha_nacimiento,
-                        direccion: result.result.direccion,
-                        localidad: result.result.localidad,
-                        provincia: result.result.provincia,
-                        fecha_inscripcion: result.result.fecha_inscripcion,
-                    };
-                    setState(parsedData);
+                    setState(result.result);
                 } else {
                     props.handleClose();
                 }
@@ -177,16 +158,16 @@ const AddEditStudentForm = (props) => {
                                 <motion.li variants={item}>
                                     <FormControl variant="outlined">
                                         <TextField
-                                            id="name"
-                                            name="name"
+                                            id="nombre"
+                                            name="nombre"
                                             label="Nombre"
                                             variant="outlined"
-                                            value={state.name}
-                                            onChange={handleChange("name")}
+                                            value={state.nombre}
+                                            onChange={handleChange("nombre")}
                                             required
                                         />
                                     </FormControl>
-                                    {validation.name && (
+                                    {validation.nombre && (
                                         <FormHelperText
                                             className="helper-text"
                                             style={{ color: "rgb(182, 60, 47)" }}
@@ -201,16 +182,16 @@ const AddEditStudentForm = (props) => {
                                 <motion.li variants={item}>
                                     <FormControl variant="outlined">
                                         <TextField
-                                            id="last_name"
-                                            name="last_name"
+                                            id="apellido"
+                                            name="apellido"
                                             label="Apellido"
                                             variant="outlined"
-                                            value={state.last_name}
-                                            onChange={handleChange("last_name")}
+                                            value={state.apellido}
+                                            onChange={handleChange("apellido")}
                                             required
                                         />
                                     </FormControl>
-                                    {validation.last_name && (
+                                    {validation.apellido && (
                                         <FormHelperText
                                             className="helper-text"
                                             style={{ color: "rgb(182, 60, 47)" }}
@@ -376,7 +357,7 @@ const AddEditStudentForm = (props) => {
                             <Row lg={12} md={12} sm={12} xs={12} className="center" style={{ justifyContent: 'center' }}>
                                 <Col>
                                     {!isLoading ?
-                                        <button className="ontrack_btn_modal ontrack_btn add_btn" type="submit">Guardar</button>
+                                        <button className="ontrack_btn_modal ontrack_btn add_btn" type="submit">Guardar Alumno</button>
                                         :
                                         <button className="ontrack_btn_modal ontrack_btn add_btn" disabled>
                                             <CircularProgress

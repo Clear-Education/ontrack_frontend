@@ -16,7 +16,7 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import BackgroundLoader from "../../commons/background_loader/background_loader";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Modal from "../../commons/modals/modal";
-import { addYearsService, editYearsService, deleteYearsService } from "../../../utils/year/services/year_services";
+import { addYearsService, editYearsService, deleteYearsService, getYearService } from "../../../utils/year/services/year_services";
 import DeleteForm from "../../commons/delete_form/deleteForm";
 import GoBackButton from "../../commons/go_back_button/go_back_button";
 
@@ -24,7 +24,8 @@ import GoBackButton from "../../commons/go_back_button/go_back_button";
 const Year = (props) => {
 
     const url = `${config.api_url}/carrera/${props.data}/anio/list/`;
-    const [selectedData, setSelectedData] = useState()
+    const [selectedData, setSelectedData] = useState();
+    const [yearData, setYearData] = useState();
     const user = useSelector((store) => store.user);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -36,6 +37,16 @@ const Year = (props) => {
     const handleBackStep = () => {
         props.handleNextStep("department");
     }
+
+
+    useSWR(url, () => {
+        setIsLoading(true)
+        return getYearService(user.user.token, props.data).then((result) => {
+            setYearData(result.result);
+            setIsLoading(false)
+        })
+    }
+    );
 
     async function addYear(e, data) {
         e.preventDefault();
@@ -66,34 +77,35 @@ const Year = (props) => {
         })
     }
 
-    let { data } = useSWR(url, () => {
-        setIsLoading(true);
-        return getYears(props.data, user.user.token).then((result) => {
-            setIsLoading(false)
-            if (result.success == true) {
-                return result.result;
-            } else {
-                result.result.forEach((element) => {
-                    Alert.error(element.message, {
-                        effect: "stackslide",
-                    });
-                });
-            }
-        })
-    }
-    );
+
 
     return (
         <>
             <Row lg={12} md={12} sm={12} xs={12}>
                 <Col lg={11} md={11} sm={11} xs={11} style={{ margin: 'auto' }}>
-                    <GoBackButton action={handleBackStep}/>
-                    <TitlePage title="Años" />
+                    <Row>
+                        <Col>
+                            <TitlePage title="Años" />
+                        </Col>
+                        <Col className={styles.add_new_structure}>
+                            <Modal
+                                title="Nuevo Año"
+                                body={<YearForm
+                                    handleSubmitAction={addYear}
+                                    addModal={true} />}
+                                button={
+                                    <button className="ontrack_btn add_btn">
+                                        Nuevo Año
+                                        </button>
+                                }
+                            />
+                        </Col>
+                    </Row>
                     <div className={styles.structure_container}>
                         {isLoading && <BackgroundLoader show={isLoading} />}
                         <Row lg={12} md={12} sm={12} xs={12} style={{ margin: 'auto' }}>
                             <Col lg={12} md={12} sm={12} xs={12} className={styles.structure_items_container}>
-                                {data && !!data.length ? data.map((year, i) => {
+                                {yearData && !!yearData.length ? yearData.map((year, i) => {
                                     return (
                                         <Row lg={12} md={12} sm={12} xs={12} key={i}>
                                             <Col lg={12} md={12} sm={12} xs={12} className={styles.structure_item_container}>
@@ -101,7 +113,7 @@ const Year = (props) => {
 
                                                     <Col lg={9} md={9} sm={9} xs={9} className={styles.detail_container}>
                                                         <div className={styles.color_item} style={{ backgroundColor: year.color }} />
-                                                        <span className={styles.name_item}>{year.nombre.toUpperCase()}</span>
+                                                        <span className={styles.name_item}>{year.nombre && year.nombre.toUpperCase()}</span>
                                                         <span className={styles.action_container}></span>
                                                     </Col>
 
@@ -143,21 +155,9 @@ const Year = (props) => {
                                 }
                             </Col>
 
-                            <Col lg={12} md={12} sm={12} xs={12} id={styles.add_new_structure}>
-                                <Modal
-                                    title="Nuevo Año"
-                                    body={<YearForm
-                                        handleSubmitAction={addYear}
-                                        addModal={true} />}
-                                    button={
-                                        <button className="ontrack_btn add_btn">
-                                            Nuevo Año
-                                        </button>
-                                    }
-                                />
-                            </Col>
                         </Row>
                     </div>
+                    <GoBackButton action={handleBackStep} />
                 </Col>
             </Row>
         </>

@@ -66,7 +66,21 @@ const Calendar = () => {
     <>
       <Row lg={12} md={12} sm={12} xs={12}>
         <Col lg={11} md={11} sm={11} xs={11} style={{ margin: 'auto' }}>
-          <TitlePage title="Año Lectivo" />
+          <Row>
+            <Col>
+              <TitlePage title="Año Lectivo" />
+            </Col>
+            <Col className={styles.add_new_structure}>
+              <Modal
+                title="Nuevo Año Lectivo"
+                body={<SchoolYearForm handleSubmitAction={addSchoolYear} />}
+                button={
+                  <button className="ontrack_btn add_btn">Nuevo Año Lectivo</button>
+                }
+              />
+            </Col>
+          </Row>
+
           <div className={styles.structure_container}>
             {isLoading && <BackgroundLoader show={isLoading} />}
             <Row lg={12} md={12} sm={12} xs={12} style={{ margin: 'auto' }}>
@@ -116,17 +130,6 @@ const Calendar = () => {
                 }
               </Col>
 
-              <Col lg={12} md={12} sm={12} xs={12} id={styles.add_new_structure}>
-                <Modal
-                  title="Nuevo Año Lectivo"
-                  body={<SchoolYearForm handleSubmitAction={addSchoolYear} />}
-                  button={
-                    <button className="ontrack_btn add_btn">
-                      Nuevo Año Lectivo
-                                        </button>
-                  }
-                />
-              </Col>
             </Row>
           </div>
         </Col>
