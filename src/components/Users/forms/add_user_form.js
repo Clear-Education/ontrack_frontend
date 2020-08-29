@@ -185,7 +185,7 @@ const AddUserForm = (props) => {
                                             variant="outlined"
                                             value={state.last_name}
                                             onChange={handleChange("last_name")}
-
+                                            required
                                         />
                                     </FormControl>
                                     {validation.last_name && (
@@ -210,7 +210,7 @@ const AddUserForm = (props) => {
                                             value={state.dni}
                                             onChange={handleChange("dni")}
                                             type="number"
-
+                                            required
                                         />
                                     </FormControl>
                                     {validation.dni && (
@@ -263,7 +263,7 @@ const AddUserForm = (props) => {
                                             value={state.legajo}
                                             onChange={handleChange("legajo")}
                                             type="number"
-
+                                            required
                                         />
                                     </FormControl>
                                     {validation.legajo && (
@@ -310,7 +310,7 @@ const AddUserForm = (props) => {
                                             variant="outlined"
                                             value={state.cargo}
                                             onChange={handleChange("cargo")}
-
+                                            required
                                         />
                                     </FormControl>
                                     {validation.cargo && (

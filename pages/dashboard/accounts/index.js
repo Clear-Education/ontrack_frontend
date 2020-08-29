@@ -101,20 +101,12 @@ const Accounts = () => {
       label: "DNI",
     },
     {
-      name: "legajo",
-      label: "Legajo",
-    },
-    {
       name: "cargo",
       label: "Cargo",
     },
     {
       name: "email",
       label: "Email",
-    },
-    {
-      name: "is_active",
-      label: "Estado",
     },
     {
       name: "actions",

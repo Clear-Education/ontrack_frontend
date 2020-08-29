@@ -110,9 +110,9 @@ body {
 }
 
 /* TABLE */
-.MuiTable-root{
+/* .MuiTable-root{
   margin-left: 45px;
-}
+} */
 h6.MuiTypography-root {
   text-align: left;
   color: var(--black);
@@ -123,9 +123,7 @@ h6.MuiTypography-root {
   border-radius: 10px;
   padding: 10px;
 }
-.MuiTableCell-root{
-  border-bottom: none !important;
-}
+
 .MuiTableCell-head{
   background-color: var(--light-gray) !important;
 }
