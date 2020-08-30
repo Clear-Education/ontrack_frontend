@@ -32,6 +32,8 @@ const MTConfig = ( _name ) => {
             },
 
             options: {
+                rowsPerPageOptions:[5],
+                rowsPerPage:5,
                 searchFieldStyle: { width: '30%', margin: 'auto', marginRight: '0px' },
                 actionsColumnIndex: -1,
                 downloadOptions: { filename: `${_name}.csv` },

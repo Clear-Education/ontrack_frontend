@@ -7,7 +7,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import Alert from "react-s-alert";
 
 import styles from './styles.module.css'
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ColorPicker from 'material-ui-color-picker'
 import ExamsTable from "../exams/exams_table";
 import useSWR from "swr";
@@ -93,14 +93,13 @@ const SubjectForm = (props) => {
     }
 
 
-    useSWR(school_year_url, () => {
-        setIsLoading(true);
-        return getSchoolYearService(user.user.token).then((result) => {
-            setIsLoading(false)
+
+
+    useEffect(()=>{
+         getSchoolYearService(user.user.token).then((result) => {
             setSchoolYearData(result.result);
         })
-    }
-    );
+    },[])
 
     return (
         <motion.span

@@ -64,7 +64,6 @@ export async function addStudentCrud(token,data){
 }
 
 export async function editStudentCrud(token,data){
-  debugger;
   return await axios
   .patch(`${config.api_url}/alumnos/${data.id}/`,data,{
       headers:{

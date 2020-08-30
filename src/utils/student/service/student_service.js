@@ -58,19 +58,7 @@ export async function getStudentsCourseService(token,course_id,schoolYearId){
 
 
 export async function addStudentService(token,data){
-    const parseStudentData = [{
-        nombre: data.name,
-        apellido: data.last_name,
-        dni: data.dni,
-        email: data.email,
-        legajo: data.legajo,
-        fecha_nacimiento: data.fecha_nacimiento,
-        fecha_inscripcion: data.fecha_inscripcion,
-        direccion: data.direccion,
-        localidad: data.localidad,
-        provincia: data.provincia,
-        instutucion: data.institucion,
-       }]
+    const parseStudentData = [data]
   return await addStudentCrud(token,parseStudentData).then((result)=>{
       if (result.success) {
         Alert.success("Alumno agregado correctamente", {
@@ -108,20 +96,14 @@ export async function addMultipleStudentsCourseService(token,data){
 }
 
 export async function editStudentService(token,data){
-  const parseStudentData ={
-    id: data.id,
-    nombre: data.name,
-    apellido: data.last_name,
-    dni: data.dni,
-    email: data.email,
-    legajo: data.legajo,
-    fecha_nacimiento: data.fecha_nacimiento,
-    fecha_inscripcion: data.fecha_inscripcion,
-    direccion: data.direccion,
-    localidad: data.localidad,
-    provincia: data.provincia,
-    instutucion: data.institucion,
-   }
+  let parseStudentData = {};
+  Object.keys(data).map((key)=>{
+    if(data[key] === null || data[key] === '32/12/1969'){
+      delete data[key]
+    }else{
+      parseStudentData[key] = data[key];
+    }
+  })
   return await editStudentCrud(token,parseStudentData).then((result)=>{
       if (result.success) {
         Alert.success("Alumno editado correctamente", {

@@ -7,7 +7,7 @@ import config from "../../../src/utils/config";
 import BackgroundLoader from "../../../src/components/commons/background_loader/background_loader";
 import { getSeguimientosService, addSeguimientosService } from "../../../src/utils/Seguimientos/services/Seguimientos_services";
 import Modal from "../../../src/components/commons/modals/modal";
-import { IconButton } from "@material-ui/core";
+import { IconButton, Link } from "@material-ui/core";
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import { motion } from "framer-motion";
 import { Row, Col } from "react-bootstrap";
@@ -47,6 +47,8 @@ const Seguimientos = () => {
     }
 
 
+
+
     return (
         <>
             {isLoading && <BackgroundLoader show={isLoading} />}
@@ -55,19 +57,28 @@ const Seguimientos = () => {
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ duration: 0.3 }}
             >
-                <Row lg={12} md={12} sm={12} xs={12} style={{ margin: 0 }}>
-                    <Col lg={12} md={12} sm={12} xs={12} style={{ padding: 0 }}>
-                        <TitlePage title="Seguimientos" />
-                    </Col>
-                </Row>
-                <Row lg={12} md={12} sm={12} xs={12} style={{ margin: '5%' }}>
+                <Row lg={12} md={12} sm={12} xs={12} style={{ margin: '0 5% 0 5%' }}>
+                    <Row lg={12} md={12} sm={12} xs={12} style={{ width: '100%' }}>
+                        <Col lg={6} md={6} sm={6} xs={6}>
+                            <TitlePage title="Seguimientos" />
+                        </Col>
+                        <Col lg={6} md={6} sm={6} xs={6} className={styles.add_btn_container}>
+                            {
+                                user.user.groups === "Pedagogía" ?
+                                <Link href="seguimientos/nuevo">
+                                  <button className="ontrack_btn add_btn">Nuevo Seguimiento</button>
+                                </Link>
+                                    : null
+                            }
+                        </Col>
+                    </Row>
                     <Col
                         md={12}
                         sm={12}
                         xs={12}
+                        style={{ marginTop: 20 }}
                     >
                         <MUIDataTable
-                            title={"Seguimientos"}
                             data={selectedData}
                             options={MTConfig("Seguimientos").options}
                             components={MTConfig().components}
@@ -116,19 +127,6 @@ const Seguimientos = () => {
                             ]}
                         />
                     </Col>
-                    {
-                        user.user.groups === 3 &&
-
-                        <Col className={styles.add_btn_container}>
-                            <Modal
-                                title="Agregar Seguimiento"
-                                body={<button className="ontrack_btn add_btn">Agregar</button>}
-                                button={
-                                    <button className="ontrack_btn add_btn">Nuevo Seguimiento</button>
-                                }
-                            />
-                        </Col>
-                    }
                 </Row>
 
 
