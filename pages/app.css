@@ -169,10 +169,15 @@ button:focus {
   transition: all 0.2s;
   border: none;
   font-weight: 600;
+  opacity: 0.9;
 }
 
 .ontrack_btn:active {
   transform: scale(0.97);
+}
+
+.ontrack_btn:hover{
+  opacity: 1;
 }
 
 .add_btn {

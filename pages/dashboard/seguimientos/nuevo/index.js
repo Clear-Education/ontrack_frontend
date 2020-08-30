@@ -8,6 +8,7 @@ import StepConnector from '@material-ui/core/StepConnector';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import styles from './index.module.scss';
+import Alert from "react-s-alert";
 
 //ICONS
 import EventIcon from '@material-ui/icons/Event';
@@ -19,6 +20,12 @@ import DescriptionIcon from '@material-ui/icons/Description';
 import { Row, Col } from 'react-bootstrap';
 import TitlePage from '../../../../src/components/commons/title_page/title_page';
 import FirstStepInfo from '../../../../src/components/tracking/1_step_info/first_step_info';
+import { useDispatch, useSelector } from 'react-redux';
+
+//REDUX TYPES
+import * as types from "../../../../redux/types";
+import SecondStepStudents from '../../../../src/components/tracking/2_step_students/second_step_students';
+
 
 const ColorlibConnector = withStyles({
     alternativeLabel: {
@@ -84,7 +91,7 @@ function getStepContent(step) {
         case 0:
             return 'Proporcione la información del seguimiento'
         case 1:
-            return 'Seleccione de alumnos para el seguimiento';
+            return 'Seleccione los alumnos que desea agregar al seguimiento';
         case 2:
             return 'Seleccione integrantes del seguimiento';
         case 3:
@@ -101,16 +108,56 @@ function getStepContent(step) {
 const CreateTracking = () => {
     const [activeStep, setActiveStep] = useState();
     const steps = getSteps();
+    const trackingData = useSelector((store)=>store.tracking);
+    const [globalTrackingData, setGlobalTrackingData] = useState(trackingData);
+    const dispatch = useDispatch();
 
-    useEffect(() => {
-        setActiveStep(0);
+    useEffect(() => { 
+       /*  dispatch({type:types.RESET_TRACKING_DATA}); */
+        setGlobalTrackingData(trackingData)
+        setActiveStep(trackingData.current_step ? trackingData.current_step : 0 );
     }, [])
 
+    const handleGlobalState = (name, value) => {
+        setGlobalTrackingData({ ...globalTrackingData, [name]: value })
+    }
+
+    const handleValidateData = () => {
+        switch (activeStep) {
+            case 0:
+                return globalTrackingData.nombre !== '' && globalTrackingData.descripcion !== ''
+            case 1:
+                return !!globalTrackingData.alumnos.length
+            case 2:
+                return true
+            case 3:
+                return true
+            case 4:
+                return true
+            case 5:
+                return true
+            default:
+                return true
+        }
+    }
+
     const handleNext = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        const validateData = handleValidateData();
+        if (validateData) {
+            const trackingData = {...globalTrackingData,['current_step']:activeStep + 1}
+            dispatch({ type: types.SAVE_TRACKING_DATA, payload: trackingData })
+            setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        } else {
+            Alert.error("Recuerda completar los campos requeridos", {
+                effect: "stackslide",
+            });
+        }
+
     };
 
     const handleBack = () => {
+        const trackingData = {...globalTrackingData,['current_step']:activeStep - 1}
+        dispatch({ type: types.SAVE_TRACKING_DATA, payload: trackingData })
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
@@ -146,7 +193,14 @@ const CreateTracking = () => {
                                     <Col lg={12} md={12} sm={12} xs={12}>
                                         {
                                             activeStep === 0 ?
-                                                <FirstStepInfo />
+                                                <FirstStepInfo
+                                                    handleGlobalState={handleGlobalState}
+                                                />
+                                                : 
+                                            activeStep === 1 ? 
+                                                <SecondStepStudents
+                                                handleGlobalState={handleGlobalState}
+                                                />
                                                 : null
                                         }
                                     </Col>

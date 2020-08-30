@@ -25,7 +25,7 @@ const INITIAL_STATE = {
 }
 
 const Cursos = () => {
-
+ 
     const [state, setState] = useState(INITIAL_STATE);
     const [selectedStudentTable, setSelectedStudentTable] = useState("add");
     const user = useSelector((store) => store.user);
@@ -202,89 +202,3 @@ const Cursos = () => {
 
 
 export default Cursos;
-
-
-/*
-
-
-
-        let { data } = useSWR(url, () => {
-            setIsLoading(true);
-            return getcursosService(user.user.token).then((result) => {
-                setIsLoading(false)
-                return result.result
-            })
-        }
-        );
-
-
-
-    async function addcursos(e, data) {
-        e.preventDefault();
-        setIsLoading(true);
-        return await addcursosService(user.user.token, data).then((result) => {
-            setIsLoading(false);
-            mutate(url);
-            return result;
-        })
-    }
-
-    async function editcursos(e, data) {
-        e.preventDefault();
-        setIsLoading(true);
-        return await editcursosService(user.user.token, data).then((result) => {
-            setIsLoading(false);
-            mutate(url);
-            return result;
-        })
-    }
-
-    async function deletecursos(e, data) {
-        e.preventDefault();
-        setIsLoading(true);
-        return await deletecursosService(user.user.token, data).then((result) => {
-            setIsLoading(false);
-            mutate(url);
-            return result;
-        })
-    }
-
-
-
-return (
-    <>
-    {isLoading && <BackgroundLoader show={isLoading} />}
-         <TitlePage title="cursos" />
-
-
-            <Modal
-            title="Agregar cursos"
-            body={ <AddIcon handleSubmitAction={addcursos}/>}
-            button={
-                <IconButton>
-                    <AddIcon />
-                </IconButton>
-            }
-            />
-
-            <Modal
-                title="Editar cursos"
-                body={ <EditIcon handleSubmitAction={editcursos}/>}
-                button={
-                    <IconButton onClick={() => setSelectedData()} >
-                        <EditIcon />
-                    </IconButton>
-                }
-            />
-
-            <Modal
-            title="¿Seguro que deseas eliminar?"
-            body={ <Delete handleSubmitAction={deletecursos}/>}
-            button={
-                <IconButton onClick={() => setSelectedData()} >
-                    <Delete />
-                </IconButton>
-            }
-            />
-    </>
-) */
