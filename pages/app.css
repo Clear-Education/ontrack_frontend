@@ -42,7 +42,7 @@ body {
 
 .responsive_modal .MuiDialog-paperFullScreen {
   max-height: 95vh !important;
-  min-height: 750px;
+  min-height: 80vh;
   border-radius: 10px 10px 0 0 !important;
   background-color: #f1f1f1;
 }
