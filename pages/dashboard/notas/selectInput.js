@@ -86,8 +86,14 @@ const SelectInput = ({ type, data, changeAction }) => {
     useEffect(() => {
         if (state.subject !== '' && type === 'exam') {
             getExamsService(user.user.token, state.subject).then((result) => {
-                console.log(result.result);
-                setExamData(result.result);
+                let examList = []
+                result.result.forEach((element) => {
+                    if (element.anio_lectivo == state.school_year) {
+                        examList.push(element);
+                    }
+                })
+
+                setExamData(examList);
             })
         }
     }, [state.subject])
@@ -131,9 +137,9 @@ const SelectInput = ({ type, data, changeAction }) => {
                             <MenuItem value="">
                                 <em>Seleccionar</em>
                             </MenuItem>
-                            {schoolYearData && schoolYearData.map((department) => {
+                            {schoolYearData && schoolYearData.map((school_year) => {
                                 return (
-                                    <MenuItem value={department.id} key={department.id}>{department.nombre}</MenuItem>
+                                    <MenuItem value={school_year.id} key={school_year.id}>{school_year.nombre}</MenuItem>
                                 )
                             })}
                         </Select>

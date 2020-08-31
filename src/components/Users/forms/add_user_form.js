@@ -13,6 +13,7 @@ import config from "../../../utils/config";
 import useSWR from "swr";
 import Alert from "react-s-alert";
 import { getGroupsService } from "../../../utils/user/service/user_services";
+import CountrySelector from "../../commons/country_selector/country_selector";
 
 const list = {
     visible: {
@@ -60,6 +61,8 @@ const AddUserForm = (props) => {
     const [date, setDate] = useState(null);
     const user = useSelector((store) => store.user);
 
+    console.log(state);
+
 
     useSWR(url, () =>
         getGroupsService(user.user.token).then((result) => {
@@ -99,6 +102,10 @@ const AddUserForm = (props) => {
 
         setState({ ...state, [prop]: event.target.value });
     };
+
+    const handleChangeCountryRegion = (prop, value) => {
+        setState({ ...state, [prop]: value })
+    }
 
     const convertDate = (inputFormat) => {
         function pad(s) {
@@ -376,7 +383,7 @@ const AddUserForm = (props) => {
                         </Row>
 
                         <Row lg={12} md={12} sm={12} xs={12} className={styles.row_input_container}>
-                            <Col lg={6} md={6} sm={12} xs={12} className={fullscreen && styles.input_container}>
+                            <Col lg={4} md={4} sm={12} xs={12} className={fullscreen && styles.input_container}>
                                 <motion.li variants={item}>
                                     <FormControl variant="outlined">
                                         <InputLabel id="groups">Tipo de Cuenta</InputLabel>
@@ -403,7 +410,7 @@ const AddUserForm = (props) => {
                                 </motion.li>
                             </Col>
 
-                            <Col lg={6} md={6} sm={12} xs={12} className={fullscreen && styles.input_container}>
+                            <Col lg={4} md={4} sm={12} xs={12} className={fullscreen && styles.input_container}>
                                 <motion.li variants={item}>
                                     <FormControl variant="outlined">
                                         <TextField
@@ -427,16 +434,13 @@ const AddUserForm = (props) => {
                                     )}
                                 </motion.li>
                             </Col>
-                        </Row>
-
-                        <Row lg={12} md={12} sm={12} xs={12} className={styles.row_input_container}>
                             <Col lg={4} md={4} sm={12} xs={12} className={fullscreen && styles.input_container}>
                                 <motion.li variants={item}>
                                     <FormControl variant="outlined">
                                         <TextField
                                             id="direccion"
                                             name="direccion"
-                                            label="Direccion"
+                                            label="Dirección, Localidad, Calle, Número"
                                             variant="outlined"
                                             value={state.direccion}
                                             onChange={handleChange("direccion")}
@@ -453,6 +457,13 @@ const AddUserForm = (props) => {
                                     )}
                                 </motion.li>
                             </Col>
+                        </Row>
+
+                        <div style={{ margin: 15 }}>
+                            <CountrySelector setState={handleChangeCountryRegion} />
+                        </div>
+
+                        {/*                         <Row lg={12} md={12} sm={12} xs={12} className={styles.row_input_container}>
 
                             <Col lg={4} md={4} sm={12} xs={12} className={fullscreen && styles.input_container}>
                                 <motion.li variants={item}>
@@ -481,7 +492,7 @@ const AddUserForm = (props) => {
                             <Col lg={4} md={4} sm={12} xs={12} className={fullscreen && styles.input_container}>
                                 <motion.li variants={item}>
                                     <FormControl variant="outlined">
-                                    <TextField
+                                        <TextField
                                             id="localidad"
                                             name="localidad"
                                             label="Localidad"
@@ -501,7 +512,7 @@ const AddUserForm = (props) => {
                                     )}
                                 </motion.li>
                             </Col>
-                        </Row>
+                        </Row> */}
 
                         <motion.li variants={item}>
                             <Row lg={12} md={12} sm={12} xs={12} className="center" style={{ justifyContent: 'center' }}>
