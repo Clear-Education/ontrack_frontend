@@ -2,7 +2,7 @@ import TitlePage from "../../commons/title_page/title_page";
 import { Row, Col } from "react-bootstrap";
 import styles from './subject.module.css'
 import { useSelector } from "react-redux";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import useSWR, { mutate } from "swr";
 import config from "../../../utils/config";
 import { IconButton } from "@material-ui/core";
@@ -19,24 +19,22 @@ import GoBackButton from "../../commons/go_back_button/go_back_button";
 const Subject = (props) => {
 
     const url = `${config.api_url}/anio/${props.data}/materia/list/`
-    const [selectedData, setSelectedData] = useState()
+    const [selectedData, setSelectedData] = useState();
+    const [subjectData, setSubjectData] = useState();
     const user = useSelector((store) => store.user);
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
 
 
     const handleBackStep = () => {
         props.handleNextStep("year");
     }
 
-    let { data } = useSWR(url, () => {
-        setIsLoading(true);
-        return getSubjectsService(user.user.token, props.data).then((result) => {
+    useSWR(url, () => {
+        getSubjectsService(user.user.token, props.data).then((result) => {
             setIsLoading(false)
-            return result.result
+            setSubjectData(result.result)
         })
-    }
-    );
-
+    })
 
 
     async function addSubject(e, data) {
@@ -75,18 +73,32 @@ const Subject = (props) => {
         <>
             <Row lg={12} md={12} sm={12} xs={12}>
                 <Col lg={11} md={11} sm={11} xs={11} style={{ margin: 'auto' }}>
-                    <GoBackButton action={handleBackStep}/>
-                    <TitlePage title="Materias" />
+                    <Row>
+                        <Col>
+                            <TitlePage title="Materias" />
+                        </Col>
+                        <Col className={styles.add_new_structure}>
+                            <Modal
+                                title="Nueva Materia"
+                                body={<SubjectForm handleSubmitAction={addSubject} />}
+                                button={
+                                    <button className="ontrack_btn add_btn">
+                                        Nueva Materia
+                                        </button>
+                                }
+                            />
+                        </Col>
+                    </Row>
                     <div className={styles.structure_container}>
                         {isLoading && <BackgroundLoader show={isLoading} />}
                         <Row lg={12} md={12} sm={12} xs={12} style={{ margin: 'auto' }}>
                             <Col lg={12} md={12} sm={12} xs={12} className={styles.structure_items_container}>
-                                {data && !!data.length ? data.map((subject, i) => {
+                                {subjectData && !!subjectData.length ? subjectData.map((subject, i) => {
                                     return (
                                         <Row lg={12} md={12} sm={12} xs={12} key={i}>
                                             <Col lg={12} md={12} sm={12} xs={12} className={styles.structure_item_container}>
                                                 <Row lg={12} md={12} sm={12} xs={12} style={{ width: '100%' }} >
- 
+
                                                     <Col lg={9} md={9} sm={9} xs={9} className={styles.detail_container}>
                                                         <div className={styles.color_item} style={{ backgroundColor: subject.color }} />
                                                         <span className={styles.name_item}>{subject.nombre.toUpperCase()}</span>
@@ -105,7 +117,7 @@ const Subject = (props) => {
                                                         />
                                                         <Modal
                                                             title="Editar Materia"
-                                                            body={<SubjectForm data={selectedData} handleSubmitAction={editSubject} showTable={true}/>}
+                                                            body={<SubjectForm data={selectedData} handleSubmitAction={editSubject} showTable={true} />}
                                                             button={
                                                                 <IconButton onClick={() => setSelectedData(subject)} >
                                                                     <EditIcon />
@@ -124,19 +136,9 @@ const Subject = (props) => {
                                 }
                             </Col>
 
-                            <Col lg={12} md={12} sm={12} xs={12} id={styles.add_new_structure}>
-                                <Modal
-                                    title="Nueva Materia"
-                                    body={<SubjectForm handleSubmitAction={addSubject} />}
-                                    button={
-                                        <button className="ontrack_btn add_btn">
-                                            Nueva Materia
-                                        </button>
-                                    }
-                                />
-                            </Col>
                         </Row>
                     </div>
+                    <GoBackButton action={handleBackStep} />
                 </Col>
             </Row>
 

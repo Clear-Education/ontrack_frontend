@@ -22,6 +22,25 @@ export async function getSchoolYearCrud(token) {
     });
 }
 
+export async function getOneSchoolYearCrud(token, id_anio_lectivo) {
+  return await axios
+    .get(`${config.api_url}/anio_lectivo/${id_anio_lectivo}/`, {
+      headers: {
+        Authorization: `Token ${token}`
+      }
+    })
+    .then((json) => {
+      let response = {
+        success: true,
+        result: json.data,
+      };
+      return response;
+    })
+    .catch((error) => {
+      return errorHandler(error);
+    });
+}
+
 export async function addSchoolYearCrud(token, data) {
   return await axios
     .post(`${config.api_url}/anio_lectivo/`, data, {

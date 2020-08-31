@@ -149,7 +149,7 @@ const ExamsTable = (props) => {
                 </Col>
                 </>
         :
-                <h3 style={{ color: 'rgb(154 154 154)' }}>Para configurar los exámenes seleccione un año lectivo</h3>
+                <h4 style={{ color: 'rgb(154 154 154)' }}>Seleccione un año lectivo para configurar los exámenes</h4>
             }
         </>
 

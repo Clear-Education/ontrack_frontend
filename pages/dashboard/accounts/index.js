@@ -52,7 +52,6 @@ const Accounts = () => {
   }
 
   const handleEditUserModal = (value, data) => {
-    setEditUserModal(value);
     setSelectedUser(data);
 
   }
@@ -101,20 +100,12 @@ const Accounts = () => {
       label: "DNI",
     },
     {
-      name: "legajo",
-      label: "Legajo",
-    },
-    {
       name: "cargo",
       label: "Cargo",
     },
     {
       name: "email",
       label: "Email",
-    },
-    {
-      name: "is_active",
-      label: "Estado",
     },
     {
       name: "actions",
@@ -169,13 +160,32 @@ const Accounts = () => {
   return (
     <>
       {isLoading && <BackgroundLoader show={isLoading} />}
+
       <motion.div
         initial={{ scale: 0.95, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 0.3 }}
       >
         <Row lg={12} md={12} sm={12} xs={12} style={{ margin: '0 5% 0 5%' }}>
-          <TitlePage title="Cuentas de Usuario"></TitlePage>
+          <Row lg={12} md={12} sm={12} xs={12} style={{ width: '100%' }}>
+            <Col lg={6} md={6} sm={6} xs={6}>
+              <TitlePage title="Cuentas de Usuario"></TitlePage>
+            </Col>
+            <Col lg={6} md={6} sm={6} xs={6} className={styles.add_btn_container}
+              style={{
+                justifyContent: 'flex-end',
+                display: 'flex',
+                alignItems: 'flex-end'
+              }}>
+              <Modal
+                title="Agregar Cuenta"
+                body={<AddUserForm handleSubmitNewUser={handleSubmitNewUser} />}
+                button={
+                  <button className="ontrack_btn add_btn">Nueva Cuenta</button>
+                }
+              />
+            </Col>
+          </Row>
           <Col
             md={12}
             sm={12}
@@ -184,7 +194,7 @@ const Accounts = () => {
           >
             <MUIDataTable
               title={"Lista de Usuarios"}
-              data={allData?.map(user => {
+              data={allData && allData.map(user => {
                 const estado = user.is_active ? "Activo" : "Suspendido";
                 return [
                   user.id,
@@ -200,16 +210,6 @@ const Accounts = () => {
               columns={columns}
               options={options}
             />
-          </Col>
-          <Col className={styles.add_button_container}>
-            <Modal
-              title="Agregar Cuenta"
-              body={<AddUserForm handleSubmitNewUser={handleSubmitNewUser} />}
-              button={
-                <button className="ontrack_btn add_btn">Nueva Cuenta</button>
-              }
-            />
-
           </Col>
         </Row>
 

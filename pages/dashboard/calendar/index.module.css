@@ -1,5 +1,5 @@
 .structure_container{
-    height: 600px;
+    height: 500px;
     background-color:var(--light-gray);
     border-radius: 10px;
     margin: auto;
@@ -14,10 +14,11 @@
     display: block;
 }
 
-#add_new_structure{
-    position: absolute;
-    bottom: 10px;
-}
+.add_new_structure {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+  }
 
 .structure_item_container{
     padding: 20px;

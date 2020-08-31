@@ -1,78 +1,77 @@
-.structure_container{
-    height: 600px;
-    background-color:var(--light-gray);
-    border-radius: 10px;
-    margin: auto;
-    position: relative;
-    margin-top: 20px;
+.structure_container {
+  height: 500px;
+  background-color: var(--light-gray);
+  border-radius: 10px;
+  margin: auto;
+  position: relative;
+  margin-top: 20px;
 }
 
-.no_data_msg{
-    padding: 10px;
-    font-weight: 700;
-    margin-top: 10px;
-    display: block;
+.no_data_msg {
+  padding: 10px;
+  font-weight: 700;
+  margin-top: 10px;
+  display: block;
+}
+.add_new_structure {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+.structure_item_container {
+  padding: 20px;
+  text-align: left;
+  font-weight: 700;
+  color: black;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: all 0.2s;
+}
+.structure_items_container {
+  height: 500px;
+  overflow: auto;
 }
 
-#add_new_structure{
-    position: absolute;
-    bottom: 10px;
+.structure_item_container:hover {
+  transform: scale(1.007);
 }
 
-.structure_item_container{
-    padding: 20px;
-    text-align: left;
-    font-weight: 700;
-    color: black;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    margin-top: 10px;
-    transition: all .2s;
-}
-.structure_items_container{
-    height: 500px;
-    overflow: auto;
+.color_item {
+  width: 20px;
+  display: inline-block;
+  height: 40px;
+  border-radius: 5px;
 }
 
-.structure_item_container:hover{
-transform: scale(1.007);
+.name_item {
+  margin-left: 10px;
 }
 
-.color_item{
-    width: 20px;
-    display: inline-block;
-    height: 40px;
-    border-radius: 5px;
+.icon_edit_item {
+  position: absolute;
+  right: 70px;
 }
 
-.name_item{
-    margin-left: 10px;
+.icon_delete_item {
+  position: absolute;
+  right: 150px;
 }
 
-.icon_edit_item{
-    position: absolute;
-    right: 70px;
+.icon_arrow_item {
+  position: absolute;
+  right: 5px;
 }
 
-.icon_delete_item{
-    position: absolute;
-    right: 150px;
+.actions_container {
+  background-color: rgb(212, 212, 212);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 }
-
-.icon_arrow_item{
-    position: absolute;
-    right: 5px; 
-}
-
-.actions_container{
-    background-color: rgb(212, 212, 212);
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-}
-.detail_container{
-    display: flex;
-    align-items: center;
+.detail_container {
+  display: flex;
+  align-items: center;
 }
