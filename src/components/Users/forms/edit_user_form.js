@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 import config from "../../../utils/config";
 import useSWR from "swr";
 import { getGroupsService } from "../../../utils/user/service/user_services";
+import CountrySelector from "../../commons/country_selector/country_selector";
 
 const list = {
     visible: {
@@ -84,6 +85,10 @@ const EditUserForm = (props) => {
             setState({ ...state, [prop]: JSON.parse(event.target.value) });
         }
     };
+
+    const handleChangeCountryRegion = (prop, value) => {
+        setState({ ...state, [prop]: value })
+    }
 
     const convertDate = (inputFormat) => {
         function pad(s) {
@@ -277,7 +282,7 @@ const EditUserForm = (props) => {
                         </Row>
 
                         <Row lg={12} md={12} sm={12} xs={12} className={styles.row_input_container}>
-                            <Col lg={6} md={6} sm={12} xs={12} className={fullscreen && styles.input_container}>
+                            <Col lg={4} md={4} sm={12} xs={12} className={fullscreen && styles.input_container}>
                                 <motion.li variants={item}>
                                     <FormControl variant="outlined">
                                         <TextField
@@ -293,7 +298,24 @@ const EditUserForm = (props) => {
                                     </FormControl>
                                 </motion.li>
                             </Col>
-                            <Col lg={6} md={6} sm={12} xs={12} className={fullscreen && styles.input_container}>
+                            <Col lg={4} md={4} sm={12} xs={12} className={fullscreen && styles.input_container}>
+                                <motion.li variants={item}>
+                                    <FormControl variant="outlined">
+                                        <TextField
+                                            id="phone"
+                                            name="phone"
+                                            label="Telefono"
+                                            variant="outlined"
+                                            value={state.phone}
+                                            onChange={handleChange("phone")}
+                                            type="number"
+
+                                            disabled={initialStateUserAccount == false ? true : false}
+                                        />
+                                    </FormControl>
+                                </motion.li>
+                            </Col>
+                            <Col lg={4} md={4} sm={12} xs={12} className={fullscreen && styles.input_container}>
                                 <motion.li variants={item}>
                                     <FormControl variant="outlined">
                                         <InputLabel id="groups">Tipo de Cuenta</InputLabel>
@@ -325,13 +347,12 @@ const EditUserForm = (props) => {
                                 <motion.li variants={item}>
                                     <FormControl variant="outlined">
                                         <TextField
-                                            id="phone"
-                                            name="phone"
-                                            label="Telefono"
+                                            id="direccion"
+                                            name="direccion"
+                                            label="Direccion"
                                             variant="outlined"
-                                            value={state.phone}
-                                            onChange={handleChange("phone")}
-                                            type="number"
+                                            value={state.direccion}
+                                            onChange={handleChange("direccion")}
 
                                             disabled={initialStateUserAccount == false ? true : false}
                                         />
@@ -365,58 +386,9 @@ const EditUserForm = (props) => {
                             </Col>
                         </Row>
 
-                        <Row lg={12} md={12} sm={12} xs={12} className={styles.row_input_container}>
-                            <Col lg={4} md={4} sm={12} xs={12} className={fullscreen && styles.input_container}>
-                                <motion.li variants={item}>
-                                    <FormControl variant="outlined">
-                                        <TextField
-                                            id="direccion"
-                                            name="direccion"
-                                            label="Direccion"
-                                            variant="outlined"
-                                            value={state.direccion}
-                                            onChange={handleChange("direccion")}
-
-                                            disabled={initialStateUserAccount == false ? true : false}
-                                        />
-                                    </FormControl>
-                                </motion.li>
-                            </Col>
-
-                            <Col lg={4} md={4} sm={12} xs={12} className={fullscreen && styles.input_container}>
-                                <motion.li variants={item}>
-                                    <FormControl variant="outlined">
-                                        <TextField
-                                            id="localidad"
-                                            name="localidad"
-                                            label="Localidad"
-                                            variant="outlined"
-                                            value={state.localidad}
-                                            onChange={handleChange("localidad")}
-
-                                            disabled={initialStateUserAccount == false ? true : false}
-                                        />
-                                    </FormControl>
-                                </motion.li>
-                            </Col>
-
-                            <Col lg={4} md={4} sm={12} xs={12} className={fullscreen && styles.input_container}>
-                                <motion.li variants={item}>
-                                    <FormControl variant="outlined">
-                                        <TextField
-                                            id="provincia"
-                                            name="provincia"
-                                            label="Provincia"
-                                            variant="outlined"
-                                            value={state.provincia}
-                                            onChange={handleChange("provincia")}
-
-                                            disabled={initialStateUserAccount == false ? true : false}
-                                        />
-                                    </FormControl>
-                                </motion.li>
-                            </Col>
-                        </Row>
+                        <div style={{ margin: 15 }}>
+                            <CountrySelector setState={handleChangeCountryRegion} />
+                        </div>
 
                         <motion.li variants={item}>
                             <Row lg={12} md={12} sm={12} xs={12} className="center" style={{ justifyContent: 'center' }}>

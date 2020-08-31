@@ -52,7 +52,6 @@ const Accounts = () => {
   }
 
   const handleEditUserModal = (value, data) => {
-    setEditUserModal(value);
     setSelectedUser(data);
 
   }
@@ -161,7 +160,6 @@ const Accounts = () => {
   return (
     <>
       {isLoading && <BackgroundLoader show={isLoading} />}
-
 
       <motion.div
         initial={{ scale: 0.95, opacity: 0 }}
