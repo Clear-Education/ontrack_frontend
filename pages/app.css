@@ -52,7 +52,9 @@ body {
 .MuiInputLabel-animated{
   color: var(--gray) !important;
 }
-
+.MuiOutlinedInput-input{
+  padding: 10.5px 14px !important;
+}
 .MuiInputLabel-outlined.MuiInputLabel-shrink {
   background-color: #f1f1f1;
   color: var(--gray);

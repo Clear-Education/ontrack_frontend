@@ -24,7 +24,12 @@ import { useDispatch, useSelector } from 'react-redux';
 
 //REDUX TYPES
 import * as types from "../../../../redux/types";
-import SecondStepStudents from '../../../../src/components/tracking/2_step_students/second_step_students';
+import ThirdStepStudents from '../../../../src/components/tracking/3_step_students/third_step_students';
+import FourthStepSubjects from '../../../../src/components/tracking/4_step_subjects/fourth_step_subjects';
+import SecondStepDepYearCourse from '../../../../src/components/tracking/2_step_department_year_course/second_step_dep_year_course';
+import FifthStepParticipants from '../../../../src/components/tracking/5_step_participants/fifth_step_participants';
+import SixthStepDates from '../../../../src/components/tracking/6_step_dates/sixth_step_dates';
+import SeventhStepGoals from '../../../../src/components/tracking/7_step_goals/seventh_step_goals';
 
 
 const ColorlibConnector = withStyles({
@@ -58,10 +63,11 @@ function ColorlibStepIcon(props) {
     const icons = {
         1: <DescriptionIcon />,
         2: <GroupIcon />,
-        3: <MenuBookIcon />,
-        4: <GroupAddIcon />,
-        5: <EventIcon />,
-        6: <FlagIcon />,
+        3: <GroupIcon />,
+        4: <MenuBookIcon />,
+        5: <GroupAddIcon />,
+        6: <EventIcon />,
+        7: <FlagIcon />,
     };
 
     return (
@@ -78,6 +84,7 @@ function ColorlibStepIcon(props) {
 function getSteps() {
     return [
         'Información del seguimiento',
+        'Selección de carrera, año y curso',
         'Selección de alumnos',
         'Selección de materias',
         'Selección de integrantes',
@@ -91,14 +98,16 @@ function getStepContent(step) {
         case 0:
             return 'Proporcione la información del seguimiento'
         case 1:
-            return 'Seleccione los alumnos que desea agregar al seguimiento';
+            return 'Proporcione la información del seguimiento'
         case 2:
-            return 'Seleccione integrantes del seguimiento';
+            return 'Seleccione los alumnos que desea agregar al seguimiento';
         case 3:
             return 'Seleccione las materias deseadas';
         case 4:
-            return 'Seleccione fechas del seguimiento';
+            return 'Seleccione integrantes del seguimiento';
         case 5:
+            return 'Seleccione fechas del seguimiento';
+        case 6:
             return 'Defina métricas y objetivos';
         default:
             return 'Unknown step';
@@ -108,14 +117,14 @@ function getStepContent(step) {
 const CreateTracking = () => {
     const [activeStep, setActiveStep] = useState();
     const steps = getSteps();
-    const trackingData = useSelector((store)=>store.tracking);
+    const trackingData = useSelector((store) => store.tracking);
     const [globalTrackingData, setGlobalTrackingData] = useState(trackingData);
     const dispatch = useDispatch();
 
-    useEffect(() => { 
-       /*  dispatch({type:types.RESET_TRACKING_DATA}); */
+    useEffect(() => {
+        /* dispatch({type:types.RESET_TRACKING_DATA});  */
         setGlobalTrackingData(trackingData)
-        setActiveStep(trackingData.current_step ? trackingData.current_step : 0 );
+        setActiveStep(trackingData.current_step ? trackingData.current_step : 0);
     }, [])
 
     const handleGlobalState = (name, value) => {
@@ -127,14 +136,16 @@ const CreateTracking = () => {
             case 0:
                 return globalTrackingData.nombre !== '' && globalTrackingData.descripcion !== ''
             case 1:
-                return !!globalTrackingData.alumnos.length
+                return globalTrackingData.curso;
             case 2:
-                return true
+                return !!globalTrackingData.alumnos.length
             case 3:
-                return true
+                return !!globalTrackingData.materias.length
             case 4:
-                return true
+                return !!globalTrackingData.integrantes.length
             case 5:
+                return globalTrackingData.fecha_desde !== '' && globalTrackingData.fecha_hasta !== ''
+            case 6:
                 return true
             default:
                 return true
@@ -144,8 +155,8 @@ const CreateTracking = () => {
     const handleNext = () => {
         const validateData = handleValidateData();
         if (validateData) {
-            const trackingData = {...globalTrackingData,['current_step']:activeStep + 1}
-            dispatch({ type: types.SAVE_TRACKING_DATA, payload: trackingData })
+            const newTrackingData = { ...globalTrackingData, ['current_step']: activeStep + 1 }
+            dispatch({ type: types.SAVE_TRACKING_DATA, payload: newTrackingData })
             setActiveStep((prevActiveStep) => prevActiveStep + 1);
         } else {
             Alert.error("Recuerda completar los campos requeridos", {
@@ -156,7 +167,7 @@ const CreateTracking = () => {
     };
 
     const handleBack = () => {
-        const trackingData = {...globalTrackingData,['current_step']:activeStep - 1}
+        const trackingData = { ...globalTrackingData, ['current_step']: activeStep - 1 }
         dispatch({ type: types.SAVE_TRACKING_DATA, payload: trackingData })
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
@@ -196,16 +207,41 @@ const CreateTracking = () => {
                                                 <FirstStepInfo
                                                     handleGlobalState={handleGlobalState}
                                                 />
-                                                : 
-                                            activeStep === 1 ? 
-                                                <SecondStepStudents
-                                                handleGlobalState={handleGlobalState}
+                                            :
+                                            activeStep === 1 ?
+                                                <SecondStepDepYearCourse
+                                                    handleGlobalState={handleGlobalState}
+                                                /> 
+                                            :
+                                            activeStep === 2 ?
+                                                <ThirdStepStudents
+                                                    handleGlobalState={handleGlobalState}
+                                                /> 
+                                            :
+                                            activeStep === 3 ?
+                                                <FourthStepSubjects
+                                                    handleGlobalState={handleGlobalState}
                                                 />
-                                                : null
+                                            :
+                                            activeStep === 4 ?
+                                                <FifthStepParticipants
+                                                    handleGlobalState={handleGlobalState}
+                                                /> 
+                                            :
+                                            activeStep === 5 ?
+                                                <SixthStepDates
+                                                    handleGlobalState={handleGlobalState}
+                                                /> 
+                                            :
+                                            activeStep === 6 ?
+                                                <SeventhStepGoals
+                                                    handleGlobalState={handleGlobalState}
+                                                /> 
+                                            : null
                                         }
                                     </Col>
 
-                                    <Col lg={12} md={12} sm={12} xs={12}>
+                                    <Col lg={12} md={12} sm={12} xs={12} style={{ marginBottom: 20 }}>
                                         <Button disabled={activeStep === 0} onClick={handleBack}> Volver </Button>
                                         <button
                                             className={`ontrack_btn ${activeStep !== steps.length - 1 ? 'add_btn' : 'csv_btn'}`}

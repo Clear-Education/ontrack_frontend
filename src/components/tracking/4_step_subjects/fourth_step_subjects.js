@@ -1,10 +1,10 @@
 import { Col, Row } from "react-bootstrap"
 import MUIDataTable from "mui-datatables"
 import { useState, useEffect } from "react";
-import MTConfig from "../../../../src/utils/table_options/MT_config";
-import { getStudentsCourseService } from '../../../../src/utils/student/service/student_service';
+import MTConfig from "../../../utils/table_options/MT_config";
 import { useSelector } from "react-redux";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core";
+import { getSubjectsService } from "../../../utils/subject/services/subject_services";
 
 const theme = createMuiTheme({
     palette: {
@@ -18,63 +18,56 @@ const theme = createMuiTheme({
 
 });
 
-const StudentTable = ({ changeAction, data }) => {
+const FourthStepSubjects = ({ handleGlobalState }) => {
 
-    const [studentData, setStudentData] = useState([]);
-    const [selectedStudents,setSelectedStudents] = useState([])
+    const trackingData = useSelector((store) => store.tracking);
+    const [subjectData, setSubjectData] = useState(trackingData.materias);
+    const [selectedSubjects,setSelectedSubjects] = useState([])
     const user = useSelector((store) => store.user);
     const [isLoading, setIsLoading] = useState(false);
 
 
     useEffect(() => {
         setIsLoading(true);
-        getStudentsCourseService(user.user.token, data.curso, data.school_year).then((result) => {
+        getSubjectsService(user.user.token, trackingData.year).then((result) => {
             setIsLoading(false);
-            let students = [];
-            result.result.results.forEach((element) => {
-                let studentData = {
-                    ...element.alumno,
-                    alumno_curso_id: element.id
-                }
-                students.push(studentData);
-            })
-            setStudentData(students);
+            setSubjectData(result.result)
         })
     }, []);
 
-    const getStudentCourseIds = (students) =>{
-        const filterList = [...studentData];
-        let students_course_id = []
-        students.forEach(student => {
-            let student_position = student.dataIndex;
-            let selected_student = filterList.find((s, index) => index === student_position);
-            let student_course_id = selected_student && selected_student.alumno_curso_id;
-            students_course_id.push(student_course_id);
+    const getSubjectIds = (subjects) =>{
+        const filterList = [...subjectData];
+        let subjects_id = [];
+        subjects.forEach(subject => {
+            let subject_position = subject.dataIndex;
+            let selected_subject = filterList.find((s, index) => index === subject_position);
+            let subject_id = selected_subject && selected_subject.id;
+            subjects_id.push(subject_id);
         });
-        return students_course_id;
+        return subjects_id;
     }
 
-    const handleSelectStudents = (students) => {
-        if(!!students.length){
-            const studentCourseList = getStudentCourseIds(students);
-            let selectedStudentsCopy = [...selectedStudents];
-            studentCourseList.map((student_course_id)=>{
-                let indexOf = selectedStudentsCopy.indexOf(student_course_id);
+    const handleSelectSubjects = (subjects) => {
+        if(!!subjects.length){
+            const subjectList = getSubjectIds(subjects);
+            let selectedSubjectsCopy = [...selectedSubjects];
+            subjectList.map((subject_id)=>{
+                let indexOf = selectedSubjectsCopy.indexOf(subject_id);
                 if(indexOf === -1){
-                    selectedStudentsCopy.push(student_course_id);
+                    selectedSubjectsCopy.push(subject_id);
                 }else{
-                    selectedStudentsCopy.splice(indexOf,1);
+                    selectedSubjectsCopy.splice(indexOf,1);
                 }
             })
-            setSelectedStudents(selectedStudentsCopy);
+            setSelectedSubjects(selectedSubjectsCopy);
         }else{
-            setSelectedStudents([]);
+            setSelectedSubjects([]);
         }       
     }
 
     useEffect(()=>{
-        changeAction('alumnos',selectedStudents);
-    },[selectedStudents]);
+        handleGlobalState('materias',selectedSubjects);
+    },[selectedSubjects]);
     
     return (
         <Row style={{ margin: 0, justifyContent: 'center' }}>
@@ -89,15 +82,15 @@ const StudentTable = ({ changeAction, data }) => {
                         "Cargando..." :
                         <MuiThemeProvider theme={theme}>
                             <MUIDataTable
-                                data={studentData}
+                                data={subjectData}
                                 options={
                                     {
                                         searchFieldStyle: { width: '30%', margin: 'auto', marginRight: '0px' },
                                         selection: true,
-                                        onRowSelectionChange: (students) => handleSelectStudents(students),
+                                        onRowSelectionChange: (subjects) => handleSelectSubjects(subjects),
                                         selectToolbarPlacement: 'none',
                                         actionsColumnIndex: -1,
-                                        downloadOptions: { filename: `Alumnos del Curso.csv` },
+                                        downloadOptions: { filename: `Materias.csv` },
                                         viewColumns: false,
                                         sort: true,
                                         filter: true,
@@ -137,18 +130,6 @@ const StudentTable = ({ changeAction, data }) => {
                                         name: "nombre",
                                         label: "Nombre",
                                     },
-                                    {
-                                        name: "apellido",
-                                        label: "Apellido",
-                                    },
-                                    {
-                                        name: "legajo",
-                                        label: "Legajo",
-                                    },
-                                    {
-                                        name: "email",
-                                        label: "Email",
-                                    }
                                 ]}
                             />
                         </MuiThemeProvider>
@@ -160,4 +141,4 @@ const StudentTable = ({ changeAction, data }) => {
     )
 }
 
-export default StudentTable
+export default FourthStepSubjects
