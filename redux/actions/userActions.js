@@ -19,7 +19,7 @@ export const loginAction = (username, password) => {
             {
               effect: "stackslide",
               html: true,
-            } 
+            }
           );
         });
         return false;
@@ -38,12 +38,12 @@ export const logoutAction = (auth_token) => async (dispatch) => {
       });
       return dispatch({ type: types.LOGOUT });
     } else {
-        result.result.forEach((element) => {
-          Alert.error(element.message, {
-            effect: "stackslide",
-          });
+      result.result.forEach((element) => {
+        Alert.error(element.message, {
+          effect: "stackslide",
         });
-        return false;
+      });
+      return false;
     }
   });
 };
@@ -51,3 +51,8 @@ export const logoutAction = (auth_token) => async (dispatch) => {
 export const forcedLogout = () => async (dispatch) => {
   return dispatch({ type: types.LOGOUT });
 };
+
+
+export const updateUser = (data) => async (dispatch) => {
+  return dispatch({ type: types.UPDATE_USER, payload: data })
+}

@@ -95,6 +95,26 @@ export async function editUserCrud(data, auth_token) {
         });
 }
 
+export async function editUserProfile(data, auth_token) {
+    return axios.patch(`${config.api_url}/users/${data.id}/`, data, {
+        headers: {
+            Authorization: `Token ${auth_token}`,
+        },
+    })
+        .then((json) => {
+            let response = {
+                success: true,
+                result: json.data,
+            };
+
+            return response;
+
+        })
+        .catch((error) => {
+            return errorHandler(error);
+        });
+}
+
 export async function editUserStateCrud(data, auth_token) {
     let { is_active } = data;
     let dataEditUser = {

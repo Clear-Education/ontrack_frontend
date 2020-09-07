@@ -17,12 +17,18 @@ export async function login(user, password) {
     .post(`${config.api_url}/users/login/`, formData)
     .then((json) => {
       if (json.status == 200) {
-     const {
+        const {
           name,
           last_name,
           cargo,
           token,
           phone,
+          date_of_birth,
+          dni,
+          picture,
+          direccion,
+          localidad,
+          provincia,
           email,
           legajo,
           institucion,
@@ -34,6 +40,12 @@ export async function login(user, password) {
           cargo,
           token,
           phone,
+          date_of_birth,
+          dni,
+          picture,
+          direccion,
+          localidad,
+          provincia,
           email,
           legajo,
           institucion,
@@ -65,7 +77,7 @@ export async function logout(auth_token) {
       },
     })
     .then((json) => {
-      return { success: true, data: json.data};
+      return { success: true, data: json.data };
     })
     .catch((error) => {
       return errorHandler(error);

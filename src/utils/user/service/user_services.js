@@ -1,4 +1,4 @@
-import { getUsersCrud, addUserCrud, deleteUserCrud, editUserCrud, editUserStateCrud, getGroupsCrud } from "../cruds/user_cruds";
+import { getUsersCrud, addUserCrud, deleteUserCrud, editUserCrud, editUserProfile, editUserStateCrud, getGroupsCrud } from "../cruds/user_cruds";
 import Alert from "react-s-alert";
 
 export async function getUserService(token) {
@@ -20,7 +20,7 @@ export async function addUserService(data, token) {
     return await addUserCrud(data, token).then((result) => {
         if (result.success) {
             Alert.success("Usuario creado correctamente", {
-              effect: "stackslide",
+                effect: "stackslide",
             });
         } else {
             result.result.forEach((element) => {
@@ -37,7 +37,24 @@ export async function editUserService(data, token) {
     return await editUserCrud(data, token).then((result) => {
         if (result.success) {
             Alert.success("Usuario editado correctamente", {
-             effect: "stackslide",
+                effect: "stackslide",
+            });
+        } else {
+            result.result.forEach((element) => {
+                Alert.error(element.message, {
+                    effect: "stackslide",
+                });
+            });
+        }
+        return result;
+    })
+}
+
+export async function editUserProfileService(data, token) {
+    return await editUserProfile(data, token).then((result) => {
+        if (result.success) {
+            Alert.success("Perfil de usuario editado correctamente", {
+                effect: "stackslide",
             });
         } else {
             result.result.forEach((element) => {
@@ -54,7 +71,7 @@ export async function editUserStateService(data, token) {
     return await editUserStateCrud(data, token).then((result) => {
         if (result.success) {
             Alert.success("Estado del usuario editado correctamente", {
-               effect: "stackslide",
+                effect: "stackslide",
             });
         } else {
             result.result.forEach((element) => {

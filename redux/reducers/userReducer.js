@@ -11,7 +11,7 @@ initialState = {
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case types.LOGIN:
-      return { 
+      return {
         ...state,
         user: action.payload,
         isLoggedIn: true,
@@ -26,15 +26,7 @@ const userReducer = (state = initialState, action) => {
     case types.UPDATE_USER:
       return {
         ...state,
-        user: {
-          name: action.payload.name,
-          surname: action.payload.surname,
-          id: action.payload.id,
-          role: action.payload.role,
-          auth_token: state.user.auth_token,
-          cellphone: action.payload.cellphone,
-          email: action.payload.email,
-        },
+        user: action.payload,
         isLoggedIn: true,
         isLoading: false,
       };
