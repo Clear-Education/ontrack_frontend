@@ -36,7 +36,8 @@ export const logoutAction = (auth_token) => async (dispatch) => {
       Alert.success("¡Sesión finalizada correctamente!", {
         effect: "stackslide",
       });
-      return dispatch({ type: types.LOGOUT });
+      dispatch({ type: types.LOGOUT });
+      return result
     } else {
         result.result.forEach((element) => {
           Alert.error(element.message, {

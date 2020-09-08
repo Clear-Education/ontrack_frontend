@@ -58,12 +58,17 @@ const SubjectForm = (props) => {
     const [isLoading, setIsLoading] = useState(false)
     const user = useSelector((store) => store.user);
     const [schoolYearData, setSchoolYearData] = useState();
-    const school_year_url = `${config.api_url}/anio_lectivo/list/`;
+
+    useEffect(()=>{
+        getSchoolYearService(user.user.token).then((result) => {
+           setSchoolYearData(result.result);
+       })
+   },[])
 
     const hadleValidation = (prop, value) => {
         setValidation({
             ...validation,
-            [prop]: !(value.split("").length > 0),
+            [prop]: !(value.trim().length > 0),
         });
     };
 
@@ -92,14 +97,6 @@ const SubjectForm = (props) => {
         });
     }
 
-
-
-
-    useEffect(()=>{
-         getSchoolYearService(user.user.token).then((result) => {
-            setSchoolYearData(result.result);
-        })
-    },[])
 
     return (
         <motion.span

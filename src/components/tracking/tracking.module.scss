@@ -12,3 +12,33 @@
 .name_container{
     width: 50% !important;
 }
+
+.name_rol_container{
+    background-color: var(--gray);
+    border-radius: 5px;
+    padding: 12px;
+    text-align: left;
+}
+
+.stepper_container{
+    width: 100%;
+}
+.actionsContainer{
+    margin-top: 10px;
+}
+
+.stepper_button{
+    padding: 10px !important;
+}
+
+.table_button_container{
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+.goals_title{
+    color: var(--main-color-dark);
+    font-weight: 700;
+    text-align: left;
+}

@@ -12,7 +12,7 @@ import { getSchoolYearService } from "../../../src/utils/school_year/services/sc
 
 
 const INITIAL_STATE = {
-    school_year: '',
+    anio_lectivo: '',
     department: '',
     year: '',
     curso: ''
@@ -53,12 +53,12 @@ const SelectInput = ({ type, data ,changeAction}) => {
 
 
     useEffect(() => {
-        if (state.department !== '' && state.school_year !== '' && type==='year') {
+        if (state.department !== '' && state.anio_lectivo !== '' && type==='year') {
             getYearService(user.user.token, state.department).then((result) => {
                 setYearData(result.result);
             })
         }
-    }, [state.school_year])
+    }, [state.anio_lectivo])
 
     useEffect(() => {
         if (state.year !== '' && type==='curso') {
@@ -99,8 +99,8 @@ const SelectInput = ({ type, data ,changeAction}) => {
                     <Select
                         labelId="anio_lectivo"
                         id="anio_lectivo"
-                        value={state.school_year}
-                        onChange={handleChange("school_year")}
+                        value={state.anio_lectivo}
+                        onChange={handleChange("anio_lectivo")}
                     >
                         <MenuItem value="">
                             <em>Seleccionar</em>

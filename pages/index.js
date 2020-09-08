@@ -65,7 +65,7 @@ const Login = () => {
   const user = useSelector((store) => store.user);
   const [loginState, setLoginState] = useState(LOGIN_INITIAL_STATE);
   const [validation, setValidation] = useState(LOGIN_VALIDATION_STATE);
-
+  const [isLoading,setIsLoading] = useState(false);
   const hadleValidationEmail = (value) => {
     setValidation({
       ...validation,
@@ -76,7 +76,7 @@ const Login = () => {
   const hadleValidation = (prop, value) => {
     setValidation({
       ...validation,
-      [prop]: !(value.split("").length > 0),
+      [prop]: !(value.trim().length > 0),
     });
   };
 
@@ -109,8 +109,10 @@ const Login = () => {
         effect: "stackslide",
       });
     } else {
+      setIsLoading(true);
       dispatch(loginAction(loginState.email, loginState.password)).then(
         (status) => {
+          setIsLoading(false);
           if (status) {
             router.push("/dashboard");
           }
@@ -261,10 +263,10 @@ const Login = () => {
                 >
                   <button
                     id={styles.login}
-                    disabled={user.isLoading || user.isLoggedIn ? true : false}
-                    onClick={handleLogin}
+                    disabled={isLoading || user.isLoggedIn ? true : false}
+                    onClick={(event)=>handleLogin(event)}
                   >
-                    {user.isLoading || user.isLoggedIn ? (
+                    {isLoading ? (
                       <>
                         <CircularProgress
                           size={18}

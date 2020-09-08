@@ -46,7 +46,6 @@ const Asistencias = () => {
     }
 
     async function deleteasistencias(e, data) {
-        console.log(data)
         e.preventDefault();
         setIsLoading(true);
         return await deleteAsistenciasService(user.user.token, data).then((result) => {

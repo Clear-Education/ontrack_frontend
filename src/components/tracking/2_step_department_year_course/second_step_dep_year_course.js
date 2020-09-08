@@ -1,4 +1,4 @@
-import styles from './styles.module.scss'
+import styles from '../tracking.module.scss'
 import { useState } from "react";
 import Alert from "react-s-alert";
 
@@ -8,37 +8,30 @@ import StepLabel from '@material-ui/core/StepLabel';
 import StepContent from '@material-ui/core/StepContent';
 import Button from '@material-ui/core/Button';
 import SelectInput from "../../../../pages/dashboard/cursos/selectInput";
-import StudentTable from "./student_table";
-import { useSelector } from "react-redux";
 
 const INITIAL_STATE = {
-    school_year: '',
     department: '',
+    anio_lectivo: '',
     year: '',
     curso: '',
-    studentsToAdd: [],
-    studentsToDelete: [],
 }
 
-const SecondStepStudents = ({ handleGlobalState }) => {
+const SecondStepDepYearCourse = ({ handleGlobalState }) => {
 
     const [state, setState] = useState(INITIAL_STATE);
-    const user = useSelector((store) => store.user);
 
-    const handleChange = (prop, value, _student_course_id) => {
-        if (prop !== 'students') {
+
+    const handleChange = (prop, value) => {
             setState({ ...state, [prop]: value })
-        }
-
+            handleGlobalState(prop,value);
     }
 
 
     function getSteps() {
         return ['Seleccione la carrera deseada',
-            'Seleccione el año lectivo deseado',
-            'Seleccione el año deseado',
-            'Seleccione el curso deseado',
-            'Seleccione los alumnos'
+                'Seleccione el año lectivo deseado',
+                'Seleccione el año deseado',
+                'Seleccione el curso deseado',
         ];
     }
 
@@ -52,8 +45,6 @@ const SecondStepStudents = ({ handleGlobalState }) => {
                 return <SelectInput type="year" data={state} changeAction={handleChange} />;
             case 3:
                 return <SelectInput type="curso" data={state} changeAction={handleChange} />;
-            case 4:
-                return <StudentTable type="Alumnos" data={state} changeAction={handleGlobalState} />;
             default:
                 return 'Unknown step';
         }
@@ -97,7 +88,7 @@ const SecondStepStudents = ({ handleGlobalState }) => {
                                         activeStep !== steps.length - 1 ?
 
                                             <button
-                                                onClick={() => handleNext(activeStep === 0 ? 'department' : activeStep === 1 ? 'school_year' : activeStep === 2 ? 'year' : activeStep === 3 ? 'curso' : null)}
+                                                onClick={() => handleNext(activeStep === 0 ? 'department' : activeStep === 1 ? 'anio_lectivo' : activeStep === 2 ? 'year' : activeStep === 3 ? 'curso' : null)}
                                                 className={`ontrack_btn csv_btn ${styles.stepper_button}`}
                                             >
                                                 Siguiente
@@ -118,5 +109,5 @@ const SecondStepStudents = ({ handleGlobalState }) => {
 }
 
 
-export default SecondStepStudents;
+export default SecondStepDepYearCourse;
 

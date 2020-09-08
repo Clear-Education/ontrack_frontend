@@ -46,7 +46,6 @@ const VALIDATE_INITIAL_STATE = {
 
 
 const AddAsistenciaForm = (props) => {
-    console.log(props.data)
     const [state, setState] = useState(props.data ? props.data : { ...INITIAL_STATE, ["alumno_curso"]: props.data.alumno_curso });
     const [date, setDate] = useState(null)
     const [validation, setValidation] = useState(VALIDATE_INITIAL_STATE);
@@ -56,7 +55,7 @@ const AddAsistenciaForm = (props) => {
     const hadleValidation = (prop, value) => {
         setValidation({
             ...validation,
-            [prop]: !(value.split("").length > 0),
+            [prop]: !(value.trim().length > 0),
         });
     };
 

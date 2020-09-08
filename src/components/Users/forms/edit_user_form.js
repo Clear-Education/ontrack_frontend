@@ -71,7 +71,7 @@ const EditUserForm = (props) => {
     const handleValidation = (prop, value) => {
         setValidation({
             ...validation,
-            [prop]: !(value.split("").length > 0),
+            [prop]: !(value.trim().length > 0),
         });
     };
 

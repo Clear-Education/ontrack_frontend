@@ -2,7 +2,7 @@
   --main-color-dark: #004d67;
   --black: #303030;
   --white: #f7f7f7;
-  --gray: #868686;
+  --gray: #e8e8e8;
   --medium-gray: #79797933;
   --light-gray: #f7f7f7;
   --orange: #e4710fba;
@@ -48,14 +48,19 @@ body {
 }
 
 /* Inputs form login y reset pass */
+.MuiInputBase-root.MuiOutlinedInput-root.MuiInputBase-formControl{
+  padding: 5px;
+}
 
 .MuiInputLabel-animated{
   color: var(--gray) !important;
 }
-
+.MuiOutlinedInput-input{
+  padding: 10.5px 14px !important;
+}
 .MuiInputLabel-outlined.MuiInputLabel-shrink {
   background-color: #f1f1f1;
-  color: var(--gray);
+  color: var(--main-color-dark) !important;
   font-weight: bold;
 }
 .MuiInputLabel-outlined:focus.MuiInputLabel-shrink:focus{
@@ -204,10 +209,10 @@ button:focus {
 .MuiStepConnector-lineVertical{
   min-height: 10px !important;
 }
-.MuiStepLabel-label{
-text-align: left !important;
-}
 
+.MuiStepper-alternativeLabel{
+  width: 100%;
+}
 
 
 .MuiTableCell-root:focus{
