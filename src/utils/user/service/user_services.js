@@ -1,5 +1,20 @@
-import { getUsersCrud, addUserCrud, deleteUserCrud, editUserCrud, editUserProfile, editUserStateCrud, getGroupsCrud } from "../cruds/user_cruds";
+import { getUserCrud, getUsersCrud, addUserCrud, deleteUserCrud, editUserCrud, editUserProfile, editUserStateCrud, getGroupsCrud } from "../cruds/user_cruds";
 import Alert from "react-s-alert";
+
+export async function getOneUserService(token, id_user) {
+    return await getUserCrud(token, id_user).then((result) => {
+        if (result.success) {
+
+        } else {
+            result.result.forEach((element) => {
+                Alert.error(element.message, {
+                    effect: "stackslide",
+                });
+            });
+        }
+        return result;
+    })
+}
 
 export async function getUserService(token) {
     return await getUsersCrud(token).then((result) => {
@@ -56,6 +71,7 @@ export async function editUserProfileService(data, token) {
             Alert.success("Perfil de usuario editado correctamente", {
                 effect: "stackslide",
             });
+
         } else {
             result.result.forEach((element) => {
                 Alert.error(element.message, {

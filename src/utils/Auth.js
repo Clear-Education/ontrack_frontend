@@ -18,6 +18,7 @@ export async function login(user, password) {
     .then((json) => {
       if (json.status == 200) {
         const {
+          id,
           name,
           last_name,
           cargo,
@@ -35,6 +36,7 @@ export async function login(user, password) {
           groups
         } = json.data;
         let userData = {
+          id,
           name,
           last_name,
           cargo,

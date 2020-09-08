@@ -3,7 +3,7 @@ import Modal from '../../../src/components/commons/modals/modal';
 import UserProfileForm from '../../../src/components/Users/profile/profile_user_form';
 import { useEffect, useState } from "react";
 import { updateUser } from "../../../redux/actions/userActions";
-import { editUserProfileService } from '../../../src/utils/user/service/user_services';
+import { getOneUserService, editUserProfileService } from '../../../src/utils/user/service/user_services';
 
 
 const UserProfile = () => {
@@ -16,6 +16,7 @@ const UserProfile = () => {
 
     useEffect(() => {
         let dataUser = {
+            id: user.user.id,
             email: user.user.email,
             name: user.user.name,
             phone: user.user.phone,
@@ -38,15 +39,21 @@ const UserProfile = () => {
         e.preventDefault();
         setIsLoading(true);
         return await editUserProfileService(data, user.user.token).then((result) => {
-            dispatch(updateUser(data)).then(
-                (status) => {
-                    if (status) {
-                        console.log("ok")
-                    }
-                }
-            );
-            setIsLoading(false);
-            return result;
+            if (result.success) {
+                getOneUserService(user.user.token, profileData.id).then((result) => {
+                    let data_user = { ...result.result, "token": user.user.token, "id": user.user.id }
+                    dispatch(updateUser(data_user)).then(
+                        (status) => {
+                            if (status) {
+                            }
+                        }
+                    );
+                    setIsLoading(false);
+                    return result;
+                })
+
+            }
+
         })
     }
 
