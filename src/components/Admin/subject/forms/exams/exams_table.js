@@ -26,28 +26,34 @@ const ExamsTable = (props) => {
     const [examsArray, setExamsArray] = useState([]);
 
     const filterData = (data) => {
-        let selectedExams = [];
+        let selectedExamsCopy = [];
         if(!!data.length){
-        selectedExams = data.filter((element) => {
+        selectedExamsCopy = data.filter((element) => {
             return element.anio_lectivo === props.schoolYear;
         });
         }
-        setSelectedExams(selectedExams);
+        setSelectedExams(selectedExamsCopy);
     };
-
-    useSWR(url, () => {
-        setIsLoading(true);
-        return getExamsService(user.user.token, selectedSubject.id).then((result) => {
-            setIsLoading(false)
-            setExamsArray(result.result)
-        })
-    }
-    );
 
     useEffect(() => {
         setSelectedSchoolYear(props.schoolYear)
+        getExamsService(user.user.token, selectedSubject.id,props.schoolYear).then((result) => {
+            setIsLoading(false)
+            setExamsArray(result.result)
+        })
+    }, [props.schoolYear]);
+
+    useEffect(() => {
+        setSelectedSchoolYear(props.schoolYear)
+        getExamsService(user.user.token, selectedSubject.id,props.schoolYear).then((result) => {
+            setIsLoading(false)
+            setExamsArray(result.result)
+        })
+    }, [isLoading]);
+
+    useEffect(()=>{
         filterData(examsArray)
-    }, [props]);
+    },[examsArray]);
 
     useEffect(() => {
         filterData(examsArray)
@@ -97,7 +103,7 @@ const ExamsTable = (props) => {
         if(!!examsArray.length){
             editExamsService(user.user.token,examsArray).then((result)=>{
             setIsLoading(false);
-        })  
+        })   
         }else{
             deleteExamsService(user.user.token,examsArray).then((result)=>{
                 setIsLoading(false);  

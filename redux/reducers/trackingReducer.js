@@ -14,7 +14,9 @@ var initialTrackingState = {
     integrantes: [],
     fecha_desde: '',
     fecha_hasta: '',
-    goals: [],
+    promedio: '',
+    asistencia: '',
+    cualitativos: [],
 };
 
 
@@ -35,7 +37,9 @@ const trackingReducer = (state = initialTrackingState, action) => {
                 integrantes: action.payload.integrantes,
                 fecha_desde: action.payload.fecha_desde,
                 fecha_hasta: action.payload.fecha_hasta,
-                goals: action.payload.goals,
+                promedio: action.payload.promedio,
+                asistencia: action.payload.asistencia,
+                cualitativos: action.payload.cualitativos,
                 
             }
         case types.RESET_TRACKING_DATA:

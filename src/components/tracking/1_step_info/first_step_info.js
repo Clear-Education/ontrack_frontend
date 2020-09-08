@@ -3,6 +3,7 @@ import { FormControl, TextField, FormHelperText } from '@material-ui/core'
 import { Row, Col } from 'react-bootstrap'
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { motion } from 'framer-motion';
 
 
 const INITIAL_STATE = {
@@ -14,27 +15,28 @@ const VALIDATE_INITIAL_STATE = {
     nombre: false,
     descripcion: false,
 };
- 
-const FirstStepInfo = ({handleGlobalState}) => {
+
+const FirstStepInfo = ({ handleGlobalState }) => {
 
     const [state, setState] = useState(INITIAL_STATE);
     const [validation, setValidation] = useState(VALIDATE_INITIAL_STATE);
-    const trackingData = useSelector((store)=>store.tracking);
+    const trackingData = useSelector((store) => store.tracking);
 
-    useEffect(()=>{
-        setState({...state,
-        nombre: trackingData.nombre,
-        descripcion: trackingData.descripcion
+    useEffect(() => {
+        setState({
+            ...state,
+            nombre: trackingData.nombre,
+            descripcion: trackingData.descripcion
         })
-    },[])
+    }, [])
 
     const hadleValidation = (prop, value) => {
         setValidation({
             ...validation,
-            [prop]: !(value.split("").length > 0),
+            [prop]: !(value.trim().length > 0),
         });
     };
- 
+
 
     const handleChange = (prop) => (event) => {
         hadleValidation(prop, event.target.value);
@@ -45,7 +47,12 @@ const FirstStepInfo = ({handleGlobalState}) => {
 
 
     return (
-        <div className={styles.container}>
+        <motion.div
+            initial={{ scale: 0.95, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.3 }}
+        >
+            <div className={styles.container}>
                 <Row>
                     <Col lg={12} md={12} sm={12} xs={12} className={`${styles.input_container}  ${styles.name_container}`}>
                         <FormControl variant="outlined">
@@ -96,7 +103,8 @@ const FirstStepInfo = ({handleGlobalState}) => {
                     </Col>
 
                 </Row>
-        </div>
+            </div>
+        </motion.div>
     )
 }
 

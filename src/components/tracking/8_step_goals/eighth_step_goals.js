@@ -5,6 +5,8 @@ import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { FormControl, TextField, FormHelperText } from '@material-ui/core';
+import AddItemList from '../../commons/add_item_list/add_item_list';
+
 
 
 
@@ -20,7 +22,7 @@ const VALIDATE_INITIAL_STATE = {
  
 
 
-const SeventhStepGoals = ({ handleGlobalState }) => {
+const EighthStepGoals = ({ handleGlobalState }) => {
 
     const [state, setState] = useState(INITIAL_STATE);
     const [validation, setValidation] = useState(VALIDATE_INITIAL_STATE);
@@ -61,10 +63,13 @@ const SeventhStepGoals = ({ handleGlobalState }) => {
     const handleChange = (prop) => (event) => {
         let value = event.target.value
         hadleValidation(prop, value);
-        handleGlobalState(prop, value);
         setState({ ...state, [prop]: value })
+        handleGlobalState(prop, value);
     }
 
+    const handleQualitativeGoals = (qualitativeItems) =>{
+        handleGlobalState("cualitativos", qualitativeItems);
+    }
 
     return (
         <>
@@ -81,7 +86,7 @@ const SeventhStepGoals = ({ handleGlobalState }) => {
                             <Row lg={12} md={12} sm={12} xs={12} className={styles.row_input_container} style={{ marginLeft: '-10px' }}>
                                 <Col lg={6} md={6} sm={6} xs={6}>
                                     <FormControl variant="outlined">
-                                    <FormLabel className="left" component="legend">Promedio:</FormLabel>
+                                    <FormLabel className="left" component="legend">Promedio: (No requerido)</FormLabel>
                                     <TextField
                                                 id="promedio"
                                                 name="promedio"
@@ -89,6 +94,7 @@ const SeventhStepGoals = ({ handleGlobalState }) => {
                                                 value={state.promedio}
                                                 onChange={handleChange("promedio")}
                                                 type="number"
+                                                inputProps={{ min: "0", max: "10", step: "1" }}
                                                 required
                                                 style={{
                                                     padding: '0'
@@ -107,7 +113,7 @@ const SeventhStepGoals = ({ handleGlobalState }) => {
 
                                 <Col lg={6} md={6} sm={6} xs={6}>
                                     <FormControl variant="outlined">
-                                    <FormLabel className="left" component="legend">Asistencia:</FormLabel>
+                                    <FormLabel className="left" component="legend">Asistencia %:  (No requerido)</FormLabel>
                                     <TextField
                                                 id="asistencia"
                                                 name="asistencia"
@@ -142,16 +148,14 @@ const SeventhStepGoals = ({ handleGlobalState }) => {
                     animate={{ scale: 1, opacity: 1 }}
                     transition={{ duration: 0.3 }}
                 >
-                    <h6 className="left" className={styles.goals_title}>Objetivos:</h6>
+                    <h6 className="left" className={styles.goals_title}>Objetivos:</h6> 
                     <Row>
                         <Col lg={12} md={12} sm={12} xs={12} className={`${styles.input_container}`}>
-
-                            <Row lg={12} md={12} sm={12} xs={12} className={styles.row_input_container} style={{ marginLeft: '-10px' }}>
-                                <Col lg={6} md={6} sm={6} xs={6}>
-                                    <FormLabel className="left" component="legend">Añade un objetivo</FormLabel>
-                                </Col>
-                            </Row>
-
+                            <AddItemList 
+                                labelText={"Añade un objetivo"} 
+                                handleList = {handleQualitativeGoals}
+                                previousItems = {trackingData.cualitativos}
+                            />
                         </Col>
                     </Row>
                 </motion.div>
@@ -161,4 +165,4 @@ const SeventhStepGoals = ({ handleGlobalState }) => {
 }
 
 
-export default SeventhStepGoals;
+export default EighthStepGoals;

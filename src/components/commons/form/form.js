@@ -94,7 +94,7 @@ const Form = ({
     } else if (type !== "select") {
       setValidations({
         ...validations,
-        [name]: !(value.split("").length > 0),
+        [name]: !(value.trim().length > 0),
       });
     }
   };

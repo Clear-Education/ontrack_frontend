@@ -35,28 +35,38 @@ const FifthStepParticipants = ({ handleGlobalState }) => {
         })
     }, []);
 
-    const getUserIds = (users) =>{
+    const getSelectedUsers = (users) =>{
         const filterList = [...userData];
-        let users_id = [];
+        let users_data = [];
         users.forEach(user => {
             let user_position = user.dataIndex;
             let selected_user = filterList.find((s, index) => index === user_position);
-            let user_id = selected_user && selected_user.id;
-            users_id.push(user_id);
+            users_data.push(selected_user);
         });
-        return users_id;
+        return users_data;
     }
 
     const handleSelectUsers = (users) => {
         if(!!users.length){
-            const userList = getUserIds(users);
+            const usersList = getSelectedUsers(users);
             let selectedUsersCopy = [...selectedUsers];
-            userList.map((user_id)=>{
-                let indexOf = selectedUsersCopy.indexOf(user_id);
-                if(indexOf === -1){
-                    selectedUsersCopy.push(user_id);
+            usersList.map((user)=>{
+                if(!!selectedUsersCopy.length){
+                    let indexOf = -1;
+                    selectedUsersCopy.map((selectedUser,index)=>{
+                        if(selectedUser.id === user.id ){
+                            indexOf = index
+                        }
+                    });
+
+                    if(indexOf === -1){
+                        selectedUsersCopy.push(user);
+                    }else{
+                        selectedUsersCopy.splice(indexOf,1);
+                    }
+    
                 }else{
-                    selectedUsersCopy.splice(indexOf,1);
+                    selectedUsersCopy.push(user);
                 }
             })
             setSelectedUsers(selectedUsersCopy);

@@ -61,9 +61,6 @@ const AddUserForm = (props) => {
     const [date, setDate] = useState(null);
     const user = useSelector((store) => store.user);
 
-    console.log(state);
-
-
     useSWR(url, () =>
         getGroupsService(user.user.token).then((result) => {
             setGroupsData(result.result);
@@ -73,7 +70,7 @@ const AddUserForm = (props) => {
     const handleValidation = (prop, value) => {
         setValidation({
             ...validation,
-            [prop]: !(value.split("").length > 0),
+            [prop]: !(value.trim().length > 0),
         });
     };
 

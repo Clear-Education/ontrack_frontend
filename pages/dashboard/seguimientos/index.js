@@ -13,27 +13,41 @@ import { motion } from "framer-motion";
 import { Row, Col } from "react-bootstrap";
 import MUIDataTable from "mui-datatables";
 import MTConfig from "../../../src/utils/table_options/MT_config";
+import { getTrackingService } from "../../../src/utils/tracking/services/tracking_services";
+import { useRouter } from "next/dist/client/router";
 
 
 const Seguimientos = () => {
 
     const url = `${config.api_url}/`
-    const [selectedData, setSelectedData] = useState()
+    const [selectedData, setSelectedData] = useState();
+    const [trackingData, setTrackingData] = useState([])
     const user = useSelector((store) => store.user);
     const [isLoading, setIsLoading] = useState(false)
+    const router = useRouter();
 
 
 
-    /* 
-        let { data } = useSWR(url, () => {
-            setIsLoading(true);
-            return getSeguimientosService(user.user.token).then((result) => {
-                setIsLoading(false)
-                return result.result
+    useSWR(url, () => {
+        setIsLoading(true);
+        return getTrackingService(user.user.token).then((result) => {
+            setIsLoading(false)
+            let trackings = [...result.result.results];
+            let parsedTrackings = [];
+            trackings.map((tracking) => {
+                let newTrackingData = {
+                    nombre: tracking.nombre,
+                    descripcion: tracking.descripcion,
+                    fecha_inicio: tracking.fecha_inicio,
+                    fecha_cierre: tracking.fecha_cierre,
+                    estado: tracking.en_progreso ? 'En progreso' : 'Finalizado'
+                }
+                parsedTrackings.push(newTrackingData);
             })
-        }
-        );
-     */
+            setTrackingData(parsedTrackings);
+        })
+    }
+    );
 
 
     async function addSeguimientos(e, data) {
@@ -65,9 +79,9 @@ const Seguimientos = () => {
                         <Col lg={6} md={6} sm={6} xs={6} className={styles.add_btn_container}>
                             {
                                 user.user.groups === "Pedagogía" ?
-                                <Link href="seguimientos/nuevo">
-                                  <button className="ontrack_btn add_btn">Nuevo Seguimiento</button>
-                                </Link>
+                                    <Link href="seguimientos/nuevo">
+                                        <button className="ontrack_btn add_btn">Nuevo Seguimiento</button>
+                                    </Link>
                                     : null
                             }
                         </Col>
@@ -79,7 +93,7 @@ const Seguimientos = () => {
                         style={{ marginTop: 20 }}
                     >
                         <MUIDataTable
-                            data={selectedData}
+                            data={trackingData}
                             options={MTConfig("Seguimientos").options}
                             components={MTConfig().components}
                             localization={MTConfig().localization}
@@ -102,8 +116,12 @@ const Seguimientos = () => {
                                     label: "Descripción",
                                 },
                                 {
-                                    name: "encargado",
-                                    label: "Encargado",
+                                    name: "fecha_inicio",
+                                    label: "Inicio",
+                                },
+                                {
+                                    name: "fecha_cierre",
+                                    label: "Fin",
                                 },
                                 {
                                     name: "estado",
@@ -116,9 +134,11 @@ const Seguimientos = () => {
                                         customBodyRender: (value, tableMeta, updateValue) => {
                                             return (
                                                 <>
-                                                    <IconButton onClick={() => setSelectedData(tableMeta.rowData[0])} >
-                                                        <ArrowForwardIosIcon />
-                                                    </IconButton>
+                                                    <Link href={'seguimientos/1'}> 
+                                                        <IconButton>
+                                                            <ArrowForwardIosIcon />
+                                                        </IconButton>
+                                                    </Link>
                                                 </>
                                             )
                                         },

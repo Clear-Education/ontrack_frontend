@@ -9,7 +9,6 @@ export async function get${mayusName}Service(token) {
         } else {
             result.result.forEach((element) => {
                 Alert.error(element.message, {
-                    ,
                     effect: "stackslide",
                 });
             });
@@ -27,7 +26,6 @@ export async function add${mayusName}Service(data, token) {
         } else {
             result.result.forEach((element) => {
                 Alert.error(element.message, {
-                    ,
                     effect: "stackslide",
                 });
             });
@@ -45,7 +43,6 @@ export async function edit${mayusName}Service(data, token) {
         } else {
             result.result.forEach((element) => {
                 Alert.error(element.message, {
-                    ,
                     effect: "stackslide",
                 });
             });
@@ -59,13 +56,12 @@ export async function delete${mayusName}Service(token,data){
   return await delete${mayusName}Crud(token,data).then((result)=>{
       if (result.success) {
         Alert.success("Materia eliminada correctamente", {
-          ,
           effect: "stackslide",
         });
         } else {
           result.result.forEach((element) => {
             Alert.error(element.message, {
-              ,
+
               effect: "stackslide",
             });
           });
