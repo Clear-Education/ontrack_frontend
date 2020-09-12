@@ -27,14 +27,12 @@ const UserSidebar = () => {
     setSelected(window.location.href.match(/\/([^\/]+)\/?$/)[1]);
   }, [router.route]);
 
-  const logout = () => {
+  const logout = (e) => {
+    e.preventDefault();
     setLoading(true);
     dispatch(logoutAction(user.user.token)).then((result) => {
-      if (result) {
+      if (result.success) {
         router.push("/");
-        Alert.success("¡Sesión finalizada correctamente!", {
-          effect: "stackslide",
-        });
       }
     });
   };
@@ -123,7 +121,7 @@ const UserSidebar = () => {
             </Link>
           </Col>
         </Row>
-        <div className={styles.logout_container} onClick={logout}>
+        <div className={styles.logout_container} onClick={(e)=>logout(e)}>
           <img src="/icons/logout_icon.svg" style={{ width: '40px', display: 'inline' }} />
         </div>
       </div>

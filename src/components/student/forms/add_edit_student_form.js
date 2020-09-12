@@ -89,7 +89,7 @@ const AddEditStudentForm = (props) => {
     const hadleValidation = (prop, value) => {
         setValidation({
             ...validation,
-            [prop]: !(value.split("").length > 0),
+            [prop]: !(value.trim().length > 0),
         });
     };
 
@@ -290,7 +290,7 @@ const AddEditStudentForm = (props) => {
                                             placeholder="01/05/2020"
                                             onChange={(date) => handleChangeDate(date, 'birth')}
                                             inputVariant="outlined"
-                                            maxDate={new Date()}
+                                            maxDate={new Date('2003')}
                                             format="dd/MM/yyyy"
                                             invalidDateMessage="El formato de fecha es inválido"
                                             minDateMessage="La fecha no puede ser menor al día de hoy"

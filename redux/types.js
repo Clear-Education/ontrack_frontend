@@ -6,3 +6,5 @@ export const RESET_PASSWORD = "RESET_PASSWORD";
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 export const FORCED_LOGOUT = "FORCED_LOGOUT";
+export const SAVE_TRACKING_DATA = "SAVE_TRACKING_DATA";
+export const RESET_TRACKING_DATA = "RESET_TRACKING_DATA";
