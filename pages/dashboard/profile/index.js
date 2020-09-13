@@ -3,7 +3,7 @@ import Modal from '../../../src/components/commons/modals/modal';
 import UserProfileForm from '../../../src/components/Users/profile/profile_user_form';
 import { useEffect, useState } from "react";
 import { updateUser } from "../../../redux/actions/userActions";
-import { getOneUserService, editUserProfileService } from '../../../src/utils/user/service/user_services';
+import { getOneUserService, editUserProfileService, changeUserPasswordService } from '../../../src/utils/user/service/user_services';
 
 
 const UserProfile = () => {
@@ -57,21 +57,22 @@ const UserProfile = () => {
         })
     }
 
+    async function changeUserPassword(e, data) {
+        e.preventDefault();
+        setIsLoading(true);
+        return await changeUserPasswordService(data, user.user.token).then(result => {
+            setIsLoading(false);
+            return result;
+        })
+
+    }
+
     return (
         <div>
             <h1 className="mb-5">Perfil de Usuario</h1>
-            {/* <Modal
-                title="Edit Perfil de Usuario"
-                show={false}
-                button={
-                    <button className="ontrack_btn add_btn">Nuevo Alumno</button>
-                }
-                body={<UserProfileForm handleSubmitAction={editUserProfile}
-                    user={profileData} />}
-
-            /> */}
-
-            <UserProfileForm handleSubmitAction={editUserProfile}
+            <UserProfileForm
+                handleSubmitAction={editUserProfile}
+                handleChangePassword={changeUserPassword}
                 user={profileData}></UserProfileForm>
 
         </div>

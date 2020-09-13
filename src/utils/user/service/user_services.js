@@ -1,4 +1,4 @@
-import { getUserCrud, getUsersCrud, addUserCrud, deleteUserCrud, editUserCrud, editUserProfile, editUserStateCrud, getGroupsCrud } from "../cruds/user_cruds";
+import { getUserCrud, getUsersCrud, addUserCrud, editUserCrud, editUserProfile, changeUserPassword, editUserStateCrud, getGroupsCrud } from "../cruds/user_cruds";
 import Alert from "react-s-alert";
 
 export async function getOneUserService(token, id_user) {
@@ -82,6 +82,21 @@ export async function editUserProfileService(data, token) {
         return result;
     })
 }
+
+export async function changeUserPasswordService(data, token) {
+    return await changeUserPassword(data, token).then((result) => {
+        if (result.success) {
+            Alert.success("Contraseña modificada, vuelva a loguearse con sus nuevas credenciales por favor", {
+                effect: "stackslide",
+            });
+
+        } else {
+            Alert.error("La contraseña ingresada es incorrecta!")
+        }
+        return result;
+    })
+}
+
 
 export async function editUserStateService(data, token) {
     return await editUserStateCrud(data, token).then((result) => {

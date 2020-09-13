@@ -201,6 +201,10 @@ button:focus {
   background-color: var(--red);
 }
 
+.subtitle {
+  color: var(--orange);
+}
+
 /* STEPPER */
 
 .MuiStepIcon-root.MuiStepIcon-active,.MuiStepIcon-root.MuiStepIcon-completed{

@@ -29,5 +29,13 @@
   width: 200px !important;
   height: 200px !important;
   margin: 0 auto !important;
-  border: 2px solid orange;
+  border: 2px solid #e4710fba;
+}
+
+
+.container_profile {
+  background-color: var(--light-gray);
+  padding: 4%;
+  margin-right: 5%;
+  margin-bottom: 5%;
 }

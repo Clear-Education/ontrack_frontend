@@ -117,7 +117,7 @@ export async function editUserProfile(data, auth_token) {
 
     let form_data = new FormData();
 
-    if (typeof data.picture !== "string") {
+    if (typeof data.picture !== "string" && data.picture !== null) {
         form_data.append("picture", data.picture);
     }
 
@@ -135,6 +135,27 @@ export async function editUserProfile(data, auth_token) {
     form_data.append("cargo", data.cargo);
 
     return axios.patch(`${config.api_url}/users/${data.id}/`, form_data, {
+        headers: {
+            Authorization: `Token ${auth_token}`,
+        },
+    })
+        .then((json) => {
+            let response = {
+                success: true,
+                result: json.data,
+            };
+
+            return response;
+
+        })
+        .catch((error) => {
+            return errorHandler(error);
+        });
+}
+
+export async function changeUserPassword(data, auth_token) {
+
+    return axios.patch(`${config.api_url}/users/change_password/`, data, {
         headers: {
             Authorization: `Token ${auth_token}`,
         },
