@@ -36,6 +36,7 @@ const Seguimientos = () => {
             let parsedTrackings = [];
             trackings.map((tracking) => {
                 let newTrackingData = {
+                    id: tracking.id,
                     nombre: tracking.nombre,
                     descripcion: tracking.descripcion,
                     fecha_inicio: tracking.fecha_inicio,
@@ -132,9 +133,10 @@ const Seguimientos = () => {
                                     label: "Acciones",
                                     options: {
                                         customBodyRender: (value, tableMeta, updateValue) => {
+                                           
                                             return (
                                                 <>
-                                                    <Link href={'seguimientos/1'}> 
+                                                    <Link href={`seguimientos/${tableMeta.rowData[0]}`}> 
                                                         <IconButton>
                                                             <ArrowForwardIosIcon />
                                                         </IconButton>

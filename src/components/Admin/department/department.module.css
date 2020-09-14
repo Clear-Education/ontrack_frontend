@@ -1,6 +1,6 @@
 .structure_container {
   height: 500px;
-  background-color: var(--light-gray);
+  background-color: var(--white);
   border-radius: 10px;
   margin: auto;
   position: relative;

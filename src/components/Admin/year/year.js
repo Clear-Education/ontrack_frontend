@@ -2,19 +2,17 @@ import TitlePage from "../../commons/title_page/title_page";
 import { Row, Col } from "react-bootstrap";
 import styles from './year.module.css';
 import { useSelector } from "react-redux";
-import { getYears } from "../../../utils/crud_years";
+
 
 import { useState } from "react";
 import useSWR, { mutate } from "swr";
 import config from "../../../utils/config";
-import Alert from "react-s-alert";
 import YearForm from "./forms/year_form";
 import { IconButton } from "@material-ui/core";
 import EditIcon from '@material-ui/icons/Edit';
 import Delete from '@material-ui/icons/Delete';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import BackgroundLoader from "../../commons/background_loader/background_loader";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import Modal from "../../commons/modals/modal";
 import { addYearsService, editYearsService, deleteYearsService, getYearService } from "../../../utils/year/services/year_services";
 import DeleteForm from "../../commons/delete_form/deleteForm";

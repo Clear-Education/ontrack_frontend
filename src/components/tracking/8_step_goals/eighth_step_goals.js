@@ -64,11 +64,11 @@ const EighthStepGoals = ({ handleGlobalState }) => {
         let value = event.target.value
         hadleValidation(prop, value);
         setState({ ...state, [prop]: value })
-        handleGlobalState(prop, value);
+        handleGlobalState && handleGlobalState(prop, value);
     }
 
     const handleQualitativeGoals = (qualitativeItems) =>{
-        handleGlobalState("cualitativos", qualitativeItems);
+        handleGlobalState && handleGlobalState("cualitativos", qualitativeItems);
     }
 
     return (

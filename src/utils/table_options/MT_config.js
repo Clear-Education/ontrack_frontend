@@ -64,7 +64,7 @@ const MTConfig = ( _name ) => {
 
             components: {
                 Toolbar: props => (
-                    <div style={{ backgroundColor: 'var(--light-gray)' }}>
+                    <div style={{ backgroundColor: 'var(--white)' }}>
                         <MTableToolbar {...props} />
                     </div>
                 )
