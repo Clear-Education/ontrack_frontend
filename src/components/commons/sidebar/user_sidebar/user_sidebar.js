@@ -122,7 +122,7 @@ const UserSidebar = () => {
           </Col>
         </Row>
         <div className={styles.logout_container} onClick={(e)=>logout(e)}>
-          <img src="/icons/logout_icon.svg" style={{ width: '40px', display: 'inline' }} />
+          <img src="/icons/logout_icon.svg" style={{ width: '35px', display: 'inline' }} />
         </div>
       </div>
     </>

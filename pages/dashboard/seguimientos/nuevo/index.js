@@ -153,8 +153,9 @@ const CreateTracking = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
+        dispatch({ type: types.RESET_TRACKING_DATA });
         setGlobalTrackingData(trackingData)
-        setActiveStep(trackingData.current_step ? trackingData.current_step : 0);
+        setActiveStep(trackingData.current_step ? 7 : 0);
     }, [])
 
     const handleGlobalState = (name, value) => {
@@ -257,7 +258,6 @@ const CreateTracking = () => {
                     <Stepper alternativeLabel activeStep={activeStep} connector={<ColorlibConnector />}>
                         {steps.map((label) => (
                             <Step key={label}>
-
                                 <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel>
                             </Step>
                         ))}

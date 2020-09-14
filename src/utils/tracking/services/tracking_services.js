@@ -1,10 +1,11 @@
 import { getTrackingCrud, addTrackingCrud, editTrackingCrud, deleteTrackingCrud, getTrackingRolesCrud } from "../cruds/tracking_cruds";
 import Alert from "react-s-alert";
 import { convertDate, parseParticipants, parseTrackingData } from "./tracking_functions_services";
+import { addMultipleGoalsService } from "../../goals/services/goals_services";
 
 
-export async function getTrackingService(token) {
-    return await getTrackingCrud(token).then((result) => {
+export async function getTrackingService(token,_id) {
+    return await getTrackingCrud(token,_id).then((result) => {
         if (result.success) {
 
         } else {
@@ -38,8 +39,9 @@ export async function addTrackingService(data, token) {
     const TRACKING_DATA = parseTrackingData(data);
     return await addTrackingCrud(TRACKING_DATA, token).then((result) => {
         if (result.success) {
-            Alert.success("Seguimiento creado correctamente", {
-                effect: "stackslide",
+            const DATA = {...data,seguimiento: result.result.id}
+            return addMultipleGoalsService(DATA,token).then((result)=>{
+                return result;
             });
         } else {
             result.result.forEach((element) => {
@@ -47,8 +49,8 @@ export async function addTrackingService(data, token) {
                     effect: "stackslide",
                 });
             });
+            return result;
         }
-        return result;
     }) 
 }
 

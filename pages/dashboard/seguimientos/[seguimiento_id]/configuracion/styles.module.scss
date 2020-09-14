@@ -1,0 +1,62 @@
+.sub_menu_container{
+    position: absolute;
+    left: -90px;
+    top: 40px;
+}
+.header_container{
+    margin-bottom: 20px;
+    text-align: left;
+    margin-left: 2%;
+    width: 100%;
+}
+
+.sub_menu_container{
+    position: absolute;
+    left: -90px;
+    top: 40px;
+}
+
+.container{
+    background-color: var(--gray);
+    border-radius: 5px;
+    padding: 20px;
+    margin-left: 3%;
+
+}
+
+.table_container{
+    margin-bottom: 20px;
+}
+
+.edit_icon_button{
+    width: fit-content;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    background-color: var(--main-color-dark);
+    border-radius: 100%;
+}
+
+.collapse_container{
+    width: 100%;
+    display: flex;
+    padding: 20px 40px;
+    cursor: pointer;
+}
+
+.dates_container{
+    background-color: var(--white);
+    border-radius: 10px;
+    padding: 20px;
+    margin-left: 15px;
+    width: 96.5%;
+}
+
+.dates_label{
+    display: block;
+    text-align: left;
+    margin-left: 2.5%;
+    color: black;
+    font-weight: 500;
+    margin-bottom: 15px;
+}

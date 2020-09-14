@@ -1,0 +1,41 @@
+.header_container{
+    margin-bottom: 20px;
+    text-align: left;
+    margin-left: 2%;
+    width: 100%;
+}
+.container{
+    min-height: 1000px;
+    background-color:var(--white);
+    border-radius: 5px;
+    margin-left: 3%;
+    overflow: auto;
+    padding-top: 10px;
+}
+
+.new_post_container{
+    padding: 30px 20px;
+}
+
+.item_container{
+    background-color:var(--secondary-gray);
+    border-radius: 5px;
+    padding: 15px;
+}
+.section_title{
+    padding-left: 15px;
+    text-align: left;
+    display: block;
+    margin-bottom: 10px;
+}
+#student_item_container{
+    background-color: var(--gray);
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.sub_menu_container{
+    position: absolute;
+    left: -90px;
+    top: 40px;
+}
