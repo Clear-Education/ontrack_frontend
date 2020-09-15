@@ -3,9 +3,9 @@ import styles from './styles.module.css'
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import useSWR, { mutate } from "swr";
-import config from "../../utils/Config"
+import config from "../../utils/config"
 import BackgroundLoader from "../commons/background_loader/background_loader";
-import { getSolicitudesService, addSolicitudesService } from "../../../src/utils/Solicitudes/services/Solicitudes_services";
+import { getSolicitudesService, addSolicitudesService } from "../../../src/utils/solicitudes/services/solicitudes_services";
 import { IconButton, Link } from "@material-ui/core";
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';

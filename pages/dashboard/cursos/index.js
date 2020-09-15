@@ -16,7 +16,7 @@ import { addMultipleStudentsCourseService, deleteMultipleStudentsCourseService }
 import { useSelector } from "react-redux";
 
 const INITIAL_STATE = {
-    school_year: '',
+    anio_lectivo: '',
     department: '',
     year: '',
     curso: '',
@@ -25,12 +25,12 @@ const INITIAL_STATE = {
 }
 
 const Cursos = () => {
- 
+
     const [state, setState] = useState(INITIAL_STATE);
     const [selectedStudentTable, setSelectedStudentTable] = useState("add");
     const user = useSelector((store) => store.user);
 
-    const handleChange = (prop, value,_student_course_id) => {
+    const handleChange = (prop, value, _student_course_id) => {
         let studentList = selectedStudentTable === 'add' ? state.studentsToAdd : state.studentsToDelete
         let students_ids = value;
         if (prop === 'students') {
@@ -39,20 +39,20 @@ const Cursos = () => {
             } else {
                 let deleted = false;
                 students_ids.map((student_id) => {
-        
-                    let indexOfStudent = studentList.map((student)=>{return student.alumno}).indexOf(student_id);
+
+                    let indexOfStudent = studentList.map((student) => { return student.alumno }).indexOf(student_id);
                     if (indexOfStudent !== -1) {
                         studentList.splice(indexOfStudent, 1)
                         deleted = true;
                     }
                     if (!deleted) {
-                            let student_data = {
-                                alumno: student_id,
-                                curso: state.curso,
-                                anio_lectivo: state.school_year,
-                                student_course_id : _student_course_id
-                            }
-                            studentList.push(student_data)
+                        let student_data = {
+                            alumno: student_id,
+                            curso: state.curso,
+                            anio_lectivo: state.anio_lectivo,
+                            student_course_id: _student_course_id
+                        }
+                        studentList.push(student_data)
                     }
                 })
 
@@ -66,8 +66,8 @@ const Cursos = () => {
 
     const handleSelectedStudentTable = (table) => {
         setSelectedStudentTable(table);
-        setState((prevState)=>({
-            school_year: prevState.school_year,
+        setState((prevState) => ({
+            anio_lectivo: prevState.anio_lectivo,
             department: prevState.department,
             year: prevState.year,
             curso: prevState.curso,
@@ -171,7 +171,7 @@ const Cursos = () => {
                                         Anterior
                                     </Button>
                                     <button
-                                        onClick={() => handleNext(activeStep === 0 ? 'department' : activeStep === 1 ? 'school_year' : activeStep === 2 ? 'year' : activeStep === 3 ? 'curso' : 'send')}
+                                        onClick={() => handleNext(activeStep === 0 ? 'department' : activeStep === 1 ? 'anio_lectivo' : activeStep === 2 ? 'year' : activeStep === 3 ? 'curso' : 'send')}
                                         className={`ontrack_btn csv_btn ${styles.stepper_button}`}
                                     >
                                         {activeStep === steps.length - 1 ? 'Finalizar' : 'Siguiente'}
