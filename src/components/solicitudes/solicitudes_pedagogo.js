@@ -5,52 +5,58 @@ import { useState } from "react";
 import useSWR, { mutate } from "swr";
 import config from "../../utils/Config"
 import BackgroundLoader from "../commons/background_loader/background_loader";
-import { getSolicitudesService, addSolicitudesService } from "../../../src/utils/Solicitudes/services/Solicitudes_services";
+import { getSolicitudesService, editEstadoSolicitudService } from "../../../src/utils/Solicitudes/services/Solicitudes_services";
 import { motion } from "framer-motion";
 import { Row, Col } from "react-bootstrap";
 import MUIDataTable from "mui-datatables";
 import MTConfig from "../../../src/utils/table_options/MT_config";
-import Modal from '../../../src/components/commons/modals/modal';
-import RechazarSolicitudForm from "./forms/rechazar_solicitud_form";
 
-
-const INITIAL_DATA = [{
-    nombre: "Seguimiento Francisco Perez y Juan Rodriguez",
-    descripcion: "Seguimiento para francisco Perez",
-    fecha: "20/10/2020",
-    alumnos: ["Francisco Perez", "Juan Rodriguez"],
-    estado: "Pendiente",
-    docente: "John Doe"
-}]
 
 const SolicitudesPedagogo = () => {
 
-    const url = `${config.api_url}/`
-    const [selectedData, setSelectedData] = useState(INITIAL_DATA)
+    const url = `${config.api_url}/seguimientos/solicitudes/list/`;
+    const [selectedData, setSelectedData] = useState([])
     const user = useSelector((store) => store.user);
     const [isLoading, setIsLoading] = useState(false)
 
-    console.log(selectedData);
 
-    async function aceptarSolicitud(data) {
+    useSWR(url, () => {
         setIsLoading(true);
-        return await aceptarSolicitudService(user.user.token, data).then((result) => {
+        return getSolicitudesService(user.user.token).then((result) => {
+            setIsLoading(false)
+            let trackings = [...result.result.results];
+            let parsedTrackings = [];
+            trackings.filter(trackings => trackings.estado[(trackings.estado.length - 1)].estado_solicitud == "Pendiente")
+                .map((tracking) => {
+                    let newTrackingData = {
+                        id: tracking.id,
+                        motivo_solicitud: tracking.motivo_solicitud,
+                        alumnos: tracking.alumnos.map(alumno => alumno.alumno.nombre + " " + alumno.alumno.apellido),
+                        creador: tracking.creador.name + " " + tracking.creador.last_name,
+                        fecha_creacion: new Date(tracking.fecha_creacion).toLocaleDateString(),
+                        estado: tracking.estado[0].estado_solicitud
+                    }
+                    parsedTrackings.push(newTrackingData);
+                })
+            setSelectedData(parsedTrackings);
+        })
+    }
+    );
+
+
+    async function editEstadoSolicitud(id, estado) {
+        const data = {
+            id,
+            estado
+        }
+        console.log(data);
+        setIsLoading(true);
+        return await editEstadoSolicitudService(data, user.user.token).then((result) => {
             setIsLoading(false);
             mutate(url);
             return result;
         })
     }
-
-    async function rechazarSolicitud(data) {
-        setIsLoading(true);
-        return await rechazarSolicitudService(user.user.token, data).then((result) => {
-            setIsLoading(false);
-            mutate(url);
-            return result;
-        })
-    }
-
-
 
     return (
         <>
@@ -88,12 +94,12 @@ const SolicitudesPedagogo = () => {
 
                                 },
                                 {
-                                    name: "fecha",
-                                    label: "Fecha",
+                                    name: "fecha_creacion",
+                                    label: "Fecha Solicitud",
                                 },
                                 {
-                                    name: "descripcion",
-                                    label: "Descripción",
+                                    name: "motivo_solicitud",
+                                    label: "Motivo",
                                 },
                                 {
                                     name: "alumnos",
@@ -105,7 +111,7 @@ const SolicitudesPedagogo = () => {
                                     }
                                 },
                                 {
-                                    name: "docente",
+                                    name: "creador",
                                     label: "Docente",
                                 },
                                 {
@@ -116,22 +122,15 @@ const SolicitudesPedagogo = () => {
                                     name: "actions",
                                     label: "Acciones",
                                     options: {
-                                        customBodyRender: (dataIndex) => {
+                                        customBodyRender: (value, tableMeta, updateValue) => {
                                             return (
                                                 <div className=" d-flex flex-lg-row flex-column">
-                                                    <button className="ontrack_btn add_btn mr-2 mb-lg-0 mb-2" variant="contained" onClick={() => aceptarSolicitud(dataIndex)} >
+                                                    <button className="ontrack_btn add_btn mr-2 mb-lg-0 mb-2" variant="contained" onClick={() => editEstadoSolicitud(tableMeta.rowData[0], "Aceptada") /* aceptarSolicitud(selectedData[dataIndex]) */} >
                                                         Aceptar
                                                     </button>
-                                                    <Modal
-                                                        title="Rechazar Solicitud"
-                                                        body={<RechazarSolicitudForm data={selectedData} handleSubmitAction={rechazarSolicitud} />}
-                                                        button={
-                                                            <button className="ontrack_btn delete_btn" variant="contained" onClick={() => setSelectedData(INITIAL_DATA)} >
-                                                                Rechazar
-                                                            </button>
-                                                        }
-                                                    />
-
+                                                    <button className="ontrack_btn delete_btn" variant="contained" onClick={() => editEstadoSolicitud(tableMeta.rowData[0], "Rechazada")} >
+                                                        Rechazar
+                                                    </button>
                                                 </div>
                                             )
                                         },

@@ -7,26 +7,26 @@ import { motion } from 'framer-motion';
 
 
 const INITIAL_STATE = {
-    nombre: '',
-    descripcion: ''
+    motivo_solicitud: ''
 }
 
 const VALIDATE_INITIAL_STATE = {
-    nombre: false,
-    descripcion: false,
+    motivo_solicitud: ''
 };
 
 const FirstStepInfoSolicitud = ({ handleGlobalState }) => {
 
     const [state, setState] = useState(INITIAL_STATE);
     const [validation, setValidation] = useState(VALIDATE_INITIAL_STATE);
-    const trackingData = useSelector((store) => store.tracking);
+    const trackingData = useSelector((store) => store.trackingSolicitud);
+
+
+    console.log(trackingData);
 
     useEffect(() => {
         setState({
             ...state,
-            nombre: trackingData.nombre,
-            descripcion: trackingData.descripcion
+            motivo_solicitud: trackingData.motivo_solicitud
         })
     }, [])
 
@@ -57,19 +57,19 @@ const FirstStepInfoSolicitud = ({ handleGlobalState }) => {
                     <Col lg={12} md={12} sm={12} xs={12} className={styles.input_container}>
                         <FormControl variant="outlined">
                             <TextField
-                                id="descripcion"
-                                name="descripcion"
+                                id="motivo_solicitud"
+                                name="motivo_solicitud"
                                 label="Motivo de Solicitud"
                                 variant="outlined"
                                 multiline
                                 rows={3}
                                 rowsMax={10}
-                                value={state.descripcion}
-                                onChange={handleChange("descripcion")}
+                                value={state.motivo_solicitud}
+                                onChange={handleChange("motivo_solicitud")}
                                 required
                             />
                             {
-                                validation.descripcion &&
+                                validation.motivo_solicitud &&
                                 <FormHelperText
                                     className="helper-text"
                                     style={{ color: "rgb(182, 60, 47)" }}

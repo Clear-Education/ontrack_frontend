@@ -32,6 +32,7 @@ import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 //REDUX TYPES
 import * as types from "../../../../redux/types";
 import { addTrackingService } from '../../../../src/utils/tracking/services/tracking_services';
+import { addSolicitudesService } from '../../../../src/utils/solicitudes/services/solicitudes_services';
 
 
 const ColorlibConnector = withStyles({
@@ -86,23 +87,20 @@ function ColorlibStepIcon(props) {
 
 function getSteps() {
     return [
-        'Información',
+        'Motivo',
         'Carrera, año y curso',
         'Alumnos',
-        'Materias',
     ];
 }
 
 function getStepContent(step) {
     switch (step) {
         case 0:
-            return 'Proporcione la información de la solicitud'
+            return 'Detalle el motivo de la solicitud indicando las materias sobre las cuales se quiera realizar el seguimiento.'
         case 1:
             return 'Seleccione la carrera, año y curso deseado'
         case 2:
             return 'Seleccione los alumnos que desea agregar al seguimiento';
-        case 3:
-            return 'Seleccione las materias deseadas';
         default:
             return 'Unknown step';
     }
@@ -111,21 +109,19 @@ function getStepContent(step) {
 
 const INITIAL_TRACKING_DATA = {
     current_step: 0,
-    nombre: '',
-    descripcion: '',
+    motivo_solicitud: '',
     department: '',
     year: '',
     curso: '',
     anio_lectivo: '',
     alumnos: [],
-    materias: [],
 }
 
 const CreateTracking = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [activeStep, setActiveStep] = useState();
     const steps = getSteps();
-    const trackingData = useSelector((store) => store.tracking);
+    const trackingData = useSelector((store) => store.trackingSolicitud);
     const user = useSelector((store) => store.user);
     const [globalTrackingData, setGlobalTrackingData] = useState(trackingData);
     const dispatch = useDispatch();
@@ -142,13 +138,11 @@ const CreateTracking = () => {
     const handleValidateData = () => {
         switch (activeStep) {
             case 0:
-                return globalTrackingData.nombre !== '' && globalTrackingData.descripcion !== ''
+                return globalTrackingData.motivo_solicitud !== ''
             case 1:
                 return globalTrackingData.curso;
             case 2:
                 return !!globalTrackingData.alumnos.length
-            case 3:
-                return !!globalTrackingData.materias.length
             default:
                 return true
         }
@@ -158,8 +152,9 @@ const CreateTracking = () => {
         const validateData = handleValidateData();
         if (validateData) {
             const newTrackingData = { ...globalTrackingData, ['current_step']: activeStep + 1 }
-            dispatch({ type: types.SAVE_TRACKING_DATA, payload: newTrackingData })
-            activeStep === steps.length - 1 ? handleSubmitTracking() : setActiveStep((prevActiveStep) => prevActiveStep + 1);;
+            console.log(newTrackingData);
+            dispatch({ type: types.SAVE_TRACKING_SOLICITUD_DATA, payload: newTrackingData })
+            activeStep === steps.length - 1 ? handleSubmitTracking() : setActiveStep((prevActiveStep) => prevActiveStep + 1);
         } else {
             Alert.error("Hay campos requeridos vacíos o que presentan errores", {
                 effect: "stackslide",
@@ -170,7 +165,7 @@ const CreateTracking = () => {
 
     const handleSubmitTracking = () => {
         setIsLoading(true);
-        addSolicitudSeguimiento(globalTrackingData, user.user.token).then((result) => {
+        addSolicitudesService(globalTrackingData, user.user.token).then((result) => {
             setIsLoading(false);
             if (result.success) {
                 setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -180,12 +175,12 @@ const CreateTracking = () => {
 
     const handleBack = () => {
         const trackingData = { ...globalTrackingData, ['current_step']: activeStep - 1 }
-        dispatch({ type: types.SAVE_TRACKING_DATA, payload: trackingData })
+        dispatch({ type: types.SAVE_TRACKING_SOLICITUD_DATA, payload: trackingData })
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
     const handleReset = () => {
-        dispatch({ type: types.RESET_TRACKING_DATA });
+        dispatch({ type: types.RESET_TRACKING_SOLICITUD_DATA });
         setGlobalTrackingData(INITIAL_TRACKING_DATA);
         setActiveStep(0);
     };
