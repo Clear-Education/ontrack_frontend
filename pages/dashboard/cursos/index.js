@@ -25,12 +25,12 @@ const INITIAL_STATE = {
 }
 
 const Cursos = () => {
- 
+
     const [state, setState] = useState(INITIAL_STATE);
     const [selectedStudentTable, setSelectedStudentTable] = useState("add");
     const user = useSelector((store) => store.user);
 
-    const handleChange = (prop, value,_student_course_id) => {
+    const handleChange = (prop, value, _student_course_id) => {
         let studentList = selectedStudentTable === 'add' ? state.studentsToAdd : state.studentsToDelete
         let students_ids = value;
         if (prop === 'students') {
@@ -39,20 +39,20 @@ const Cursos = () => {
             } else {
                 let deleted = false;
                 students_ids.map((student_id) => {
-        
-                    let indexOfStudent = studentList.map((student)=>{return student.alumno}).indexOf(student_id);
+
+                    let indexOfStudent = studentList.map((student) => { return student.alumno }).indexOf(student_id);
                     if (indexOfStudent !== -1) {
                         studentList.splice(indexOfStudent, 1)
                         deleted = true;
                     }
                     if (!deleted) {
-                            let student_data = {
-                                alumno: student_id,
-                                curso: state.curso,
-                                anio_lectivo: state.school_year,
-                                student_course_id : _student_course_id
-                            }
-                            studentList.push(student_data)
+                        let student_data = {
+                            alumno: student_id,
+                            curso: state.curso,
+                            anio_lectivo: state.school_year,
+                            student_course_id: _student_course_id
+                        }
+                        studentList.push(student_data)
                     }
                 })
 
@@ -66,7 +66,7 @@ const Cursos = () => {
 
     const handleSelectedStudentTable = (table) => {
         setSelectedStudentTable(table);
-        setState((prevState)=>({
+        setState((prevState) => ({
             school_year: prevState.school_year,
             department: prevState.department,
             year: prevState.year,
@@ -90,7 +90,7 @@ const Cursos = () => {
             case 0:
                 return <SelectInput type="department" data={state} changeAction={handleChange} />
             case 1:
-                return <SelectInput type="anio_lectivo" data={state} changeAction={handleChange} />;
+                return <SelectInput type="school_year" data={state} changeAction={handleChange} />;
             case 2:
                 return <SelectInput type="year" data={state} changeAction={handleChange} />;
             case 3:
