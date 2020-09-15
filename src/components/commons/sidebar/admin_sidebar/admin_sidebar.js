@@ -205,7 +205,7 @@ const AdminSideBar = () => {
             sm={12}
             xs={12}
           >
-            <img src="/icons/logout_icon.svg" style={{ width: '30px', display: 'inline' }} />
+            <img src="/icons/logout_icon.svg" style={{ width: '35px', display: 'inline' }} />
             <p style={{ marginTop: 10 }} className={styles.nav_text}> Cerrar Sesión </p>
           </Col>
 

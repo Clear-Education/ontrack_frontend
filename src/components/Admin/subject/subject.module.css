@@ -1,6 +1,6 @@
 .structure_container{
     min-height: 600px;
-    background-color:var(--light-gray);
+    background-color:var(--white);
     border-radius: 10px;
     margin: 20px auto;
     position: relative;

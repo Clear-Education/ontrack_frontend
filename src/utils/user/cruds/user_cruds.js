@@ -21,6 +21,24 @@ export async function addUserCrud(data, auth_token) {
             return errorHandler(error);
         });
 }
+export async function getUserCrud(auth_token, id_user) {
+    return axios
+        .get(`${config.api_url}/users/${id_user}`, {
+            headers: {
+                Authorization: `Token ${auth_token}`,
+            },
+        })
+        .then(json => {
+            let response = {
+                success: true,
+                result: json.data,
+            };
+
+            return response;
+        })
+        .catch(error => errorHandler(error));
+}
+
 
 export async function getUsersCrud(auth_token) {
     return axios
@@ -81,6 +99,67 @@ export async function editUserCrud(data, auth_token) {
                 Authorization: `Token ${auth_token}`,
             },
         })
+        .then((json) => {
+            let response = {
+                success: true,
+                result: json.data,
+            };
+
+            return response;
+
+        })
+        .catch((error) => {
+            return errorHandler(error);
+        });
+}
+
+export async function editUserProfile(data, auth_token) {
+
+    let form_data = new FormData();
+
+    if (typeof data.picture !== "string" && data.picture !== null) {
+        form_data.append("picture", data.picture);
+    }
+
+
+    form_data.append("name", data.name);
+    form_data.append("last_name", data.last_name);
+    form_data.append("email", data.email);
+    form_data.append("legajo", data.legajo);
+    form_data.append("phone", data.phone ? data.phone : "");
+    form_data.append("date_of_birth", data.date_of_birth);
+    form_data.append("direccion", data.direccion);
+    form_data.append("localidad", data.localidad);
+    form_data.append("provincia", data.provincia);
+
+    form_data.append("cargo", data.cargo);
+
+    return axios.patch(`${config.api_url}/users/${data.id}/`, form_data, {
+        headers: {
+            Authorization: `Token ${auth_token}`,
+        },
+    })
+        .then((json) => {
+            let response = {
+                success: true,
+                result: json.data,
+            };
+
+            return response;
+
+        })
+        .catch((error) => {
+            return errorHandler(error);
+        });
+}
+
+export async function changeUserPassword(data, auth_token) {
+
+    return axios.patch(`${config.api_url}/users/change_password/`, data, {
+        headers: {
+            Authorization: `Token ${auth_token}`,
+        },
+    })
         .then((json) => {
             let response = {
                 success: true,

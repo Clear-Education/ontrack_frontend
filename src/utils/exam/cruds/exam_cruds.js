@@ -3,12 +3,13 @@ import axios from 'axios';
 import errorHandler from "../../error_handler";
 
 
-export async function getExamsCrud(token,subject_id){
+export async function getExamsCrud(token,subject_id,_anio_lectivo_id){
     return await axios
-    .get(`${config.api_url}/materia/${subject_id}/evaluacion/list/`,{ //TODO cambiar cuando tenga year id
+    .get(`${config.api_url}/materia/${subject_id}/evaluacion/list/`,{ 
         headers:{
             Authorization: `Token ${token}`
-        }
+        },
+        params:{anio_lectivo:_anio_lectivo_id}
     })
     .then((json) => {
       let response = {

@@ -1,0 +1,19 @@
+.students_container{
+    max-height: 150px;
+    overflow: auto;
+}
+.student_container{
+    background-color: var(--medium-gray);
+    font-size: 14px;
+    text-align: left;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.selected{
+    background-color: var(--main-color-dark);
+    color: var(--white);
+    font-weight: 600;
+}

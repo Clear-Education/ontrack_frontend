@@ -2,9 +2,10 @@
   --main-color-dark: #004d67;
   --black: #303030;
   --white: #f7f7f7;
-  --gray: #868686;
+  --white: #f7f7f7;
+  --gray: #e8e8e8;
   --medium-gray: #79797933;
-  --light-gray: #f7f7f7;
+  --secondary-gray: #cecece33;
   --orange: #e4710fba;
   --red: #9c3838;
   --green: rgb(33, 105, 63);
@@ -34,6 +35,27 @@ body {
   margin-right: auto;
 }
 
+
+/* SWITCH MATERIAL UI */
+.MuiSwitch-colorPrimary.Mui-checked{
+  color: var(--main-color-dark) !important;
+}
+
+.MuiSwitch-colorPrimary.Mui-checked + .MuiSwitch-track{
+  background-color: var(--main-color-dark) !important;
+}
+
+/* CHECKBOX MUI */
+.MuiCheckbox-colorSecondary.Mui-checked{
+  color: var(--main-color-dark) !important;
+}
+
+/* Avatars Material UI */
+.MuiAvatar-root.MuiAvatar-circle.MuiAvatar-colorDefault{
+  height: 30px;
+  width: 30px;
+}
+
 /* Modales responsive */
 
 .responsive_modal {
@@ -48,14 +70,23 @@ body {
 }
 
 /* Inputs form login y reset pass */
-
-.MuiInputLabel-animated{
-  color: var(--gray) !important;
+.MuiInputBase-root.MuiOutlinedInput-root.MuiInputBase-formControl{
+  padding: 5px;
 }
 
+.MuiInput-underline:after{
+  border-bottom: 2px solid var(--main-color-dark) !important;
+}
+
+.MuiInputLabel-animated{
+  color: var(--black) !important;
+}
+.MuiOutlinedInput-input{
+  padding: 10.5px 14px !important;
+}
 .MuiInputLabel-outlined.MuiInputLabel-shrink {
   background-color: #f1f1f1;
-  color: var(--gray);
+  color: var(--main-color-dark) !important;
   font-weight: bold;
 }
 .MuiInputLabel-outlined:focus.MuiInputLabel-shrink:focus{
@@ -120,13 +151,13 @@ h6.MuiTypography-root {
 }
 .MuiPaper-root.MuiPaper-elevation4.MuiPaper-rounded{
   box-shadow: none;
-  background-color: var(--light-gray);
+  background-color: var(--white);
   border-radius: 10px;
   padding: 10px;
 }
 
 .MuiTableCell-head{
-  background-color: var(--light-gray) !important;
+  background-color: var(--white) !important;
 }
 
 /* Circular progress */
@@ -196,6 +227,10 @@ button:focus {
   background-color: var(--red);
 }
 
+.subtitle {
+  color: var(--orange);
+}
+
 /* STEPPER */
 
 .MuiStepIcon-root.MuiStepIcon-active,.MuiStepIcon-root.MuiStepIcon-completed{
@@ -204,10 +239,10 @@ button:focus {
 .MuiStepConnector-lineVertical{
   min-height: 10px !important;
 }
-.MuiStepLabel-label{
-text-align: left !important;
-}
 
+.MuiStepper-alternativeLabel{
+  width: 100%;
+}
 
 
 .MuiTableCell-root:focus{

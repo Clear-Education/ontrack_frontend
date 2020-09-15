@@ -2,7 +2,6 @@ import store from '../../redux/store'
 import { forcedLogout } from '../../redux/actions/userActions';
 
 const handleCrudErrors = (error) => {
-  console.log(error.response);
     let response = {};
     if (error.response) {
       if (error.response.status === 400) {
@@ -11,7 +10,7 @@ const handleCrudErrors = (error) => {
           unauthorized: false,
           result: [
             {
-              message: error.response.data.detail,
+              message: error.response.data.length > 0 ? error.response.data[0] : error.response.data.detail,
             },
           ],
         };

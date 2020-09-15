@@ -76,10 +76,10 @@ const StudentTable = ({ changeAction, data, handleSelectedStudentTable }) => {
             >
                 <Row className={styles.table_button_container}>
                     <Col>
-                        <button onClick={() => handleTableToShow('add')} className="ontrack_btn add_btn" style={{ padding: 10 }}>Agregar alumnos</button>
+                        <button onClick={() => handleTableToShow('add')} className="ontrack_btn add_btn" style={{ padding: 10 }}>Agregar alumnos al curso</button>
                     </Col>
                     <Col>
-                        <button onClick={() => handleTableToShow('delete')} className="ontrack_btn delete_btn" style={{ padding: 10 }}>Eliminar alumnos</button>
+                        <button onClick={() => handleTableToShow('delete')} className="ontrack_btn delete_btn" style={{ padding: 10 }}>Quitar alumnos del curso</button>
                     </Col>
                 </Row>
                 {

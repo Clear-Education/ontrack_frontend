@@ -2,51 +2,50 @@ import TitlePage from "../../../src/components/commons/title_page/title_page";
 import styles from './styles.module.scss'
 import { useSelector } from "react-redux";
 import { useState } from "react";
-import useSWR, { mutate } from "swr";
+import useSWR from "swr";
 import config from "../../../src/utils/config";
 import BackgroundLoader from "../../../src/components/commons/background_loader/background_loader";
-import { getSeguimientosService, addSeguimientosService } from "../../../src/utils/Seguimientos/services/Seguimientos_services";
-import Modal from "../../../src/components/commons/modals/modal";
 import { IconButton, Link } from "@material-ui/core";
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import { motion } from "framer-motion";
 import { Row, Col } from "react-bootstrap";
 import MUIDataTable from "mui-datatables";
 import MTConfig from "../../../src/utils/table_options/MT_config";
+import { getTrackingService } from "../../../src/utils/tracking/services/tracking_services";
+import { useRouter } from "next/dist/client/router";
 
 
 const Seguimientos = () => {
 
     const url = `${config.api_url}/`
-    const [selectedData, setSelectedData] = useState()
+    const [trackingData, setTrackingData] = useState([])
     const user = useSelector((store) => store.user);
     const [isLoading, setIsLoading] = useState(false)
+    const router = useRouter();
 
 
 
-    /* 
-        let { data } = useSWR(url, () => {
-            setIsLoading(true);
-            return getSeguimientosService(user.user.token).then((result) => {
-                setIsLoading(false)
-                return result.result
-            })
-        }
-        );
-     */
-
-
-    async function addSeguimientos(e, data) {
-        e.preventDefault();
+    useSWR(url, () => {
         setIsLoading(true);
-        return await addSeguimientosService(user.user.token, data).then((result) => {
-            setIsLoading(false);
-            mutate(url);
-            return result;
+        return getTrackingService(user.user.token).then((result) => {
+            setIsLoading(false)
+            let trackings = [...result.result.results];
+            let parsedTrackings = [];
+            trackings.map((tracking) => {
+                let newTrackingData = {
+                    id: tracking.id,
+                    nombre: tracking.nombre,
+                    descripcion: tracking.descripcion,
+                    fecha_inicio: tracking.fecha_inicio,
+                    fecha_cierre: tracking.fecha_cierre,
+                    estado: tracking.en_progreso ? 'En progreso' : 'Finalizado'
+                }
+                parsedTrackings.push(newTrackingData);
+            })
+            setTrackingData(parsedTrackings);
         })
     }
-
-
+    );
 
 
     return (
@@ -65,9 +64,9 @@ const Seguimientos = () => {
                         <Col lg={6} md={6} sm={6} xs={6} className={styles.add_btn_container}>
                             {
                                 user.user.groups === "Pedagogía" ?
-                                <Link href="seguimientos/nuevo">
-                                  <button className="ontrack_btn add_btn">Nuevo Seguimiento</button>
-                                </Link>
+                                    <Link href="seguimientos/nuevo">
+                                        <button className="ontrack_btn add_btn">Nuevo Seguimiento</button>
+                                    </Link>
                                     : null
                             }
                         </Col>
@@ -79,7 +78,7 @@ const Seguimientos = () => {
                         style={{ marginTop: 20 }}
                     >
                         <MUIDataTable
-                            data={selectedData}
+                            data={trackingData}
                             options={MTConfig("Seguimientos").options}
                             components={MTConfig().components}
                             localization={MTConfig().localization}
@@ -102,8 +101,12 @@ const Seguimientos = () => {
                                     label: "Descripción",
                                 },
                                 {
-                                    name: "encargado",
-                                    label: "Encargado",
+                                    name: "fecha_inicio",
+                                    label: "Inicio",
+                                },
+                                {
+                                    name: "fecha_cierre",
+                                    label: "Fin",
                                 },
                                 {
                                     name: "estado",
@@ -114,11 +117,14 @@ const Seguimientos = () => {
                                     label: "Acciones",
                                     options: {
                                         customBodyRender: (value, tableMeta, updateValue) => {
+                                           
                                             return (
                                                 <>
-                                                    <IconButton onClick={() => setSelectedData(tableMeta.rowData[0])} >
-                                                        <ArrowForwardIosIcon />
-                                                    </IconButton>
+                                                    <Link href={`seguimientos/${tableMeta.rowData[0]}`}> 
+                                                        <IconButton>
+                                                            <ArrowForwardIosIcon />
+                                                        </IconButton>
+                                                    </Link>
                                                 </>
                                             )
                                         },

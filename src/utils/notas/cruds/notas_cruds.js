@@ -91,7 +91,6 @@ export async function editNotasCrud(auth_token, data) {
 
 
 export async function deleteNotasCrud(auth_token, data) {
-    console.log(data);
     return axios.delete(`${config.api_url}/calificaciones/${data.id_calificacion}/`, {
         headers: {
             Authorization: `Token ${auth_token}`,

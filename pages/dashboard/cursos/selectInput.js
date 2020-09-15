@@ -12,12 +12,12 @@ import { getSchoolYearService } from "../../../src/utils/school_year/services/sc
 
 
 const INITIAL_STATE = {
-    school_year: '',
+    anio_lectivo: '',
     department: '',
     year: '',
     curso: ''
 }
-const SelectInput = ({ type, data ,changeAction}) => {
+const SelectInput = ({ type, data, changeAction }) => {
 
     const [renderType, setRenderType] = useState();
     const [state, setState] = useState(data ? data : INITIAL_STATE);
@@ -28,40 +28,40 @@ const SelectInput = ({ type, data ,changeAction}) => {
     const [courseData, setCourseData] = useState(null)
 
     const handleChange = (prop) => (event) => {
-        changeAction(prop,event.target.value);
+        changeAction(prop, event.target.value);
     };
 
-    useEffect(()=>{
+    useEffect(() => {
         setState(data);
-    },[data]);
-    
-    useEffect(()=>{
-        if(type === 'department'){
+    }, [data]);
+
+    useEffect(() => {
+        if (type === 'department') {
             getDepartmentService(user.user.token).then((result) => {
                 setDepartmentData(result.result);
             })
         }
-    },[])
+    }, [])
 
-    useEffect(()=>{
-        if(type === 'anio_lectivo'){
+    useEffect(() => {
+        if (type === 'anio_lectivo') {
             getSchoolYearService(user.user.token).then((result) => {
                 setSchoolYearData(result.result);
             })
         }
-    },[state.department])
+    }, [state.department])
 
 
     useEffect(() => {
-        if (state.department !== '' && state.school_year !== '' && type==='year') {
+        if (state.department !== '' && state.anio_lectivo !== '' && type === 'year') {
             getYearService(user.user.token, state.department).then((result) => {
                 setYearData(result.result);
             })
         }
-    }, [state.school_year])
+    }, [state.anio_lectivo])
 
     useEffect(() => {
-        if (state.year !== '' && type==='curso') {
+        if (state.year !== '' && type === 'curso') {
             getCourseService(user.user.token, state.year).then((result) => {
                 setCourseData(result.result);
             })
@@ -74,7 +74,7 @@ const SelectInput = ({ type, data ,changeAction}) => {
 
     return (
         <>
-        {renderType === 'department' ?
+            {renderType === 'department' ?
                 <FormControl variant="outlined">
                     <InputLabel id="department">Carrera</InputLabel>
                     <Select
@@ -93,67 +93,67 @@ const SelectInput = ({ type, data ,changeAction}) => {
                         })}
                     </Select>
                 </FormControl>
-                :renderType === 'anio_lectivo' ?
-                <FormControl variant="outlined">
-                    <InputLabel id="anio_lectivo">Año Lectivo</InputLabel>
-                    <Select
-                        labelId="anio_lectivo"
-                        id="anio_lectivo"
-                        value={state.school_year}
-                        onChange={handleChange("school_year")}
-                    >
-                        <MenuItem value="">
-                            <em>Seleccionar</em>
-                        </MenuItem>
-                        {schoolYearData && schoolYearData.map((department) => {
-                            return (
-                                <MenuItem value={department.id} key={department.id}>{department.nombre}</MenuItem>
-                            )
-                        })}
-                    </Select>
-                </FormControl>
-                : renderType === 'year' ?
+                : renderType === 'anio_lectivo' ?
                     <FormControl variant="outlined">
-                        <InputLabel id="department">Año</InputLabel>
+                        <InputLabel id="anio_lectivo">Año Lectivo</InputLabel>
                         <Select
-                            labelId="year"
-                            id="year"
-                            value={state.year}
-                            onChange={handleChange("year")}
-                            disabled={state.department === ''}
+                            labelId="anio_lectivo"
+                            id="anio_lectivo"
+                            value={state.anio_lectivo}
+                            onChange={handleChange("anio_lectivo")}
                         >
                             <MenuItem value="">
                                 <em>Seleccionar</em>
                             </MenuItem>
-                            {yearData && yearData.map((year) => {
+                            {schoolYearData && schoolYearData.map((department) => {
                                 return (
-                                    <MenuItem value={year.id} key={year.id}>{year.nombre}</MenuItem>
+                                    <MenuItem value={department.id} key={department.id}>{department.nombre}</MenuItem>
                                 )
                             })}
                         </Select>
                     </FormControl>
-                    :
-                    <FormControl variant="outlined">
-                        <InputLabel id="curso">Curso</InputLabel>
-                        <Select
-                            labelId="curso"
-                            id="curso"
-                            value={state.curso}
-                            disabled={state.year === ''}
-                            onChange={handleChange("curso")}
-                        >
-                            <MenuItem value="">
-                                <em>Seleccionar</em>
-                            </MenuItem>
-                            {courseData && courseData.map((course) => {
-                                return (
-                                    <MenuItem value={course.id} key={course.id}>{course.nombre}</MenuItem>
-                                )
-                            })}
+                    : renderType === 'year' ?
+                        <FormControl variant="outlined">
+                            <InputLabel id="department">Año</InputLabel>
+                            <Select
+                                labelId="year"
+                                id="year"
+                                value={state.year}
+                                onChange={handleChange("year")}
+                                disabled={state.department === ''}
+                            >
+                                <MenuItem value="">
+                                    <em>Seleccionar</em>
+                                </MenuItem>
+                                {yearData && yearData.map((year) => {
+                                    return (
+                                        <MenuItem value={year.id} key={year.id}>{year.nombre}</MenuItem>
+                                    )
+                                })}
+                            </Select>
+                        </FormControl>
+                        :
+                        <FormControl variant="outlined">
+                            <InputLabel id="curso">Curso</InputLabel>
+                            <Select
+                                labelId="curso"
+                                id="curso"
+                                value={state.curso}
+                                disabled={state.year === ''}
+                                onChange={handleChange("curso")}
+                            >
+                                <MenuItem value="">
+                                    <em>Seleccionar</em>
+                                </MenuItem>
+                                {courseData && courseData.map((course) => {
+                                    return (
+                                        <MenuItem value={course.id} key={course.id}>{course.nombre}</MenuItem>
+                                    )
+                                })}
 
-                        </Select>
-                    </FormControl>
-            }            
+                            </Select>
+                        </FormControl>
+            }
 
         </>
 
