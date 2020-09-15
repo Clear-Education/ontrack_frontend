@@ -87,6 +87,15 @@ const AddEditStudentForm = (props) => {
 
 
     const hadleValidation = (prop, value) => {
+        if (prop == "dni") {
+            if (value.toString().length != 8) {
+                setValidation({
+                    ...validation,
+                    [prop]: true
+                })
+                return
+            }
+        }
         setValidation({
             ...validation,
             [prop]: !(value.trim().length > 0),
@@ -100,7 +109,7 @@ const AddEditStudentForm = (props) => {
 
     };
 
-    const handleChangeCountryRegion = (prop, value) =>{
+    const handleChangeCountryRegion = (prop, value) => {
         setState({ ...state, [prop]: value })
     }
 
@@ -133,6 +142,11 @@ const AddEditStudentForm = (props) => {
             parseData['fecha_inscripcion'] = convertDate(parseData['fecha_inscripcion']);
         }
 
+        if (validation.dni == true) {
+            e.preventDefault()
+            setIsLoading(false);
+            return
+        }
         props.handleSubmitAction(e, parseData).then((result) => {
             setIsLoading(false)
             if (result.success) {
@@ -224,7 +238,7 @@ const AddEditStudentForm = (props) => {
                                             className="helper-text"
                                             style={{ color: "rgb(182, 60, 47)" }}
                                         >
-                                            Esta campo no puede estar vacio
+                                            Introduzca un número válido de DNI
                                         </FormHelperText>
                                     )}
                                 </motion.li>
@@ -349,8 +363,8 @@ const AddEditStudentForm = (props) => {
                             </Col>
                         </Row>
 
-                        <div style={{margin:15}}>
-                            <CountrySelector setState={handleChangeCountryRegion}/>
+                        <div style={{ margin: 15 }}>
+                            <CountrySelector setState={handleChangeCountryRegion} />
                         </div>
 
                         <motion.li variants={item}>
