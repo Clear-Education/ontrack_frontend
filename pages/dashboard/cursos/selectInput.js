@@ -12,7 +12,7 @@ import { getSchoolYearService } from "../../../src/utils/school_year/services/sc
 
 
 const INITIAL_STATE = {
-    school_year: '',
+    anio_lectivo: '',
     department: '',
     year: '',
     curso: ''
@@ -44,7 +44,7 @@ const SelectInput = ({ type, data, changeAction }) => {
     }, [])
 
     useEffect(() => {
-        if (type === 'school_year') {
+        if (type === 'anio_lectivo') {
             getSchoolYearService(user.user.token).then((result) => {
                 setSchoolYearData(result.result);
             })
@@ -53,12 +53,12 @@ const SelectInput = ({ type, data, changeAction }) => {
 
 
     useEffect(() => {
-        if (state.department !== '' && state.school_year !== '' && type === 'year') {
+        if (state.department !== '' && state.anio_lectivo !== '' && type === 'year') {
             getYearService(user.user.token, state.department).then((result) => {
                 setYearData(result.result);
             })
         }
-    }, [state.school_year])
+    }, [state.anio_lectivo])
 
     useEffect(() => {
         if (state.year !== '' && type === 'curso') {
@@ -93,14 +93,14 @@ const SelectInput = ({ type, data, changeAction }) => {
                         })}
                     </Select>
                 </FormControl>
-                : renderType === 'school_year' ?
+                : renderType === 'anio_lectivo' ?
                     <FormControl variant="outlined">
-                        <InputLabel id="school_year">Año Lectivo</InputLabel>
+                        <InputLabel id="anio_lectivo">Año Lectivo</InputLabel>
                         <Select
-                            labelId="school_year"
-                            id="school_year"
-                            value={state.school_year}
-                            onChange={handleChange("school_year")}
+                            labelId="anio_lectivo"
+                            id="anio_lectivo"
+                            value={state.anio_lectivo}
+                            onChange={handleChange("anio_lectivo")}
                         >
                             <MenuItem value="">
                                 <em>Seleccionar</em>
