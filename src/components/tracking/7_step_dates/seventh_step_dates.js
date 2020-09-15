@@ -24,8 +24,8 @@ const SeventhStepDates = ({ handleGlobalState }) => {
         setMaxDate(trackingData.fecha_hasta)
         setState({
             ...state,
-            ["fecha_desde"]: trackingData.fecha_inicio_seguimiento == '' ? null : trackingData.fecha_inicio_seguimiento,
-            ["fecha_hasta"]: trackingData.fecha_fin_seguimiento == '' ? null : trackingData.fecha_fin_seguimiento
+            ["fecha_desde"]: trackingData.fecha_inicio_seguimiento == undefined ? null : trackingData.fecha_inicio_seguimiento,
+            ["fecha_hasta"]: trackingData.fecha_fin_seguimiento == undefined ? null : trackingData.fecha_fin_seguimiento
         })
     }, [])
 
