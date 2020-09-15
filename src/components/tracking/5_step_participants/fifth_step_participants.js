@@ -5,6 +5,7 @@ import MTConfig from "../../../utils/table_options/MT_config";
 import { useSelector } from "react-redux";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core";
 import { getUserService } from "../../../utils/user/service/user_services";
+import styles from './styles.module.scss';
 
 const theme = createMuiTheme({
     palette: {
@@ -81,84 +82,87 @@ const FifthStepParticipants = ({ handleGlobalState }) => {
     }, [selectedUsers]);
 
     return (
-        <Row style={{ margin: 0, justifyContent: 'center' }}>
-            <Col
-                md={11}
-                sm={11}
-                xs={11}
-                style={{ margin: '30px 0px 30px 0px' }}
-            >
-                {
-                    isLoading ?
-                        "Cargando..." :
-                        <MuiThemeProvider theme={theme}>
-                            <MUIDataTable
-                                data={userData}
-                                options={
-                                    {
-                                        searchFieldStyle: { width: '30%', margin: 'auto', marginRight: '0px' },
-                                        selection: true,
-                                        onRowSelectionChange: (users) => handleSelectUsers(users),
-                                        selectToolbarPlacement: 'none',
-                                        actionsColumnIndex: -1,
-                                        downloadOptions: { filename: `Materias.csv` },
-                                        viewColumns: false,
-                                        sort: true,
-                                        filter: true,
-                                        responsive: 'standard',
-                                        textLabels: {
-                                            body: {
-                                                noMatch: "No se encontraron registros",
-                                            },
-                                            pagination: {
-                                                next: "Siguiente Página",
-                                                previous: "Página Anterior",
-                                                rowsPerPage: "Filas por página:",
-                                                displayRows: "de",
-                                            },
-                                            toolbar: {
-                                                search: "Buscar",
-                                                downloadCsv: "Descargar CSV",
-                                                print: "Imprimir",
-                                            },
+        <Row style={{ margin: 0, justifyContent: 'center', marginBottom:'20px' }}>
+            {
+                isLoading ?
+                    <span style={{display:'block', width:'100%', margin:'20px 0px 20px 0px'}}>Cargando...</span> :
+                    <>
+                        <div className={styles.message_alert}>
+                            Recuerde que para poder ver el seguimiento creado, debe agregarse como participante del mismo
+                        </div>
+                        <Col
+                            md={11}
+                            sm={11}
+                            xs={11}
+                        >
+                            <MuiThemeProvider theme={theme}>
+                                <MUIDataTable
+                                    data={userData}
+                                    options={
+                                        {
+                                            searchFieldStyle: { width: '30%', margin: 'auto', marginRight: '0px' },
+                                            selection: true,
+                                            onRowSelectionChange: (users) => handleSelectUsers(users),
+                                            selectToolbarPlacement: 'none',
+                                            actionsColumnIndex: -1,
+                                            downloadOptions: { filename: `Materias.csv` },
+                                            viewColumns: false,
+                                            sort: true,
+                                            filter: true,
+                                            responsive: 'standard',
+                                            textLabels: {
+                                                body: {
+                                                    noMatch: "No se encontraron registros",
+                                                },
+                                                pagination: {
+                                                    next: "Siguiente Página",
+                                                    previous: "Página Anterior",
+                                                    rowsPerPage: "Filas por página:",
+                                                    displayRows: "de",
+                                                },
+                                                toolbar: {
+                                                    search: "Buscar",
+                                                    downloadCsv: "Descargar CSV",
+                                                    print: "Imprimir",
+                                                },
+                                            }
+
                                         }
-
                                     }
-                                }
-                                components={MTConfig().components}
-                                localization={MTConfig().localization}
-                                columns={[
+                                    components={MTConfig().components}
+                                    localization={MTConfig().localization}
+                                    columns={[
 
-                                    {
-                                        name: "id",
-                                        label: "Id",
-                                        options: {
-                                            display: false
+                                        {
+                                            name: "id",
+                                            label: "Id",
+                                            options: {
+                                                display: false
+                                            },
+
                                         },
-
-                                    },
-                                    {
-                                        name: "name",
-                                        label: "Nombre",
-                                    },
-                                    {
-                                        name: "last_name",
-                                        label: "Apellido",
-                                    },
-                                    {
-                                        name: "legajo",
-                                        label: "Legajo",
-                                    },
-                                    {
-                                        name: "email",
-                                        label: "Email",
-                                    },
-                                ]}
-                            />
-                        </MuiThemeProvider>
-                }
-
-            </Col>
+                                        {
+                                            name: "name",
+                                            label: "Nombre",
+                                        },
+                                        {
+                                            name: "last_name",
+                                            label: "Apellido",
+                                        },
+                                        {
+                                            name: "legajo",
+                                            label: "Legajo",
+                                        },
+                                        {
+                                            name: "email",
+                                            label: "Email",
+                                        },
+                                    ]}
+                                />
+                            </MuiThemeProvider>
+                        </Col>
+                    </>
+            }
         </Row>
 
     )

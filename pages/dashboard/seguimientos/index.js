@@ -2,11 +2,9 @@ import TitlePage from "../../../src/components/commons/title_page/title_page";
 import styles from './styles.module.scss'
 import { useSelector } from "react-redux";
 import { useState } from "react";
-import useSWR, { mutate } from "swr";
+import useSWR from "swr";
 import config from "../../../src/utils/config";
 import BackgroundLoader from "../../../src/components/commons/background_loader/background_loader";
-import { getSeguimientosService, addSeguimientosService } from "../../../src/utils/Seguimientos/services/Seguimientos_services";
-import Modal from "../../../src/components/commons/modals/modal";
 import { IconButton, Link } from "@material-ui/core";
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import { motion } from "framer-motion";
@@ -20,7 +18,6 @@ import { useRouter } from "next/dist/client/router";
 const Seguimientos = () => {
 
     const url = `${config.api_url}/`
-    const [selectedData, setSelectedData] = useState();
     const [trackingData, setTrackingData] = useState([])
     const user = useSelector((store) => store.user);
     const [isLoading, setIsLoading] = useState(false)
@@ -49,19 +46,6 @@ const Seguimientos = () => {
         })
     }
     );
-
-
-    async function addSeguimientos(e, data) {
-        e.preventDefault();
-        setIsLoading(true);
-        return await addSeguimientosService(user.user.token, data).then((result) => {
-            setIsLoading(false);
-            mutate(url);
-            return result;
-        })
-    }
-
-
 
 
     return (

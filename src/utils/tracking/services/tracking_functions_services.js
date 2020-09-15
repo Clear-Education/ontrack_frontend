@@ -21,7 +21,7 @@ export const parseParticipants = (participants) => {
 
 export const parseTrackingData = (data) => {
     return {
-        nombre:  'data.nombre1',
+        nombre:  data.nombre,
         descripcion: data.descripcion,
         fecha_cierre: convertDate(data.fecha_fin_seguimiento),
         alumnos: data.alumnos,

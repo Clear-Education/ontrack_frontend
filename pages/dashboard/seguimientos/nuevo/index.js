@@ -159,7 +159,7 @@ const CreateTracking = () => {
     useEffect(() => {
         dispatch({ type: types.RESET_TRACKING_DATA });
         setGlobalTrackingData(trackingData)
-        setActiveStep(trackingData.current_step ? 7 : 0);
+        setActiveStep(trackingData.current_step ? trackingData.current_step : 0);
     }, [])
 
     useEffect(() => {
@@ -179,12 +179,12 @@ const CreateTracking = () => {
         if (name === 'role') {
             let roles;
             for (let index = 0; index < trackingData.integrantes.length; index++) {
-                roles = trackingData.integrantes[index].role === '';
-                if (roles) {
+                roles = trackingData.integrantes[index].role;
+                if (roles === undefined || roles === '' ) {
                     break
                 };
             }
-            return !roles;
+            return !(roles === undefined || roles === '');
         }
         if (name === 'goals') {
             const promedio = globalTrackingData.promedio;
