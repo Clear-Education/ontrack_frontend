@@ -18,9 +18,9 @@ const theme = createMuiTheme({
 
 });
 
-const ThirdStepStudent = ({ handleGlobalState }) => {
+const ThirdStepStudentSolicitud = ({ handleGlobalState }) => {
 
-    const trackingData = useSelector((store) => store.tracking);
+    const trackingData = useSelector((store) => store.trackingSolicitud);
     const [studentData, setStudentData] = useState(trackingData.alumnos);
     const [selectedStudents, setSelectedStudents] = useState([])
     const user = useSelector((store) => store.user);
@@ -161,4 +161,4 @@ const ThirdStepStudent = ({ handleGlobalState }) => {
     )
 }
 
-export default ThirdStepStudent
+export default ThirdStepStudentSolicitud

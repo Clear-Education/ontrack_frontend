@@ -6,12 +6,12 @@ export const convertDate = (inputFormat) => {
     return [pad(d.getDate()), pad(d.getMonth() + 1), d.getFullYear()].join("/");
 }
 
-export const parseParticipants = (participants) =>{
+export const parseParticipants = (participants) => {
     let participantsData = [];
-    participants.map((participant)=>{
+    participants.map((participant) => {
         let newParticipant = {
             usuario: participant.id,
-            rol: participant.role 
+            rol: participant.role
         }
         participantsData.push(newParticipant);
     })
@@ -19,15 +19,15 @@ export const parseParticipants = (participants) =>{
 }
 
 
-export const parseTrackingData = (data) =>{
+export const parseTrackingData = (data) => {
     return {
-        nombre:  'data.nombre1',
+        nombre:  data.nombre,
         descripcion: data.descripcion,
-        fecha_cierre: convertDate(data.fecha_hasta),
+        fecha_cierre: convertDate(data.fecha_fin_seguimiento),
         alumnos: data.alumnos,
         materias: data.materias,
         integrantes: parseParticipants(data.integrantes),
         anio_lectivo: data.anio_lectivo
-     }
- 
+    }
+
 }

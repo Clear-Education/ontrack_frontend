@@ -8,34 +8,47 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 
 const INITIAL_STATE = {
-    fecha_desde: '',
-    fecha_hasta: ''
+    fecha_desde: null,
+    fecha_hasta: null
 }
 
 const SeventhStepDates = ({ handleGlobalState }) => {
 
+    const [minDate, setMinDate] = useState("")
+    const [maxDate, setMaxDate] = useState("");
     const [state, setState] = useState(INITIAL_STATE);
     const trackingData = useSelector((store) => store.tracking);
 
-
     useEffect(() => {
+        setMinDate(trackingData.fecha_desde)
+        setMaxDate(trackingData.fecha_hasta)
         setState({
             ...state,
-            fecha_desde: trackingData.fecha_desde,
-            fecha_hasta: trackingData.fecha_hasta
+            ["fecha_desde"]: trackingData.fecha_inicio_seguimiento == '' ? null : trackingData.fecha_inicio_seguimiento,
+            ["fecha_hasta"]: trackingData.fecha_fin_seguimiento == '' ? null : trackingData.fecha_fin_seguimiento
         })
     }, [])
 
+    const convertDate = (inputFormat) => {
+        function pad(s) {
+            return s < 10 ? "0" + s : s;
+        }
+        var d = new Date(inputFormat);
+        return [d.getFullYear(), pad(d.getMonth() + 1), pad(d.getDate())].join("-");
+    }
+
 
     const handleStartDate = (date) => {
+        let dateFormatted = convertDate(date)
+
         setState({ ...state, ["fecha_desde"]: date });
-        handleGlobalState("fecha_desde", date);
+        handleGlobalState("fecha_inicio_seguimiento", dateFormatted);
     }
 
     const handleEndDate = (date) => {
-
+        let dateFormatted = convertDate(date)
         setState({ ...state, ["fecha_hasta"]: date });
-        handleGlobalState("fecha_hasta", date);
+        handleGlobalState("fecha_fin_seguimiento", dateFormatted);
     }
 
 
@@ -57,8 +70,12 @@ const SeventhStepDates = ({ handleGlobalState }) => {
                                     value={state.fecha_desde}
                                     placeholder="DD/MM/YYYY"
                                     onChange={date => handleStartDate(date)}
+                                    minDate={new Date(minDate)}
+                                    maxDate={new Date(maxDate)}
                                     format="dd/MM/yyyy"
                                     invalidDateMessage="Formato de fecha inválido"
+                                    minDateMessage="La fecha no debería ser menor a la fecha de Inicio del Año Lectivo seleccionado"
+                                    maxDateMessage="La fecha no debería ser mayor a la fecha de fin del Año Lectivo seleccionado"
                                     required
                                 />
                             </Col>
@@ -72,9 +89,13 @@ const SeventhStepDates = ({ handleGlobalState }) => {
                                     value={state.fecha_hasta}
                                     onChange={date => handleEndDate(date)}
                                     format="dd/MM/yyyy"
-                                    minDate={state.fecha_desde}
+                                    minDate={new Date(state.fecha_desde)}
+                                    maxDate={new Date(maxDate)}
                                     invalidDateMessage="Formato de fecha inválido"
+                                    minDateMessage="La fecha no debería ser menor a la fecha de Inicio del Seguimiento"
+                                    maxDateMessage="La fecha no debería ser mayor a la fecha de fin del Año Lectivo seleccionado"
                                     required
+                                    disabled={state.fecha_desde == null ? true : false}
                                 />
                             </Col>
                         </Row>

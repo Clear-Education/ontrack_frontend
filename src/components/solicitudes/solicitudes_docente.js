@@ -17,44 +17,44 @@ import MTConfig from "../../../src/utils/table_options/MT_config";
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 
 
-const INITIAL_DATA = [{
-    nombre: "Seguimiento Francisco Perez",
-    descripcion: "Seguimiento para francisco Perez",
-    fecha: "20/10/2020",
-    alumnos: ["Francisco Perez", "Juan Rodriguez"],
-    estado: "Rechazado",
-    respuesta: "No se considera necesario comenzar un seguimiento para el alumno francisco debido a que no tiene bajas calificaciones como usted expresó",
-}]
 const SolicitudesDocente = () => {
 
 
-    const url = `${config.api_url}/`
-    const [selectedData, setSelectedData] = useState(INITIAL_DATA);
+    const url = `${config.api_url}/seguimientos/solicitudes/list/`;
+    const [selectedData, setSelectedData] = useState([]);
     const user = useSelector((store) => store.user);
     const [isLoading, setIsLoading] = useState(false)
 
-    /* 
-        let { data } = useSWR(url, () => {
-            setIsLoading(true);
-            return getSolicitudesService(user.user.token, user.user.id).then((result) => {
-                setIsLoading(false)
-                setSelectedData(result.result)
-                return result.result
-            })
-        }
-        );
-     */
 
-    /* 
-        async function addSolicitudes(e, data) {
-            e.preventDefault();
-            setIsLoading(true);
-            return await addSolicitudesService(user.user.token, data).then((result) => {
-                setIsLoading(false);
-                mutate(url);
-                return result;
+    let { data } = useSWR(url, () => {
+        setIsLoading(true);
+        return getSolicitudesService(user.user.token).then((result) => {
+            setIsLoading(false)
+            let trackings = [...result.result.results];
+            let parsedTrackings = [];
+            trackings.map((tracking) => {
+                let newTrackingData = {
+                    motivo_solicitud: tracking.motivo_solicitud,
+                    alumnos: tracking.alumnos.map(alumno => alumno.alumno.nombre + " " + alumno.alumno.apellido),
+                    fecha_creacion: new Date(tracking.fecha_creacion).toLocaleDateString(),
+                    estado: tracking.estado[tracking.estado.length - 1].estado_solicitud
+                }
+                parsedTrackings.push(newTrackingData);
             })
-        } */
+            setSelectedData(parsedTrackings);
+        })
+    }
+    );
+
+    async function addSolicitudes(e, data) {
+        e.preventDefault();
+        setIsLoading(true);
+        return await addSolicitudesService(user.user.token, data).then((result) => {
+            setIsLoading(false);
+            mutate(url);
+            return result;
+        })
+    }
 
     const getMuiTheme = () => createMuiTheme({
         overrides: {
@@ -115,22 +115,13 @@ const SolicitudesDocente = () => {
                                 components={MTConfig().components}
                                 localization={MTConfig().localization}
                                 columns={[
-
                                     {
-                                        name: "id",
-                                        label: "Id",
-                                        options: {
-                                            display: false
-                                        },
-
+                                        name: "fecha_creacion",
+                                        label: "Fecha Solicitud",
                                     },
                                     {
-                                        name: "fecha",
-                                        label: "Fecha",
-                                    },
-                                    {
-                                        name: "descripcion",
-                                        label: "Descripción",
+                                        name: "motivo_solicitud",
+                                        label: "Motivo",
                                     },
                                     {
                                         name: "alumnos",
@@ -144,10 +135,6 @@ const SolicitudesDocente = () => {
                                     {
                                         name: "estado",
                                         label: "Estado",
-                                    },
-                                    {
-                                        name: "respuesta",
-                                        label: "Respuesta"
                                     },
                                     /*  {
                                          name: "actions",
@@ -184,4 +171,4 @@ const SolicitudesDocente = () => {
 }
 
 
-export default SolicitudesDocente
+export default SolicitudesDocente;
