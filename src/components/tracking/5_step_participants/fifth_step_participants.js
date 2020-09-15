@@ -22,7 +22,7 @@ const FifthStepParticipants = ({ handleGlobalState }) => {
 
     const trackingData = useSelector((store) => store.tracking);
     const [userData, setUserData] = useState(trackingData.materias);
-    const [selectedUsers,setSelectedUsers] = useState([])
+    const [selectedUsers, setSelectedUsers] = useState([])
     const user = useSelector((store) => store.user);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -30,12 +30,13 @@ const FifthStepParticipants = ({ handleGlobalState }) => {
     useEffect(() => {
         setIsLoading(true);
         getUserService(user.user.token).then((result) => {
+            let userFilter = result.result.results.filter(user => user.groups.name == "Pedagogía" || user.groups.name == "Docente")
             setIsLoading(false);
-            setUserData(result.result.results)
+            setUserData(userFilter);
         })
     }, []);
 
-    const getSelectedUsers = (users) =>{
+    const getSelectedUsers = (users) => {
         const filterList = [...userData];
         let users_data = [];
         users.forEach(user => {
@@ -47,38 +48,38 @@ const FifthStepParticipants = ({ handleGlobalState }) => {
     }
 
     const handleSelectUsers = (users) => {
-        if(!!users.length){
+        if (!!users.length) {
             const usersList = getSelectedUsers(users);
             let selectedUsersCopy = [...selectedUsers];
-            usersList.map((user)=>{
-                if(!!selectedUsersCopy.length){
+            usersList.map((user) => {
+                if (!!selectedUsersCopy.length) {
                     let indexOf = -1;
-                    selectedUsersCopy.map((selectedUser,index)=>{
-                        if(selectedUser.id === user.id ){
+                    selectedUsersCopy.map((selectedUser, index) => {
+                        if (selectedUser.id === user.id) {
                             indexOf = index
                         }
                     });
 
-                    if(indexOf === -1){
+                    if (indexOf === -1) {
                         selectedUsersCopy.push(user);
-                    }else{
-                        selectedUsersCopy.splice(indexOf,1);
+                    } else {
+                        selectedUsersCopy.splice(indexOf, 1);
                     }
-    
-                }else{
+
+                } else {
                     selectedUsersCopy.push(user);
                 }
             })
             setSelectedUsers(selectedUsersCopy);
-        }else{
+        } else {
             setSelectedUsers([]);
-        }       
+        }
     }
 
-    useEffect(()=>{
-        handleGlobalState('integrantes',selectedUsers);
-    },[selectedUsers]);
-    
+    useEffect(() => {
+        handleGlobalState('integrantes', selectedUsers);
+    }, [selectedUsers]);
+
     return (
         <Row style={{ margin: 0, justifyContent: 'center' }}>
             <Col

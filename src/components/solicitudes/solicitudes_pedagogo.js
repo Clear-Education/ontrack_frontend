@@ -49,7 +49,6 @@ const SolicitudesPedagogo = () => {
             id,
             estado
         }
-        console.log(data);
         setIsLoading(true);
         return await editEstadoSolicitudService(data, user.user.token).then((result) => {
             setIsLoading(false);

@@ -29,7 +29,7 @@ const ThirdStepStudentSolicitud = ({ handleGlobalState }) => {
 
     useEffect(() => {
         setIsLoading(true);
-        getStudentsCourseService(user.user.token, studentData.curso, studentData.anio_lectivo).then((result) => {
+        getStudentsCourseService(user.user.token, trackingData.curso, trackingData.anio_lectivo).then((result) => {
             setIsLoading(false);
             let students = [];
             result.result.results.forEach((element) => {

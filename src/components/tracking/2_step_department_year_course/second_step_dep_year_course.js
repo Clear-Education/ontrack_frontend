@@ -22,16 +22,16 @@ const SecondStepDepYearCourse = ({ handleGlobalState }) => {
 
 
     const handleChange = (prop, value) => {
-            setState({ ...state, [prop]: value })
-            handleGlobalState(prop,value);
+        setState({ ...state, [prop]: value })
+        handleGlobalState(prop, value);
     }
 
 
     function getSteps() {
         return ['Seleccione la carrera deseada',
-                'Seleccione el año lectivo deseado',
-                'Seleccione el año deseado',
-                'Seleccione el curso deseado',
+            'Seleccione el año lectivo deseado',
+            'Seleccione el año deseado',
+            'Seleccione el curso deseado',
         ];
     }
 

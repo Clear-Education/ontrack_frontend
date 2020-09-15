@@ -37,6 +37,8 @@ import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import * as types from "../../../../redux/types";
 import { addTrackingService } from '../../../../src/utils/tracking/services/tracking_services';
 
+import { getOneSchoolYearService } from "../../../../src/utils/school_year/services/school_year_services";
+
 
 const ColorlibConnector = withStyles({
     alternativeLabel: {
@@ -138,6 +140,8 @@ const INITIAL_TRACKING_DATA = {
     integrantes: [],
     fecha_desde: '',
     fecha_hasta: '',
+    fecha_inicio_seguimiento: '',
+    fecha_fin_seguimiento: '',
     promedio: '',
     asistencia: '',
     cualitativos: [],
@@ -156,6 +160,15 @@ const CreateTracking = () => {
         setGlobalTrackingData(trackingData)
         setActiveStep(trackingData.current_step ? trackingData.current_step : 0);
     }, [])
+
+    useEffect(() => {
+        if (trackingData.anio_lectivo != '') {
+            getOneSchoolYearService(user.user.token, trackingData.anio_lectivo).then((result) => {
+                setGlobalTrackingData({ ...trackingData, ["fecha_desde"]: result.result.fecha_desde, ["fecha_hasta"]: result.result.fecha_hasta })
+            })
+        }
+
+    }, [trackingData.anio_lectivo])
 
     const handleGlobalState = (name, value) => {
         setGlobalTrackingData({ ...globalTrackingData, [name]: value })
@@ -205,7 +218,7 @@ const CreateTracking = () => {
             case 5:
                 return validateEmptyData('role');
             case 6:
-                return globalTrackingData.fecha_desde !== '' && globalTrackingData.fecha_desde !== '31/12/1969' && globalTrackingData.fecha_hasta !== '' && globalTrackingData.fecha_hasta !== '31/12/1969'
+                return Date.parse(globalTrackingData.fecha_inicio_seguimiento) > Date.parse(globalTrackingData.fecha_desde) && Date.parse(globalTrackingData.fecha_fin_seguimiento) < Date.parse(globalTrackingData.fecha_hasta) && Date.parse(globalTrackingData.fecha_fin_seguimiento) > Date.parse(globalTrackingData.fecha_inicio_seguimiento)
             case 7:
                 return validateEmptyData('goals');
             default:
@@ -325,7 +338,7 @@ const CreateTracking = () => {
                                             disabled={isLoading}
                                             className={`ontrack_btn ${activeStep !== steps.length - 1 ? 'add_btn' : 'csv_btn'}`}
                                             onClick={handleNext}
-                                            style={{minWidth:'180px'}}
+                                            style={{ minWidth: '180px' }}
                                         >
                                             {activeStep === steps.length - 1 && !isLoading ? 'Crear Seguimiento' : !isLoading ? 'Siguiente' : 'Creando...'}
                                         </button>

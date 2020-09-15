@@ -20,9 +20,6 @@ const FirstStepInfoSolicitud = ({ handleGlobalState }) => {
     const [validation, setValidation] = useState(VALIDATE_INITIAL_STATE);
     const trackingData = useSelector((store) => store.trackingSolicitud);
 
-
-    console.log(trackingData);
-
     useEffect(() => {
         setState({
             ...state,

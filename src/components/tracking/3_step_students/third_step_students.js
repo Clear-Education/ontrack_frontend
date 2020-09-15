@@ -18,18 +18,18 @@ const theme = createMuiTheme({
 
 });
 
-const ThirdStepStudent = ({handleGlobalState}) => {
+const ThirdStepStudent = ({ handleGlobalState }) => {
 
     const trackingData = useSelector((store) => store.tracking);
     const [studentData, setStudentData] = useState(trackingData.alumnos);
-    const [selectedStudents,setSelectedStudents] = useState([])
+    const [selectedStudents, setSelectedStudents] = useState([])
     const user = useSelector((store) => store.user);
     const [isLoading, setIsLoading] = useState(false);
 
 
     useEffect(() => {
         setIsLoading(true);
-        getStudentsCourseService(user.user.token, studentData.curso, studentData.anio_lectivo).then((result) => {
+        getStudentsCourseService(user.user.token, trackingData.curso, trackingData.anio_lectivo).then((result) => {
             setIsLoading(false);
             let students = [];
             result.result.results.forEach((element) => {
@@ -43,7 +43,7 @@ const ThirdStepStudent = ({handleGlobalState}) => {
         })
     }, []);
 
-    const getStudentCourseIds = (students) =>{
+    const getStudentCourseIds = (students) => {
         const filterList = [...studentData];
         let students_course_id = []
         students.forEach(student => {
@@ -56,27 +56,27 @@ const ThirdStepStudent = ({handleGlobalState}) => {
     }
 
     const handleSelectStudents = (students) => {
-        if(!!students.length){
+        if (!!students.length) {
             const studentCourseList = getStudentCourseIds(students);
             let selectedStudentsCopy = [...selectedStudents];
-            studentCourseList.map((student_course_id)=>{
+            studentCourseList.map((student_course_id) => {
                 let indexOf = selectedStudentsCopy.indexOf(student_course_id);
-                if(indexOf === -1){
+                if (indexOf === -1) {
                     selectedStudentsCopy.push(student_course_id);
-                }else{
-                    selectedStudentsCopy.splice(indexOf,1);
+                } else {
+                    selectedStudentsCopy.splice(indexOf, 1);
                 }
             })
             setSelectedStudents(selectedStudentsCopy);
-        }else{
+        } else {
             setSelectedStudents([]);
-        }       
+        }
     }
 
-    useEffect(()=>{
-        handleGlobalState('alumnos',selectedStudents);
-    },[selectedStudents]);
-    
+    useEffect(() => {
+        handleGlobalState('alumnos', selectedStudents);
+    }, [selectedStudents]);
+
     return (
         <Row style={{ margin: 0, justifyContent: 'center' }}>
             <Col

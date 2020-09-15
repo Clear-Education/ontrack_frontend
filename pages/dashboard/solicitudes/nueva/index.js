@@ -12,7 +12,7 @@ import styles from './index.module.scss';
 import Alert from "react-s-alert";
 
 /* STEPS */
-import ThirdStepStudents from '../../../../src/components/tracking/3_step_students/third_step_students';
+import ThirdStepStudentSolicitud from '../../../../src/components/tracking/3_step_students/third_step_students_solicitud';
 import FourthStepSubjects from '../../../../src/components/tracking/4_step_subjects/fourth_step_subjects';
 import SecondStepDepYearCourse from '../../../../src/components/tracking/2_step_department_year_course/second_step_dep_year_course';
 
@@ -152,7 +152,6 @@ const CreateTracking = () => {
         const validateData = handleValidateData();
         if (validateData) {
             const newTrackingData = { ...globalTrackingData, ['current_step']: activeStep + 1 }
-            console.log(newTrackingData);
             dispatch({ type: types.SAVE_TRACKING_SOLICITUD_DATA, payload: newTrackingData })
             activeStep === steps.length - 1 ? handleSubmitTracking() : setActiveStep((prevActiveStep) => prevActiveStep + 1);
         } else {
@@ -223,7 +222,7 @@ const CreateTracking = () => {
                                                     />
                                                     :
                                                     activeStep === 2 ?
-                                                        <ThirdStepStudents
+                                                        <ThirdStepStudentSolicitud
                                                             handleGlobalState={handleGlobalState}
                                                         />
                                                         :
