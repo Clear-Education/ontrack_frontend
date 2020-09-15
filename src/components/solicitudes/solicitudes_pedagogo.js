@@ -5,7 +5,7 @@ import { useState } from "react";
 import useSWR, { mutate } from "swr";
 import config from "../../utils/config"
 import BackgroundLoader from "../commons/background_loader/background_loader";
-import { getSolicitudesService, editEstadoSolicitudService } from "../../../src/utils/Solicitudes/services/Solicitudes_services";
+import { getSolicitudesService, editEstadoSolicitudService } from "../../../src/utils/solicitudes/services/solicitudes_services";
 import { motion } from "framer-motion";
 import { Row, Col } from "react-bootstrap";
 import MUIDataTable from "mui-datatables";
