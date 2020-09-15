@@ -16,7 +16,7 @@ import { addMultipleStudentsCourseService, deleteMultipleStudentsCourseService }
 import { useSelector } from "react-redux";
 
 const INITIAL_STATE = {
-    school_year: '',
+    anio_lectivo: '',
     department: '',
     year: '',
     curso: '',
@@ -49,7 +49,7 @@ const Cursos = () => {
                         let student_data = {
                             alumno: student_id,
                             curso: state.curso,
-                            anio_lectivo: state.school_year,
+                            anio_lectivo: state.anio_lectivo,
                             student_course_id: _student_course_id
                         }
                         studentList.push(student_data)
@@ -67,7 +67,7 @@ const Cursos = () => {
     const handleSelectedStudentTable = (table) => {
         setSelectedStudentTable(table);
         setState((prevState) => ({
-            school_year: prevState.school_year,
+            anio_lectivo: prevState.anio_lectivo,
             department: prevState.department,
             year: prevState.year,
             curso: prevState.curso,
@@ -90,7 +90,7 @@ const Cursos = () => {
             case 0:
                 return <SelectInput type="department" data={state} changeAction={handleChange} />
             case 1:
-                return <SelectInput type="school_year" data={state} changeAction={handleChange} />;
+                return <SelectInput type="anio_lectivo" data={state} changeAction={handleChange} />;
             case 2:
                 return <SelectInput type="year" data={state} changeAction={handleChange} />;
             case 3:
@@ -171,7 +171,7 @@ const Cursos = () => {
                                         Anterior
                                     </Button>
                                     <button
-                                        onClick={() => handleNext(activeStep === 0 ? 'department' : activeStep === 1 ? 'school_year' : activeStep === 2 ? 'year' : activeStep === 3 ? 'curso' : 'send')}
+                                        onClick={() => handleNext(activeStep === 0 ? 'department' : activeStep === 1 ? 'anio_lectivo' : activeStep === 2 ? 'year' : activeStep === 3 ? 'curso' : 'send')}
                                         className={`ontrack_btn csv_btn ${styles.stepper_button}`}
                                     >
                                         {activeStep === steps.length - 1 ? 'Finalizar' : 'Siguiente'}
