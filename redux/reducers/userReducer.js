@@ -24,7 +24,6 @@ const userReducer = (state = initialState, action) => {
     case types.NO_LOADING_USER:
       return { ...state, isLoading: false };
     case types.UPDATE_USER:
-      console.log(action.payload)
       return {
         ...state,
         user: {

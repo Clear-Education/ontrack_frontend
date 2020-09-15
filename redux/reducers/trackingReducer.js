@@ -6,7 +6,7 @@ var initialTrackingState = {
     nombre: '',
     descripcion: '',
     department: '',
-    year:'',
+    year: '',
     curso: '',
     anio_lectivo: '',
     alumnos: [],
@@ -37,10 +37,12 @@ const trackingReducer = (state = initialTrackingState, action) => {
                 integrantes: action.payload.integrantes,
                 fecha_desde: action.payload.fecha_desde,
                 fecha_hasta: action.payload.fecha_hasta,
+                fecha_inicio_seguimiento: action.payload.fecha_inicio_seguimiento,
+                fecha_fin_seguimiento: action.payload.fecha_fin_seguimiento,
                 promedio: action.payload.promedio,
                 asistencia: action.payload.asistencia,
                 cualitativos: action.payload.cualitativos,
-                
+
             }
         case types.RESET_TRACKING_DATA:
             return initialTrackingState;
