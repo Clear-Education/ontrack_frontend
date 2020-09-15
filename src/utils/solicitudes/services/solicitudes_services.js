@@ -1,4 +1,4 @@
-import { getSolicitudesCrud, addSolicitudesCrud, editSolicitudesCrud, editEstadoSolicitudCrud, deleteSolicitudesCrud } from "../cruds/Solicitudes_cruds";
+import { getSolicitudesCrud, addSolicitudesCrud, editSolicitudesCrud, editEstadoSolicitudCrud, deleteSolicitudesCrud } from "../cruds/solicitudes_cruds";
 import Alert from "react-s-alert";
 
 
